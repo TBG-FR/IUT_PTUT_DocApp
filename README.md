@@ -1,2 +1,2 @@
 # PTUT6_DocApp
-PTUT #6 - Application pour les RDV médicaux [reformuler]
+PTUT #6 - Système de prise de rendez-vous médicaux en Urgence
