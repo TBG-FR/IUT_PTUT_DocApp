@@ -18,16 +18,16 @@ Ce tutoriel rapide suppose que vous êtes sous Windows, et que Wamp est install�
 * Aller dans le répertoire \bin\php => ' cd c:\wamp\bin\php ' (par exemple)
 
 * Exécuter les commandes suivantes :
-`php -r "file_put_contents('symfony', file_get_contents('https://symfony.com/installer'));"`
-`(echo @ECHO OFF & echo php "%~dp0symfony" %*) > symfony.bat`
-`symfony`
+`php -r "file_put_contents('symfony', file_get_contents('https://symfony.com/installer'));"`  
+`(echo @ECHO OFF & echo php "%~dp0symfony" %*) > symfony.bat`  
+`symfony`  
 
 * Si tout marche bien, c'est tout bon pour Symfony !
 
 ## Étape 3 - Créer un Projet
 
 * Commande permettant de créer un nouveau projet dans le répertoire www\ de Wamp :
-`symfony new ..\..\www\NOM_ET_CHEMIN_DU_DOSSIER_A_CREER`
+`symfony new ..\..\www\NOM_ET_CHEMIN_DU_DOSSIER_A_CREER`  
 
 * Ensuite, suivre les instructions à l'écran (aller dans le dossier créé, configurer puis lancer l'app)
 
