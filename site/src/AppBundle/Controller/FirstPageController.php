@@ -1,4 +1,4 @@
-<?php // src/AppBundle/Controller/LuckyController.php
+<?php // src/AppBundle/Controller/FirstPageController.php
 
 /* ----- ----- V1 - With render() (Templates) ----- ----- */
 
@@ -7,20 +7,32 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Request;
 
-class LuckyController extends Controller
-{
+class FirstPageController extends Controller
+{    
     /**
-     * @Route("/lucky/number")
+     * Matches /tests/1 exactly
+     *
+     * @Route("/tests/1", name="test_page_1")
      */
-    public function numberAction()
+    public function TestOneAction()
     {
-        $number = mt_rand(0, 100);
-
-        return $this->render('lucky/number.html.twig', array(
-            'number' => $number,
+        $username = "Bobby";
+        
+        $this->addFlash('notice', 'Notice : Your changes were saved!');
+        $this->addFlash('warning', 'Warning : Your changes were saved!');
+        $this->addFlash('error', 'Error : Your changes were saved!');
+        
+        // store an attribute for reuse during a later user request    
+        //$session->set('username', $username);
+        
+        return $this->render('tests/testpage.html.twig', array(
+            'username' => $username,
         ));
     }
+
 }
 
 /* ----- ----- V1 - With $max (Routing) ----- ----- */

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        
+        <h1>{{ username }}</h1>
+
+        {# ...or you can read and display every flash message available #}
+        {% for label, messages in app.flashes %}
+        {% for message in messages %}
+        <div class="flash-{{ label }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endfor %}
+
+        {% for i in 1..10 %}
+        <div class="{{ cycle(['even', 'odd'], i) }}">
+            <!-- some HTML here -->
+        </div>
+        {% endfor %}
+
+    </body>
+</html>
