@@ -13,9 +13,15 @@
             <img src="/assets/images/logo.png" alt="logo" id="logo">
             <nav id="nav">
                 <ul>
-                    <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
-                    <li><a href="">Lien 1</a></li>
-                    <li><a href="">Lien 2</a></li>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                        <li>
+                            <a href="{{ path('users.index') }}">Mon profil</a>
+                        </li>
+                    {% else %}
+                        <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+                        <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </header>
