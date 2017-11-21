@@ -1,0 +1,45 @@
+/* Global styles */
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    color: #000;
+}
+
+a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+/* Header styles */
+#header {
+    position: relative;
+}
+
+#logo {
+    display: inline-block;
+    width: 200px;
+    height: auto;
+}
+
+#nav {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
+
+#nav ul  {
+
+}
+
+#nav ul li {
+    float: left;
+    list-style: none;
+    margin: 0 15px;
+}
+
+#nav ul li a {
+    width: 100%;
+    height: 100%;
+}
