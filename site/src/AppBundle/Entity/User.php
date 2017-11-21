@@ -24,6 +24,20 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="first_name", type="string")
+     */
+    private $first_name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="last_name", type="string")
+     */
+    private $last_name;
+
 
     /**
      * Get id
@@ -34,5 +48,38 @@ class User extends BaseUser
     {
         return $this->id;
     }
+
+    /**
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    /**
+     * @param string $first_name
+     */
+    public function setFirstName($first_name)
+    {
+        $this->first_name = $first_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+
+    /**
+     * @param string $last_name
+     */
+    public function setLastName($last_name)
+    {
+        $this->last_name = $last_name;
+    }
+
 }
 
