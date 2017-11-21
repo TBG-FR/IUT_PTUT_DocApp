@@ -43,7 +43,7 @@
 /.web-server-pid
 
 # Composer-generated files
-/vendor/
+/vendor/*
 /web/config.php
 /var/SymfonyRequirements.php
 
