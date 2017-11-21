@@ -26,7 +26,6 @@
 /var/bootstrap.php.cache
 /bin/*
 !bin/console
-!bin/symfony_requirements
 
 # Assets and user uploads
 /web/bundles/
@@ -45,4 +44,7 @@
 # Embedded web-server pid file
 /.web-server-pid
 
-vendor
+# Composer-generated files
+/vendor/
+/web/config.php
+/var/SymfonyRequirements.php
