@@ -44,8 +44,8 @@
 
 # Composer-generated files
 /vendor/
-web/config.php
-var/SymfonyRequirements.php
+/web/config.php
+/var/SymfonyRequirements.php
 
 # Various other things
 .idea
