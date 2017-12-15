@@ -38,8 +38,7 @@ class User extends BaseUser
      */
     private $last_name;
 
-
-    /**
+   /**
      * Get id
      *
      * @return integer
@@ -80,6 +79,5 @@ class User extends BaseUser
     {
         $this->last_name = $last_name;
     }
-
 }
 

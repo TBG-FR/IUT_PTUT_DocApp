@@ -53,7 +53,7 @@ class UsersController extends Controller
             return $this->redirectToRoute('users.index');
         }
 
-        return $this->redirect('users.index');
+        return $this->redirectToRoute('users.index');
     }
 
 }
