@@ -1,0 +1,57 @@
+
+#site/web/config.php
+#site/var/SymfonyRequirements.php
+#site/composer.lock
+#site/bin/symfony_requirements
+
+# Cache and logs (Symfony2)
+site/app/cache/*
+site/app/logs/*
+!site/app/cache/.gitkeep
+!site/app/logs/.gitkeep
+
+# Email spool folder
+site/app/spool/*
+
+# Cache, session files and logs (Symfony3)
+site/var/cache/*
+site/var/logs/*
+site/var/sessions/*
+!site/var/cache/.gitkeep
+!site/var/logs/.gitkeep
+!site/var/sessions/.gitkeep
+
+# Parameters
+site/app/config/parameters.yml
+site/app/config/parameters.ini
+
+# Managed by Composer
+site/app/bootstrap.php.cache
+site/var/bootstrap.php.cache
+site/bin/*
+!site/bin/console
+
+# Assets and user uploads
+site/web/bundles/
+site/web/uploads/
+
+# PHPUnit
+site/app/phpunit.xml
+site/phpunit.xml
+
+# Build data
+site/build/
+
+# Backup entities generated with doctrine:generate:entities command
+**/Entity/*~
+
+# Embedded web-server pid file
+site/.web-server-pid
+
+# Composer-generated files
+site/vendor/*
+site/web/config.php
+site/var/SymfonyRequirements.php
+
+# Various other things
+site/.idea
