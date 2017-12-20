@@ -3,16 +3,15 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}DocInTime - Find a Doctor, now.{% endblock %}</title>
+        <link rel="icon" href="/assets/images/favicon_dev.png">
         {% block stylesheets %}
 
-            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-
             <!-- CSS : Bootstrap (4.0.0-beta.2) -->
-            <link rel="stylesheet" href={{ asset('/assets/css/bootstrap.css') }}>
+            <link rel="stylesheet" href=/assets/css/bootstrap.css>
             <!-- CSS : FontAwesome (4.7.0) -->
-            <link rel="stylesheet" href={{ asset('/assets/css/font-awesome.css') }}>
+            <link rel="stylesheet" href=/assets/css/font-awesome.css>
             <!-- CSS : Our own CSS -->
-            <link rel="stylesheet" href={{ asset('/assets/css/global.css') }}>
+            <link rel="stylesheet" href=/assets/css/global.css>
 
         {% endblock %}
     </head>
@@ -43,11 +42,11 @@
         {% block javascripts %}
 
             <!-- JS : JQuery (3.2.1) -->
-            <script src="/{{ asset('assets/js/jquery-3.2.1.js') }}"></script>
+            <script src="/assets/js/jquery-3.2.1.js"></script>
             <!-- JS : Popper -->
-            <script src="{{ asset('assets/js/popper.js') }}"></script>
+            <script src="/assets/js/popper.js"></script>
             <!-- JS : Bootstrap (4.0.0-beta.2) -->
-            <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
+            <script src="/assets/js/bootstrap.js"></script>
 
         {% endblock %}
     </body>
