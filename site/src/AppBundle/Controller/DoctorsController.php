@@ -15,11 +15,19 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class DoctorsController extends Controller
 {
     /**
+     * @Route("/doctors")
+     */
+    public function index()
+    {
+        return $this->render('doctors/index.html.twig');
+    }
+
+    /**
      * @Route("/doctors/register")
      */
     public function createAction()
     {
-        $form = $this->createForm(DoctorType::class, [
+        $form = $this->createForm(DoctorType::class, null, [
             'action' => $this->generateUrl('app_doctors_save')
         ]);
 
@@ -33,28 +41,24 @@ class DoctorsController extends Controller
      */
     public function saveAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-        $data = $request->get('user');
-
-        $user = new User();
-        $user->setFirstName($data['first_name']);
-        $user->setLastName($data['last_name']);
-        $user->setEmail($data['email']);
-        $user->setUsername(ucfirst($data['first_name'])
-            . ' ' . strtoupper($data['last_name']));
-        $user->setPassword($passwordEncoder->encodePassword($user, $data['password']));
-        $user->setEnabled(false);
+        $data = $request->get('doctor');
 
         $doctor = new Doctor();
+        $doctor->setFirstName($data['first_name']);
+        $doctor->setLastName($data['last_name']);
+        $doctor->setEmail($data['email']);
+        $doctor->setUsername(ucfirst($data['first_name'])
+            . ' ' . strtoupper($data['last_name']));
+        $doctor->setPassword($passwordEncoder->encodePassword($doctor, $data['password']));
+        $doctor->setEnabled(false); // disabled by default until we confirm the identity
         $doctor->setPhone($data['phone']);
-        $doctor->setSpecialities($data['phone']);
+        //$doctor->setSpecialities($data['phone']);
         $doctor->setAddress($data['address']);
         $doctor->setCity($data['city']);
         $doctor->setZip($data['zip']);
-        $doctor->setUser($user);
 
-        $validator = $this->createDoctorValidator();
+        $validator = $this->get('validator');
         $errors = $validator->validate($doctor);
-
 
         if($errors->count() === 0) {
             $manager = $this->getDoctrine()->getManager();
@@ -65,10 +69,4 @@ class DoctorsController extends Controller
         return new Response("");
     }
 
-    private function createDoctorValidator() : ValidatorInterface
-    {
-        $validator = $this->get('validator');
-
-        return $validator;
-    }
 }

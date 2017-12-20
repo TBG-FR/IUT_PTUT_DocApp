@@ -15,12 +15,10 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder->add('first_name', TextType::class)
                 ->add('last_name', TextType::class)
                 ->add('save', SubmitType::class, ['attr' => ['class' => 'btn btn-primary']])
                 ->setAction('/users');
-
     }
     
     /**

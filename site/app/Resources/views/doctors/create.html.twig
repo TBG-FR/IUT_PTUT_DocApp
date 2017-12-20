@@ -6,7 +6,7 @@
         <h2>Informations</h2>
         <div class="form-group">
             <label for="inputEmail">Adresse email</label>
-            <input type="email" id="inputEmail" class="form-control" name="user[email]" required>
+            <input type="email" id="inputEmail" class="form-control" name="doctor[email]" required>
         </div>
         <div class="form-group">
             {{ form_label(form.phone, "Numéro de téléphone") }}
@@ -15,21 +15,21 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="inputFirstname">Prénom</label>
-                <input type="text" id="inputFirstname" class="form-control" name="user[first_name]" required>
+                <input type="text" id="inputFirstname" class="form-control" name="doctor[first_name]" required>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputName">Nom</label>
-                <input type="text" id="inputName" class="form-control" name="user[last_name]" required>
+                <input type="text" id="inputName" class="form-control" name="doctor[last_name]" required>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="inputPassword">Mot de passe</label>
-                <input type="password" id="inputPassword" class="form-control" name="user[password]" required>
+                <input type="password" id="inputPassword" class="form-control" name="doctor[password]" required>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputPasswordConfirm">Confirmation du mot de passe</label>
-                <input type="password" id="inputPasswordConfirm" class="form-control" name="user[password_confirm]">
+                <input type="password" id="inputPasswordConfirm" class="form-control" name="doctor[password_confirm]">
             </div>
         </div>
         <h2>Adresse</h2>
@@ -54,7 +54,7 @@
             <div class="row">
                 {% for i in [1,2,4,5,6,7,7,9,20] %}
                     <div class="col-md-3">
-                        <input type="checkbox" id="inputSpeciality{{ i }}" name="user[specialities][]" value="{{ i }}">
+                        <input type="checkbox" id="inputSpeciality{{ i }}" name="doctor[specialities][]" value="{{ i }}">
                         <label for="inputSpeciality{{ i }}">Spécialité {{ i }}</label>
                     </div>
                 {% endfor %}

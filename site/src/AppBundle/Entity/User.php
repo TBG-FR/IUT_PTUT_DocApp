@@ -12,6 +12,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @UniqueEntity(fields={"email","username"})
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn("discr", type="string")
+ * @ORM\DiscriminatorMap({"user"= "User", "Doctor" = "Doctor"})
  */
 class User extends BaseUser
 {
@@ -78,6 +81,14 @@ class User extends BaseUser
     public function setLastName($last_name)
     {
         $this->last_name = $last_name;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDoctor()
+    {
+        return false;
     }
 }
 
