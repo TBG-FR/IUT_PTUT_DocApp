@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Doctor;
+use AppBundle\Entity\Speciality;
 use AppBundle\Entity\User;
 use AppBundle\Form\DoctorType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,12 +28,14 @@ class DoctorsController extends Controller
      */
     public function createAction()
     {
+        $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
         $form = $this->createForm(DoctorType::class, null, [
             'action' => $this->generateUrl('app_doctors_save')
         ]);
 
         return $this->render('doctors/create.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'specialities' => $specialities
         ]);
     }
 

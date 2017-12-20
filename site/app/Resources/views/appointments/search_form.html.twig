@@ -4,14 +4,10 @@
 
         <div class="input-group"> <!-- Speciality selection -->
             <div class="input-group-addon"><span class="fa fa-graduation-cap"></span></div>
-            <select class="form-control" id="searchDocSpec" placeholder="Wanted speciality">
-                <!-- TODO : Add a FOR loop into Specialities -->
-                <option value="1">Dentist</option>
-                <option selected value="2">Generalist</option>
-                <option value="3">Psy</option>
-                <option value="4">Urologist</option>
-                <option value="5">Anaesthetist</option>
-                <!-- TODO : END FOR -->
+            <select class="form-control" id="searchDocSpec" title="Speciality">
+                {% for speciality in specialities %}
+                    <option value="{{ speciality.id }}">{{ speciality.name }}</option>
+                {% endfor %}
             </select>
         </div>
 
