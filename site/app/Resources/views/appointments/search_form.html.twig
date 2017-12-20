@@ -13,9 +13,12 @@
 
         <div class="input-group">
             <div class="input-group-addon"><span class="fa fa-map"></span></div>
+            <input type="hidden" name="search[coords]" value="">
             <input type="text" class="form-control" id="searchLocation" placeholder="City name, zip code, street name, ..."
                    name="search[location]">
-            <div class="input-group-btn"><button class="btn btn-success" type="button" onclick="<!-- TODO : JS Geolocation -->"><span class="fa fa-map-marker"></span></button></div>
+            <div class="input-group-btn">
+                <button id="geoLocateBtn" class="btn btn-success" type="button"><span class="fa fa-map-marker"></span></button>
+            </div>
         </div>
 
         <div class="input-group">
