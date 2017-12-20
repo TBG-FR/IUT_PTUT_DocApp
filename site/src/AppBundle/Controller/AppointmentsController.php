@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Speciality;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,11 +12,16 @@ class AppointmentsController extends Controller
     /**
      * @Route("/search", name="appointments.results")
      */
-    public function executeSearchAction(/* TODO : Inputs */)
+    public function executeSearchAction(Request $request)
     {
+        $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
 
-        /* TODO : Get the given request and return results */
+        $data = $request->get('search');
 
-        return $this->render(':appointments:search_results.html.twig', array(/* TODO : Outputs */));
+        //TODO: verify data and find all matching appointments
+
+        return $this->render(':appointments:search_results.html.twig', [
+            'specialities' => $specialities
+        ]);
     }
 }
