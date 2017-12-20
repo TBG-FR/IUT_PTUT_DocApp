@@ -1,6 +1,6 @@
 {% block content %}
-
-    <form class="form-inline" action="{{ path('appointments.results') }}" method="post">
+    <div class="container">
+    <form class="form-inline" action="{{ path('appointments.results') }}" method="post" role="form">
 
         <div class="input-group"> <!-- Speciality selection -->
             <div class="input-group-addon"><span class="fa fa-graduation-cap"></span></div>
@@ -24,10 +24,31 @@
 
             <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}" name="search[time]">
             <div class="input-group-btn"><button class="btn btn-success" type="button" onclick="<!-- TODO : JS Geolocation -->"><span class="fa fa-location-arrow"></span></button></div>
+
+            <br /><label for="searchHour">Label 2</label>
+
         </div>
 
         <button type="submit" class="btn btn-primary">DocInTime !</button>
 
     </form>
+    </div>
+
+    <div class="container">
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <div class="pull-left">
+                    <input type="text" value="1" width="10" id="input1" class="form-control" />
+                    <br />
+                    <label for="decimal_input">Label 1</label>
+                </div>
+                <div>
+                    <input type="text" value="I" width="30" id="input2" class="form-control" />
+                    <br />
+                    <label for="input2">Label 2</label>
+                </div>
+            </div>
+        </form>
+    </div>
 
 {% endblock %}
