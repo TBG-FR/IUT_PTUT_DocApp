@@ -6,26 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="doctor")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\DoctorRepository")
+ * @ORM\Entity()
  */
-class Doctor
+class Doctor extends User
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-   /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
-
     /**
      * @ORM\Column(name="phone", type="string", length=10)
      * @Assert\NotBlank()
@@ -70,22 +54,6 @@ class Doctor
     public function setId(int $id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param mixed $user
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
     }
 
     /**
@@ -168,4 +136,8 @@ class Doctor
         $this->zip = $zip;
     }
 
+    public function isDoctor()
+    {
+        return true;
+    }
 }

@@ -21,12 +21,13 @@
             <nav id="nav">
                 <ul>
                     <li><a href="{{ path('default.index') }}">Home</a></li>
-                    <li><a href="#TODO">Link_41</a></li>
-                    <li><a href="#TODO">Link_InPark</a></li>
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                        <li><a href="#TODO">My Appointments</a></li>
+                        <li><a href="#">My Appointments</a></li>
                         <li><a href="{{ path('users.index') }}">My Profile</a></li>
+                        {% if app.user.isDoctor %}
+                            <li><a href="{{ path('app_doctors_index') }}">Manage appointments</a></li>
+                        {% endif %}
                     {% else %}
                         <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
                         <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
