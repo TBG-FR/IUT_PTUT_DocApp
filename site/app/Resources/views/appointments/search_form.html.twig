@@ -2,7 +2,7 @@
 
     <h3> DEV : Form V3 : Inline</h3>
 
-    <form class="form-inline">
+    <form class="form-inline" action="{{ path('appointments.results') }}" method="post">
 
         <div class="input-group"> <!-- Speciality selection -->
             <div class="input-group-addon"><span class="fa fa-graduation-cap"></span></div>
@@ -18,12 +18,19 @@
         </div>
 
         <div class="input-group">
-            <div class="input-group-addon"><span class="fa fa-google-plus-square"></span></div>
+            <div class="input-group-addon"><span class="fa fa-map"></span></div>
             <input type="text" class="form-control" id="searchLocation" placeholder="City name, zip code, street name, ...">
+            <div class="input-group-btn"><button class="btn btn-success" type="button" onclick="<!-- TODO : JS Geolocation -->"><span class="fa fa-map-marker"></span></button></div>
+        </div>
+
+        <div class="input-group">
+            <div class="input-group-addon"><span class="fa fa-clock-o"></span></div>
+            <div class="input-group-addon"><label for="searchHour">From :</label></div>
+            <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}">
             <div class="input-group-btn"><button class="btn btn-success" type="button" onclick="<!-- TODO : JS Geolocation -->"><span class="fa fa-location-arrow"></span></button></div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">DocInTime !</button>
 
     </form>
 
