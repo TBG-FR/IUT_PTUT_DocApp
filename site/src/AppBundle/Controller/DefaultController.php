@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Speciality;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -12,7 +13,10 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig');
+        $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
+
+        return $this->render('default/index.html.twig', [
+            'specialities' => $specialities
+        ]);
     }
 }

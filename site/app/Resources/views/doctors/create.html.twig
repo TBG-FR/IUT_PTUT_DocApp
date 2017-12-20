@@ -52,10 +52,11 @@
         <div class="form-group">
             <h2>Spécialités</h2>
             <div class="row">
-                {% for i in [1,2,4,5,6,7,7,9,20] %}
+                {% for speciality in specialities %}
                     <div class="col-md-3">
-                        <input type="checkbox" id="inputSpeciality{{ i }}" name="doctor[specialities][]" value="{{ i }}">
-                        <label for="inputSpeciality{{ i }}">Spécialité {{ i }}</label>
+                        <input type="checkbox" id="inputSpeciality{{ speciality.id }}" name="doctor[specialities][]"
+                               value="{{ speciality.id }}">
+                        <label for="inputSpeciality{{ speciality.id }}">{{ speciality.name }}</label>
                     </div>
                 {% endfor %}
             </div>

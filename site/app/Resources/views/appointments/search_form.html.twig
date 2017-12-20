@@ -4,27 +4,26 @@
 
         <div class="input-group"> <!-- Speciality selection -->
             <div class="input-group-addon"><span class="fa fa-graduation-cap"></span></div>
-            <select class="form-control" id="searchDocSpec" placeholder="Wanted speciality">
-                <!-- TODO : Add a FOR loop into Specialities -->
-                <option value="1">Dentist</option>
-                <option selected value="2">Generalist</option>
-                <option value="3">Psy</option>
-                <option value="4">Urologist</option>
-                <option value="5">Anaesthetist</option>
-                <!-- TODO : END FOR -->
+            <select class="form-control" id="searchDocSpec" title="Speciality" name="search[speciality]">
+                {% for speciality in specialities %}
+                    <option value="{{ speciality.id }}">{{ speciality.name }}</option>
+                {% endfor %}
             </select>
         </div>
 
         <div class="input-group">
             <div class="input-group-addon"><span class="fa fa-map"></span></div>
-            <input type="text" class="form-control" id="searchLocation" placeholder="City name, zip code, street name, ...">
+            <input type="text" class="form-control" id="searchLocation" placeholder="City name, zip code, street name, ..."
+                   name="search[location]">
             <div class="input-group-btn"><button class="btn btn-success" type="button" onclick="<!-- TODO : JS Geolocation -->"><span class="fa fa-map-marker"></span></button></div>
         </div>
 
         <div class="input-group">
             <div class="input-group-addon"><span class="fa fa-clock-o"></span></div>
             <div class="input-group-addon"><label for="searchHour">From :</label></div>
-            <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}">
+
+            <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}" name="search[time]">
+            <div class="input-group-btn"><button class="btn btn-success" type="button" onclick="<!-- TODO : JS Geolocation -->"><span class="fa fa-location-arrow"></span></button></div>
         </div>
 
         <button type="submit" class="btn btn-primary">DocInTime !</button>
