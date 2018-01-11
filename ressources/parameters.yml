@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: 3306
+    database_name: ptut
+    database_user: root
+    database_password: null
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: admin@docintime.com
+    mailer_password: null
+    secret: 704fb7157b2258b0b3c929dbc67230f756f6ecb0
