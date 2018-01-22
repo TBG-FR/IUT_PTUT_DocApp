@@ -41,7 +41,7 @@ class AppointmentsController extends Controller
      */
     public function displayDetailsAction($id, Request $request)
     {
-        $appointment = $this->getDoctrine()->getRepository(Speciality::class)->find($id);
+        $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
         return $this->render(':appointments:details.html.twig', [
             'appointment' => $appointment
@@ -57,7 +57,7 @@ class AppointmentsController extends Controller
      */
     public function reserveApptAction($id, Request $request)
     {
-        $appointment = $this->getDoctrine()->getRepository(Speciality::class)->find($id);
+        $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
         return $this->render(':appointments:reservation.html.twig', [
             'appointment' => $appointment
@@ -73,7 +73,7 @@ class AppointmentsController extends Controller
      */
     public function successAction($id, Request $request)
     {
-        $appointment = $this->getDoctrine()->getRepository(Speciality::class)->find($id);
+        $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
         return $this->render(':appointments:success.html.twig', [
             'appointment' => $appointment
@@ -82,7 +82,7 @@ class AppointmentsController extends Controller
     }
 
     /**
-     * @Route("/appointments/create", name="appointments.create")
+     * @Route("/appt/create", name="appointments.create")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -110,6 +110,7 @@ class AppointmentsController extends Controller
         }
 
         return $this->render(':appointments:create.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }
