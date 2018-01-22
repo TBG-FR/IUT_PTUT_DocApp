@@ -24,11 +24,12 @@
             </div>
 
             <div class="input-group"> <!-- Hour selection -->
-                <div class="input-group-prepend input-group-text"><span class="fa fa-clock-o"></span></div>
-                <div class="input-group-prepend input-group-text"><label for="searchHour">From :</label></div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <div class="input-group-prepend input-group-text"><span class="fa fa-clock-o"></span>
+                    <div><label class="left-space" for="searchHour">From :</label> </div></div>
 
-                <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}" name="search[time]">
-
+                    <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}" name="search[time]">
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary">DocInTime !</button>
