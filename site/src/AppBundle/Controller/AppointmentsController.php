@@ -23,8 +23,9 @@ class AppointmentsController extends Controller
 
         //TODO: verify data and find all matching appointments
 
-        return $this->render(':appointments:search_results.html.twig', [
-            'specialities' => $specialities
+        return $this->render(':appointments:results.html.twig', [
+            'specialities' => $specialities,
+            'extended' => true
         ]);
     }
 

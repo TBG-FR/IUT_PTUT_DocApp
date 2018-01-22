@@ -1,57 +1,59 @@
 {% block content %}
-    <div class="container">
-    <form class="form-inline" action="{{ path('appointments.results') }}" method="post" role="form">
-
-        <div class="input-group"> <!-- Speciality selection -->
-            <div class="input-group-addon"><span class="fa fa-graduation-cap"></span></div>
-            <select class="form-control" id="searchDocSpec" title="Speciality" name="search[speciality]">
-                {% for speciality in specialities %}
-                    <option value="{{ speciality.id }}">{{ speciality.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div class="input-group">
-            <div class="input-group-addon"><span class="fa fa-map"></span></div>
-            <input type="hidden" name="search[coords]" value="">
-            <input type="text" class="form-control" id="searchLocation" placeholder="City name, zip code, street name, ..."
-                   name="search[location]">
-            <div class="input-group-btn">
-                <button id="geoLocateBtn" class="btn btn-success" type="button"><span class="fa fa-map-marker"></span></button>
-            </div>
-        </div>
-
-        <div class="input-group">
-            <div class="input-group-addon"><span class="fa fa-clock-o"></span></div>
-            <div class="input-group-addon"><label for="searchHour">From :</label></div>
-
-            <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}" name="search[time]">
-            <div class="input-group-btn"><button class="btn btn-success" type="button" onclick="<!-- TODO : JS Geolocation -->"><span class="fa fa-location-arrow"></span></button></div>
-
-            <br /><label for="searchHour">Label 2</label>
-
-        </div>
-
-        <button type="submit" class="btn btn-primary">DocInTime !</button>
-
-    </form>
-    </div>
 
     <div class="container">
-        <form class="form-inline" role="form">
-            <div class="form-group">
-                <div class="pull-left">
-                    <input type="text" value="1" width="10" id="input1" class="form-control" />
-                    <br />
-                    <label for="decimal_input">Label 1</label>
-                </div>
-                <div>
-                    <input type="text" value="I" width="30" id="input2" class="form-control" />
-                    <br />
-                    <label for="input2">Label 2</label>
+
+        <form class="form-inline" action="{{ path('appointments.results') }}" method="post" role="form">
+
+            <div class="input-group"> <!-- Speciality selection -->
+                <div class="input-group-prepend input-group-text"><span class="fa fa-graduation-cap"></span></div>
+                <select class="form-control" id="searchDocSpec" title="Speciality" name="search[speciality]">
+                    {% for speciality in specialities %}
+                        <option value="{{ speciality.id }}">{{ speciality.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="input-group"> <!-- Location selection -->
+                <div class="input-group-prepend input-group-text"><span class="fa fa-map"></span></div>
+                <input type="hidden" name="search[coords]" value="">
+                <input type="text" class="form-control" id="searchLocation" placeholder="City name, zip code, street name, ..."
+                       name="search[location]">
+                <div class="input-group-append">
+                    <button id="geoLocateBtn" class="btn btn-success" type="button"><span class="fa fa-map-marker"></span></button>
                 </div>
             </div>
+
+            <div class="input-group"> <!-- Hour selection -->
+                <div class="input-group-prepend input-group-text"><span class="fa fa-clock-o"></span></div>
+                <div class="input-group-prepend input-group-text"><label for="searchHour">From :</label></div>
+
+                <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}" name="search[time]">
+
+            </div>
+
+            <button type="submit" class="btn btn-primary">DocInTime !</button>
+
         </form>
+
     </div>
+
+    {% if extended is defined %}
+        <div class="container">
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <div class="pull-left">
+                        <input type="text" value="1" width="10" id="input1" class="form-control" />
+                        <br />
+                        <label for="decimal_input">Label 1</label>
+                    </div>
+                    <div>
+                        <input type="text" value="I" width="30" id="input2" class="form-control" />
+                        <br />
+                        <label for="input2">Label 2</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endif %}
 
 {% endblock %}
