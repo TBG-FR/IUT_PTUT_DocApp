@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Annotations\Annotation\Enum;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,24 +10,28 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RegularAppointment extends Appointment
 {
+    //ENUM of frequencies
+    const FREQ_DAILY     = 'DAILY';
+    const FREQ_WEEKLY     = 'WEEKLY';
+    const FREQ_MONTHLY     = 'MONTHLY';
 
-    /* @var int
-     *
-     * @ORM\Column(name="freq", type="integer")
+    static private $frequencyArray = [];
+
+    /**
+     * @ORM\Column(name="frequency", type="integer")
      * @Assert\NotBlank()
      *
      * Enter 1 for "every day", 2 for "every two days", etc.
      */
     private $frequency;
 
-    /* @var string
-     *
-     * @ORM\Column(name="freq_type", type="string")
+    /**
+     * @ORM\Column(name="frequency_type", type="string")
      * @Assert\NotBlank()
      *
      * See "FrequencyType" Enum above
      */
-    private $frequencyType;
+    private $frequency_type;
 
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
@@ -36,33 +40,20 @@ class RegularAppointment extends Appointment
         parent::__construct();
     }
 
-    /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
-
-    //ENUM of frequencies
-    const FREQ_DAY     = 'Day';
-    const FREQ_WEEK     = 'Week';
-    const FREQ_MONTH     = 'Month';
-
-    static private $frequencyArray = null;
-
-    static public function getFrequencyTypeList()
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
-        // Build frequencyArray if this is the first call
-        if (self::$frequencyArray == null)
-        {
-            self::$frequencyArray = array();
-            $oClass         = new \ReflectionClass ('\AppBundle\Entity\PunctualAppointment');
-            $classConstants = $oClass->getConstants ();
-            $constantPrefix = "FREQ_";
-            foreach ($classConstants as $key=>$val)
-            {
-                if (substr($key, 0, strlen($constantPrefix)) === $constantPrefix)
-                {
-                    self::$frequencyArray[$val] = $val;
-                }
-            }
-        }
-        return self::$frequencyArray;
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id)
+    {
+        $this->id = $id;
     }
 
     public function setFrequencyType($frequencyType)
@@ -70,10 +61,10 @@ class RegularAppointment extends Appointment
         if (!in_array($frequencyType, self::getFrequencyTypeList()))
         {
             throw new \InvalidArgumentException(
-                sprintf('Invalid value for RegularAppointment.frequencyType : %s.', $frequencyType)
+                sprintf('Invalid value for RegularAppointment.frequency_type : %s.', $frequencyType)
             );
         }
-        $this->frequencyType = $frequencyType;
+        $this->frequency_type = $frequencyType;
     }
 
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
@@ -83,7 +74,7 @@ class RegularAppointment extends Appointment
      */
     public function getFrequencyType(): string
     {
-        return $this->frequencyType;
+        return $this->frequency_type;
     }
 
     /**
@@ -104,9 +95,31 @@ class RegularAppointment extends Appointment
 
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
-    public function isRegular()
+    public function isRegularAppointment()
     {
         return true;
     }
+
+    /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
+    static public function getFrequencyTypeList()
+    {
+        // Build frequencyArray if this is the first call
+        if (self::$frequencyArray == null)
+        {
+            self::$frequencyArray = array();
+            $oClass         = new \ReflectionClass ('\AppBundle\Entity\Appointment');
+            $classConstants = $oClass->getConstants ();
+            $constantPrefix = "FREQ_";
+            foreach ($classConstants as $key=>$val)
+            {
+                if (substr($key, 0, strlen($constantPrefix)) === $constantPrefix)
+                {
+                    self::$frequencyArray[$val] = $val;
+                }
+            }
+        }
+        return self::$frequencyArray;
+    }
+
 }
 

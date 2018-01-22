@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="appointment")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AppointmentRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn("regular", type="string")
- * @ORM\DiscriminatorMap({"true" = "RegularAppointment", "false" = "Appointment"})
+ * @ORM\DiscriminatorColumn("type", type="string")
+ * @ORM\DiscriminatorMap({"REGULAR_APPOINTMENT" = "RegularAppointment", "APPOINTMENT" = "Appointment"})
  */
 class Appointment
 {
@@ -29,28 +29,28 @@ class Appointment
      *
      * @ORM\Column(name="date", type="date")
      */
-    protected $date;
+    private $date;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="startTime", type="time")
      */
-    protected $startTime;
+    private $startTime;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="endTime", type="time")
      */
-    protected $endTime;
+    private $endTime;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="string")
      */
-    protected $description;
+    private $description;
 
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
@@ -143,7 +143,7 @@ class Appointment
 
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
-    public function isRegular()
+    public function isRegularAppointment()
     {
         return false;
     }
