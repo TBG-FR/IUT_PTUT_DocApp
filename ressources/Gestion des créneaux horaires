@@ -1,0 +1,20 @@
+Gestion des créneaux horaires
+
+2 types: créneaux récurrents/non récurrents
+
+Créneaux non récurrents:
+date
+heure début
+heure fin
+Description (non obligatoire)
+
+Créneaux récurrents:
+date NULL
+heure début
+heure fin
+fréquence 1: tous les jours, 2: tous les deux jours
+type_frequence: jour (défaut), semaine, mois
+
+Attaché à une adresse (celle du médecin par défaut)
+
+Un médecin doit pouvoir avoir plusieurs adresses si il plusieurs cabinets
