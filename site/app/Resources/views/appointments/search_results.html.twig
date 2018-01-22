@@ -1,50 +1,51 @@
 {% block content %}
 
 
-<div class="result">
+    <div class="result">
     <div class="row">
-        <div class="col-8">
-    <a class="lien" href="default.index">
-    <div class="element" >
+    <div class="col-8">
+        <a class="lien" href="default.index">
+            <div class="element">
 
-        <div class="image">
-            <img class="img-fluid img-thumbnail" src="/assets/images/profil.png" alt="Card image cap" >
-        </div>
-        <div class ="content">
-            <div class="float-left">
-        <div class="name">
-            Jean BONNOT
-        </div>
-        <div class="spe">
-            Urologue
-        </div>
+                <div class="image">
+                    <img class="img-fluid img-thumbnail" src="/assets/images/profil.png" alt="Card image cap">
+                </div>
+                <div class="content">
+                    <div class="float-left">
+                        <div class="name">
+                            Jean BONNOT
+                        </div>
+                        <div class="spe">
+                            Urologue
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <div class="hour">
+                            13:05
+                        </div>
+                        <div class="distance">
+                            500 m
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div class="float-right">
-        <div class="hour">
-            13:05
-        </div>
-        <div class="distance">
-            500 m
-        </div>
-        </div>
-        </div>
-
+        </a>
     </div>
-    </a>
 
         <div class="col-4">
             FUTURE CARTE
         </div>
-</div>
+    </div>
 
     {% for appointment in appointments %}
-    <h1>Créneaux disponibles à partir de {{ startTime|date('H\\hi') }}</h1>
-    <div>
-        Dr. {{ appointment.doctor.lastName }}
-        <div>{{ appointment.office.name }}</div>
-        <div>{{ appointment.office.address.toAddressString }}</div>
-        <div>De {{ appointment.startTime|date('H\\hi') }} à {{ appointment.endTime|date('H\\hi') }}</div>
-    </div>
+        <h1>Créneaux disponibles à partir de {{ startTime|date('H\\hi') }}</h1>
+        <div>
+            Dr. {{ appointment.doctor.lastName }}
+            <div>{{ appointment.office.name }}</div>
+            <div>{{ appointment.office.address.toAddressString }}</div>
+            <div>De {{ appointment.startTime|date('H\\hi') }} à {{ appointment.endTime|date('H\\hi') }}</div>
+        </div>
     {% endfor %}
 
 {% endblock %}
