@@ -62,7 +62,7 @@ class AppointmentsController extends Controller
             'specialities' => $specialities,
             'startTime' => $data['time'],
             'appointments' => $appointments,
-            'extended' => false
+            'extended' => true
         ]);
     }
 
@@ -78,7 +78,6 @@ class AppointmentsController extends Controller
 
         return $this->render(':appointments:details.html.twig', [
             'appointment' => $appointment
-            /*'extended' => true*/
         ]);
     }
 
@@ -94,7 +93,6 @@ class AppointmentsController extends Controller
 
         return $this->render(':appointments:reservation.html.twig', [
             'appointment' => $appointment
-            /*'extended' => true*/
         ]);
     }
 
@@ -110,7 +108,6 @@ class AppointmentsController extends Controller
 
         return $this->render(':appointments:success.html.twig', [
             'appointment' => $appointment
-            /*'extended' => true*/
         ]);
     }
 
