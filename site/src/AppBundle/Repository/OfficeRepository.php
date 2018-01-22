@@ -2,7 +2,9 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * OfficeRepository
@@ -12,4 +14,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class OfficeRepository extends EntityRepository
 {
+    public function getFindByUserQueryBuilder(User $user) : QueryBuilder
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.doctor = :user')
+            ->setParameter(':user', $user->getId());
+    }
 }

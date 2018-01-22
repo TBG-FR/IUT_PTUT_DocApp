@@ -17,26 +17,32 @@
     </head>
     <body>
         <header id="header">
-            <img src="/assets/images/logo.png" alt="logo" id="logo">
-            <nav id="nav">
-                <ul>
-                    <li><a href="{{ path('default.index') }}">Home</a></li>
-                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                        <li><a href="#">My Appointments</a></li>
-                        <li><a href="{{ path('users.index') }}">My Profile</a></li>
-                        {% if app.user.isDoctor %}
-                            <li><a href="{{ path('app_doctors_index') }}">Manage appointments</a></li>
-                        {% endif %}
-                    {% else %}
-                        <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
-                        <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
-                    {% endif %}
-                </ul>
+            <nav id="nav" class="navbar navbar-light bg-dark navbar-expand-md">
+                <a class="navbar-brand text-light" href="{{ path('default.index') }}">DocInTime</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="container p-0">
+                        <ul class="navbar-nav mr-auto m-0">
+                            <li class="nav-item active"><a href="{{ path('default.index') }}" class="nav-link text-light">Home</a></li>
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                <li class="nav-item"><a href="#" class="nav-link text-light">My Appointments</a></li>
+                                <li class="nav-item"><a href="{{ path('users.index') }}" class="nav-link text-light">My Profile</a></li>
+                                {% if app.user.isDoctor %}
+                                    <li class="nav-item"><a href="{{ path('app_doctors_index') }}" class="nav-link text-light">Manage appointments</a></li>
+                                {% endif %}
+                            {% else %}
+                                <li class="nav-item"><a href="{{ path('fos_user_security_login') }}" class="nav-link text-light">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+                                <li class="nav-item"><a href="{{ path('fos_user_registration_register') }}" class="nav-link text-light">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </header>
 
-        <div class="container">
+        <div id="content" class="container">
             {% block content %}{% endblock %}
         </div>
 

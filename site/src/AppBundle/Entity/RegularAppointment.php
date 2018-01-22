@@ -14,8 +14,12 @@ class RegularAppointment extends Appointment
     const FREQ_DAILY     = 'DAILY';
     const FREQ_WEEKLY     = 'WEEKLY';
     const FREQ_MONTHLY     = 'MONTHLY';
+    const FANCY_FREQ_DAILY = 'Journaliere';
+    const FANCY_FREQ_WEEKLY = 'Semestrielle';
+    const FANCY_FREQ_MONTHLY = 'Mensuelle';
 
     static private $frequencyArray = [];
+    static private $fancyFrequencyArray = [];
 
     /**
      * @ORM\Column(name="frequency", type="integer")
@@ -35,9 +39,17 @@ class RegularAppointment extends Appointment
 
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
-    public function __construct()
+    public function __construct(Appointment $original = null)
     {
         parent::__construct();
+
+        if($original != null) {
+            $this->setStartTime($original->getStartTime());
+            $this->setEndTime($original->getEndTime());
+            $this->setDate($original->getDate());
+            $this->setDescription($original->getDescription());
+            $this->setOffice($original->getOffice());
+        }
     }
 
     /**
@@ -107,7 +119,7 @@ class RegularAppointment extends Appointment
         if (self::$frequencyArray == null)
         {
             self::$frequencyArray = array();
-            $oClass         = new \ReflectionClass ('\AppBundle\Entity\Appointment');
+            $oClass         = new \ReflectionClass ('\AppBundle\Entity\RegularAppointment');
             $classConstants = $oClass->getConstants ();
             $constantPrefix = "FREQ_";
             foreach ($classConstants as $key=>$val)
@@ -119,6 +131,27 @@ class RegularAppointment extends Appointment
             }
         }
         return self::$frequencyArray;
+    }
+
+    static public function getFancyFrenquencyTypeList()
+    {
+        // Build frequencyArray if this is the first call
+        if (self::$fancyFrequencyArray == null)
+        {
+            self::$fancyFrequencyArray = array();
+            $oClass         = new \ReflectionClass ('\AppBundle\Entity\RegularAppointment');
+            $classConstants = $oClass->getConstants ();
+            $constantPrefix = "FANCY_FREQ_";
+            foreach ($classConstants as $key=>$val)
+            {
+                $constantName = substr($key, strlen($constantPrefix), strlen($key)-strlen($constantPrefix));
+                if (substr($key, 0, strlen($constantPrefix)) === $constantPrefix)
+                {
+                    self::$fancyFrequencyArray[$val] = $constantName;
+                }
+            }
+        }
+        return self::$fancyFrequencyArray;
     }
 
 }

@@ -71,3 +71,16 @@ $('#geoLocateBtn').click(function(event) {
         });
     }
 });
+
+$('#appointment_regular_appointment').on('change', function(event) {
+   const $checkbox = $(this);
+   const $checkBoxGroup = $checkbox.closest('.form-group');
+   const checked = $checkbox.prop('checked');
+   if(checked) {
+       $checkBoxGroup.parent().find('#appointment_frequency,label[for=appointment_frequency]').show();
+       $checkBoxGroup.parent().find('#appointment_frequency_type,label[for=appointment_frequency_type]').show();
+   } else {
+       $checkBoxGroup.parent().find('#appointment_frequency,label[for=appointment_frequency]').hide();
+       $checkBoxGroup.parent().find('#appointment_frequency_type,label[for=appointment_frequency_type]').hide();
+   }
+});

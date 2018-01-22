@@ -25,22 +25,16 @@ class Appointment
     protected $id;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="date", nullable=true)
      */
     private $date;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="startTime", type="time")
      */
     private $startTime;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="endTime", type="time")
      */
     private $endTime;
@@ -52,11 +46,22 @@ class Appointment
      */
     private $description;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Office", inversedBy="appointments")
+     */
+    private $office;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="appointments")
+     */
+    private $user;
+
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
     public function __construct()
     {
-        /* Nothing here */
+        $this->setStartTime(new \DateTime());
+        $this->setEndTime(new \DateTime());
     }
 
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
@@ -80,55 +85,40 @@ class Appointment
     /**
      * @return \DateTime
      */
-    public function getDate(): \DateTime
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }
 
-    /**
-     * @param \DateTime $date
-     */
-    public function setDate(\DateTime $date)
+    public function setDate($date)
     {
-        $this->date = $date->format("Y-m-d");
+        $this->date = $date;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getStartTime(): \DateTime
+    public function getStartTime()
     {
         return $this->startTime;
     }
 
-    /**
-     * @param \DateTime $startTime
-     */
-    public function setStartTime(\DateTime $startTime)
+    public function setStartTime($startTime)
     {
-        $this->startTime = $startTime->format("H:i:s");
+        $this->startTime = $startTime;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getEndTime(): \DateTime
+    public function getEndTime()
     {
         return $this->endTime;
     }
 
-    /**
-     * @param \DateTime $endTime
-     */
-    public function setEndTime(\DateTime $endTime)
+    public function setEndTime($endTime)
     {
-        $this->endTime = $endTime->format("H:i:s");
+        $this->endTime = $endTime;
     }
 
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -139,6 +129,37 @@ class Appointment
     public function setDescription(string $description)
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return Appointment
+     */
+    public function getOffice()
+    {
+        return $this->office;
+    }
+
+    /**
+     * @param Appointment $office
+     */
+    public function setOffice($office): void
+    {
+        $this->office = $office;
+    }
+
+    private function getUser()
+    {
+        return $this->user;
+    }
+
+    private function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    public function getDoctor()
+    {
+        return $this->getOffice()->getDoctor();
     }
 
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
