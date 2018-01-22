@@ -42,6 +42,7 @@ class DoctorsController extends Controller
             $office = new Office();
             $office->setAddress($doctor->getAddress());
             $office->setDoctor($doctor);
+            $office->setName($doctor->getAddress()->getName());
             $doctor->addOffice($office);
 
             $manager = $this->getDoctrine()->getManager();

@@ -23,6 +23,11 @@ class Address
     private $id;
 
     /**
+     * @ORM\Column(name="name", type="string")
+     */
+    private $name;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="line1", type="string", length=255)
@@ -84,6 +89,22 @@ class Address
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**
