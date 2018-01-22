@@ -51,6 +51,11 @@ class Appointment
      */
     private $office;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="appointments")
+     */
+    private $user;
+
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
     public function __construct()
@@ -140,6 +145,21 @@ class Appointment
     public function setOffice($office): void
     {
         $this->office = $office;
+    }
+
+    private function getUser()
+    {
+        return $this->user;
+    }
+
+    private function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    public function getDoctor()
+    {
+        return $this->getOffice()->getDoctor();
     }
 
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
