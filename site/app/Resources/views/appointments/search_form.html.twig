@@ -1,10 +1,11 @@
 {% block content %}
+
     <div class="container">
 
         <form class="form-inline" action="{{ path('appointments.results') }}" method="post" role="form">
 
             <div class="input-group"> <!-- Speciality selection -->
-                <div class="input-group-addon"><span class="fa fa-graduation-cap"></span></div>
+                <div class="input-group-prepend input-group-text"><span class="fa fa-graduation-cap"></span></div>
                 <select class="form-control" id="searchDocSpec" title="Speciality" name="search[speciality]">
                     {% for speciality in specialities %}
                         <option value="{{ speciality.id }}">{{ speciality.name }}</option>
@@ -12,19 +13,19 @@
                 </select>
             </div>
 
-            <div class="input-group">
-                <div class="input-group-addon"><span class="fa fa-map"></span></div>
+            <div class="input-group"> <!-- Location selection -->
+                <div class="input-group-prepend input-group-text"><span class="fa fa-map"></span></div>
                 <input type="hidden" name="search[coords]" value="">
                 <input type="text" class="form-control" id="searchLocation" placeholder="City name, zip code, street name, ..."
                        name="search[location]">
-                <div class="input-group-btn">
+                <div class="input-group-append">
                     <button id="geoLocateBtn" class="btn btn-success" type="button"><span class="fa fa-map-marker"></span></button>
                 </div>
             </div>
 
-            <div class="input-group">
-                <div class="input-group-addon"><span class="fa fa-clock-o"></span></div>
-                <div class="input-group-addon"><label for="searchHour">From :</label></div>
+            <div class="input-group"> <!-- Hour selection -->
+                <div class="input-group-prepend input-group-text"><span class="fa fa-clock-o"></span></div>
+                <div class="input-group-prepend input-group-text"><label for="searchHour">From :</label></div>
 
                 <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}" name="search[time]">
 
