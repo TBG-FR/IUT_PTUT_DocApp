@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -23,22 +24,21 @@ class Doctor extends User
     private $specialities;
 
     /**
-     * @ORM\Column(name="address", type="string")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Address", cascade={"persist","remove"})
      * @Assert\NotBlank()
      */
     private $address;
 
     /**
-     * @ORM\Column(name="city", type="string")
-     * @Assert\NotBlank()
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Office", mappedBy="doctor", cascade={"persist", "remove"})
      */
-    private $city;
+    private $offices;
 
-    /**
-     * @ORM\Column(name="zip", type="string", length=5)
-     * @Assert\Length(min=5,max=5)
-     */
-    private $zip;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->offices = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -89,7 +89,7 @@ class Doctor extends User
     }
 
     /**
-     * @return mixed
+     * @return Address
      */
     public function getAddress()
     {
@@ -97,7 +97,7 @@ class Doctor extends User
     }
 
     /**
-     * @param mixed $address
+     * @param Address $address
      */
     public function setAddress($address)
     {
@@ -105,35 +105,27 @@ class Doctor extends User
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
-    public function getCity()
+    public function getOffices()
     {
-        return $this->city;
+        return $this->offices;
     }
 
     /**
-     * @param mixed $city
+     * @param Office $office
      */
-    public function setCity($city)
+    public function addOffice($office)
     {
-        $this->city = $city;
+        $this->offices->add($office);
     }
 
     /**
-     * @return mixed
+     * @param Office $office
      */
-    public function getZip()
+    public function removeOffice($office)
     {
-        return $this->zip;
-    }
-
-    /**
-     * @param mixed $zip
-     */
-    public function setZip($zip)
-    {
-        $this->zip = $zip;
+        $this->offices->remove($office);
     }
 
     public function isDoctor()

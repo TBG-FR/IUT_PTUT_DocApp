@@ -15,6 +15,6 @@ heure fin
 fréquence 1: tous les jours, 2: tous les deux jours
 type_frequence: jour (défaut), semaine, mois
 
-Attaché à une adresse (celle du médecin par défaut)
+Attaché à une adresse (celle du médecin par défaut) 
 
 Un médecin doit pouvoir avoir plusieurs adresses si il plusieurs cabinets

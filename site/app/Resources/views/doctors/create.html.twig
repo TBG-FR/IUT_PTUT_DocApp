@@ -4,66 +4,39 @@
     <h1>S'inscrire en tant que médecin</h1>
     {{ form_start(form) }}
         <h2>Informations</h2>
-        <div class="form-group">
-            <label for="inputEmail">Adresse email</label>
-            <input type="email" id="inputEmail" class="form-control" name="doctor[email]" required>
-        </div>
-        <div class="form-group">
-            {{ form_label(form.phone, "Numéro de téléphone") }}
-            {{ form_widget(form.phone, {"attr": {"class": "form-control", "pattern": "[0-9]{10}"}}) }}
-        </div>
         <div class="row">
-            <div class="form-group col-md-6">
-                <label for="inputFirstname">Prénom</label>
-                <input type="text" id="inputFirstname" class="form-control" name="doctor[first_name]" required>
+            <div class="form-group col-sm-6">
+                {{ form_label(form.email, 'Adresse email') }}
+                {{ form_widget(form.email) }}
             </div>
-            <div class="form-group col-md-6">
-                <label for="inputName">Nom</label>
-                <input type="text" id="inputName" class="form-control" name="doctor[last_name]" required>
+            <div class="form-group col-sm-6">
+                {{ form_label(form.phone, 'Téléphone') }}
+                {{ form_widget(form.phone) }}
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-6">
-                <label for="inputPassword">Mot de passe</label>
-                <input type="password" id="inputPassword" class="form-control" name="doctor[password]" required>
+            <div class="form-group col-sm-6">
+                {{ form_label(form.last_name, 'Nom') }}
+                {{ form_widget(form.last_name) }}
             </div>
-            <div class="form-group col-md-6">
-                <label for="inputPasswordConfirm">Confirmation du mot de passe</label>
-                <input type="password" id="inputPasswordConfirm" class="form-control" name="doctor[password_confirm]">
+            <div class="form-group col-sm-6">
+                {{ form_label(form.first_name, 'Prénom') }}
+                {{ form_widget(form.first_name) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                {{ form_label(form.password.first, 'Mot de passe') }}
+                {{ form_widget(form.password.first, {label: 'Mot de passe'}) }}
+            </div>
+            <div class="form-group col-sm-6">
+                {{ form_label(form.password.second, 'Confirmez votre mot de passe') }}
+                {{ form_widget(form.password.second, {label: 'Mot de passe'}) }}
             </div>
         </div>
         <h2>Adresse</h2>
-        <div class="row">
-            <div class="form-group col-md-12">
-                {{ form_label(form.address, "Adresse") }}
-                {{ form_widget(form.address, {"attr": {"class": "form-control"}}) }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-3">
-                {{ form_label(form.zip, "Code postal") }}
-                {{ form_widget(form.zip, {"attr": {"class": "form-control", "pattern": "[0-9]{5}"}}) }}
-            </div>
-            <div class="form-group col-md-9">
-                {{ form_label(form.city, "Ville") }}
-                {{ form_widget(form.city, {"attr": {"class": "form-control"}}) }}
-            </div>
-        </div>
-        <div class="form-group">
-            <h2>Spécialités</h2>
-            <div class="row">
-                {% for speciality in specialities %}
-                    <div class="col-md-3">
-                        <input type="checkbox" id="inputSpeciality{{ speciality.id }}" name="doctor[specialities][]"
-                               value="{{ speciality.id }}">
-                        <label for="inputSpeciality{{ speciality.id }}">{{ speciality.name }}</label>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
+        {{ form_widget(form.address) }}
+        {{ form_row(form.specialities) }}
         <hr>
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="S'inscrire">
-        </div>
     {{ form_end(form)}}
 {% endblock %}

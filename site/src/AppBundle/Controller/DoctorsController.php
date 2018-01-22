@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Doctor;
+use AppBundle\Entity\Office;
 use AppBundle\Entity\Speciality;
 use AppBundle\Entity\User;
 use AppBundle\Form\DoctorType;
@@ -26,12 +27,30 @@ class DoctorsController extends Controller
     /**
      * @Route("/doctors/register")
      */
-    public function createAction()
+    public function createAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
-        $form = $this->createForm(DoctorType::class, null, [
-            'action' => $this->generateUrl('app_doctors_save')
-        ]);
+
+        $doctor = new Doctor;
+        $form = $this->get('form.factory')->create(DoctorType::class, $doctor);
+
+        if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $doctor->setPassword($passwordEncoder->encodePassword($doctor, $doctor->getPassword()));
+            $doctor->setEnabled(false);
+            $doctor->setUsername(strtolower($doctor->getFirstName().$doctor->getLastName()));
+            //create default office
+            $office = new Office();
+            $office->setAddress($doctor->getAddress());
+            $office->setDoctor($doctor);
+            $doctor->addOffice($office);
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($doctor);
+            $manager->flush();
+
+            $this->get('session')->getFlashBag()->add('success', 'Vous êtes maintenant inscrit');
+            return $this->redirect($this->generateUrl('app_doctors_index'));
+        }
 
         return $this->render('doctors/create.html.twig', [
             'form' => $form->createView(),
@@ -39,37 +58,4 @@ class DoctorsController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/doctors", methods={"POST"})
-     */
-    public function saveAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
-    {
-        $data = $request->get('doctor');
-
-        $doctor = new Doctor();
-        $doctor->setFirstName($data['first_name']);
-        $doctor->setLastName($data['last_name']);
-        $doctor->setEmail($data['email']);
-        $doctor->setUsername(ucfirst($data['first_name'])
-            . ' ' . strtoupper($data['last_name']));
-        $doctor->setPassword($passwordEncoder->encodePassword($doctor, $data['password']));
-        $doctor->setEnabled(false); // disabled by default until we confirm the identity
-        $doctor->setPhone($data['phone']);
-        //$doctor->setSpecialities($data['phone']);
-        $doctor->setAddress($data['address']);
-        $doctor->setCity($data['city']);
-        $doctor->setZip($data['zip']);
-
-        $validator = $this->get('validator');
-        $errors = $validator->validate($doctor);
-
-        if($errors->count() === 0) {
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($doctor);
-            $manager->flush();
-        }
-
-        return new Response("");
-    }
-
-}
+ }
