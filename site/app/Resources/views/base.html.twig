@@ -21,7 +21,7 @@
             <nav id="nav">
                 <ul>
                     <li><a href="{{ path('default.index') }}">Home</a></li>
-                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
                         <li><a href="#">My Appointments</a></li>
                         <li><a href="{{ path('users.index') }}">My Profile</a></li>
