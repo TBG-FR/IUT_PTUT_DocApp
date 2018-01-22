@@ -11,15 +11,15 @@
     {% if appointment is defined %}
 
         <p>
-            [ Afficher Infos Médecin & RDV]
-            {{ appointment.ID }}
-            {{ appointment.Date }}
-            {{ appointment.StartTime }}
-            {{ appointment.EndTime }}
-            {{ appointment.Description }}
+            <h1>[ Afficher Infos Médecin & RDV]</h1><br/>
+            {{ appointment.ID }}<br/>
+            {{ appointment.Date | date("F jS \\a\\t g:ia") }}<br/>
+            {{ appointment.StartTime | date("F jS \\a\\t g:ia") }}<br/>
+            {{ appointment.EndTime | date("F jS \\a\\t g:ia") }}<br/>
+            {{ appointment.Description }}<br/>
         </p>
 
-        <a href="{{ path('appointments.reservation', {'slug': article.ID}) }}" class="btn btn-lg btn-primary">Réserver ce RDV</a>
+        <a href="{{ path('appointments.reservation', {'id': appointment.ID}) }}" class="btn btn-primary">Réserver ce RDV</a>
 
     {% else %}
 
@@ -27,7 +27,7 @@
 
     {% endif %}
 
-    <a href="{{ path('appointments.results') }}" class="btn btn-lg btn-primary">Retourner à la liste des RDVs</a>
+    <a href="{{ path('appointments.results') }}" class="btn btn-danger">Retourner à la liste des RDVs</a>
     {# TODO : Garder la recherche en mémoire ? Trouver un moyen de revenir à la même recherche ? #}
 
 {% endblock %}
