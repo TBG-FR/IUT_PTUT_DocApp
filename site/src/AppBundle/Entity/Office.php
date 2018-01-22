@@ -141,7 +141,7 @@ class Office
     /**
      * @param ArrayCollection $appointments
      */
-    public function setAppointments($appointments): void
+    public function setAppointments($appointments)
     {
         $this->appointments = $appointments;
     }

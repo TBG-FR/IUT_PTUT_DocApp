@@ -1,25 +1,13 @@
 {% block content %}
 
-    <!-- TEMP -->
+    {% for appointment in appointments %}
+    <h1>Créneaux disponibles à partir de {{ startTime|date('H\\hi') }}</h1>
     <div>
-        Docteur Jean Bon
-        <div>St Cyr sur Menthon</div>
-        <div>13h05</div>
+        Dr. {{ appointment.doctor.lastName }}
+        <div>{{ appointment.office.name }}</div>
+        <div>{{ appointment.office.address.toAddressString }}</div>
+        <div>De {{ appointment.startTime|date('H\\hi') }} à {{ appointment.endTime|date('H\\hi') }}</div>
     </div>
-    <div>
-        Docteur Jean Bon
-        <div>St Cyr sur Menthon</div>
-        <div>13h05</div>
-    </div>
-    <div>
-        Docteur Jean Bon
-        <div>St Cyr sur Menthon</div>
-        <div>13h05</div>
-    </div>
-    <div>
-        Docteur Jean Bon
-        <div>St Cyr sur Menthon</div>
-        <div>13h05</div>
-    </div>
+    {% endfor %}
 
 {% endblock %}

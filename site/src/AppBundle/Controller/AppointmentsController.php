@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Service\LocationService;
 use AppBundle\Entity\Appointment;
 use AppBundle\Entity\RegularAppointment;
 use AppBundle\Entity\Speciality;
@@ -9,7 +10,6 @@ use AppBundle\Form\AppointmentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\Date;
 
 class AppointmentsController extends Controller
 {
@@ -19,17 +19,50 @@ class AppointmentsController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function executeSearchAction(Request $request)
+    public function executeSearchAction(Request $request, LocationService $locationService)
     {
         $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
 
         $data = $request->get('search');
 
+        $minTime = new \DateTime($data['time']);
+        $maxTime = new \DateTime($data['time']);
+        $maxTime->add(new \DateInterval('PT8H'));
+        $appointmentRepo = $this->getDoctrine()->getRepository(Appointment::class);
+        $appointments = $appointmentRepo->getAvailableAppointmentsQueryBuilder()
+            ->where('a.startTime < :time_min AND a.endTime > :time_max')
+            ->setParameter(':time_min', $minTime)
+            ->setParameter(':time_max', $maxTime)
+            ->getQuery()
+            ->getResult();
+
+
+        foreach($appointments as $appointment) {
+            /** @var Appointment $appointment */
+            $address = $appointment->getOffice()->getAddress();
+            if($address->getLatitude() == null
+                || $address->getLongitude() == null) {
+                $coordinates = $locationService->getCoordinatesFromString($address->toAddressString());
+                $address->setLatitude($coordinates['latitude']);
+                $address->setLongitude($coordinates['longitude']);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($address);
+                $em->flush();
+            }
+            $clientCoords = explode(',', $data['coords']);
+            if(count($clientCoords) === 2) {
+                $distance = $locationService->distance($address->getLatitude(), $address->getLongitude(),
+                    $clientCoords[0], $clientCoords[1]);
+            }
+        }
+
         //TODO: verify data and find all matching appointments
 
         return $this->render(':appointments:results.html.twig', [
             'specialities' => $specialities,
-            'extended' => true
+            'startTime' => $data['time'],
+            'appointments' => $appointments,
+            'extended' => false
         ]);
     }
 
