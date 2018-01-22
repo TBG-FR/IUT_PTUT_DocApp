@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -22,6 +23,12 @@ class Office
     private $id;
 
     /**
+     * @ORM\Column(name="name", type="string")
+     * @Assert\NotBlank()
+     */
+    private $name;
+
+    /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Address", cascade={"persist"})
      * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
      * @Assert\Type(type="Address")
@@ -36,6 +43,11 @@ class Office
     private $doctor;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Appointment", mappedBy="office", cascade={"remove"})
+     */
+    private $appointments;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $created_at;
@@ -43,6 +55,7 @@ class Office
     public function __construct()
     {
         $this->created_at = new \DateTime();
+        $this->appointments = new ArrayCollection();
     }
 
     /**
@@ -59,6 +72,22 @@ class Office
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**
@@ -102,6 +131,22 @@ class Office
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getAppointments()
+    {
+        return $this->appointments;
+    }
+
+    /**
+     * @param ArrayCollection $appointments
+     */
+    public function setAppointments($appointments): void
+    {
+        $this->appointments = $appointments;
+    }
+
+    /**
      * @param \DateTime $created_at
      */
     public function setCreatedAt($created_at)
@@ -109,4 +154,8 @@ class Office
         $this->created_at = $created_at;
     }
 
+    public function getDisplay()
+    {
+        return $this->getName() . ' (' . $this->getAddress()->getLine1() . ' - ' . $this->getAddress()->getCity() . ')';
+    }
 }
