@@ -17,10 +17,13 @@ html, body {
     margin-top: 75px;
 }
 
+/*
 a {
     color: inherit;
     text-decoration: underline;
 }
+*/
+
 
 /* Header styles */
 #header {
