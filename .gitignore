@@ -55,3 +55,7 @@ site/var/SymfonyRequirements.php
 
 # Various other things
 site/.idea
+site/web/config.php
+site/var/SymfonyRequirements.php
+site/bin/symfony_requirements
+site/composer.lock
