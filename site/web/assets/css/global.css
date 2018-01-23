@@ -34,6 +34,7 @@ a {
     height: auto;
 }
 .result {
+    margin-top: 3%;
     padding-top: 3%;
     padding-bottom: 3%;
     background-color: #e9f4ff;
@@ -58,6 +59,7 @@ a {
 }
 
 .result > .row>.col-8>.lien >  .element  > .image {
+    min-height: 15px;
     border-radius: 0.5rem;
     width: 20%;
     display: inline-block;
