@@ -126,12 +126,14 @@ a {
     padding: 1%;
 }
 
-.result > .row>.col> .image {
+.result > .row > {
+    color: #1d2124;
+    text-decoration: none;
+}
+.result > .row>.col-2> .image {
     min-height: 15px;
     border-radius: 0.5rem;
-    width: 20%;
     display: inline-block;
-    max-width: 40%;
     height: auto;
 }
 
@@ -158,11 +160,15 @@ a {
 
 
 
-.result > .desc{
+.result > .desc {
     margin-right: 3%;
     margin-left: 3%;
     padding: 1%;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
-    background-color : #a6b3d4;
+    background-color: #a6b3d4;
+}
+
+.result > .desc >.titre{
+
 }

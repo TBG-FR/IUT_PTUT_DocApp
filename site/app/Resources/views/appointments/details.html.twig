@@ -19,6 +19,7 @@
                 </div>
 
                 </div>
+
             <div class="col-4">
                 <div class="name">
                     Dr. {{ appointment.doctor.lastName }}
@@ -33,6 +34,7 @@
                     {{ doctor_specialities|join(' - ') }}
                 </div>
             </div>
+            
                 <div class="col-6">
                     <div class="time">
                     {{ appointment.StartTime | date("H:i") }} - {{ appointment.EndTime | date("H:i") }}
@@ -40,7 +42,7 @@
                 </div>
             </div>
             <div class="row desc">
-                {{ appointment.Description }}
+                Description :</br>{{ appointment.Description }}
             </div>
 
         </div>
