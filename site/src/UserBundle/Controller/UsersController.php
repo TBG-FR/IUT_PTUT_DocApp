@@ -3,10 +3,11 @@
 namespace UserBundle\Controller;
 
 use UserBundle\Entity\User;
-use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use UserBundle\Form\EditUserType;
+use UserBundle\Form\UserType;
 
 class UsersController extends Controller
 {
@@ -19,7 +20,7 @@ class UsersController extends Controller
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $user = $userRepo->find($this->getUser()->getId());
 
-        $form = $this->createForm(UserType::class, $user, [
+        $form = $this->createForm(EditUserType::class, $user, [
             'action' => $this->generateUrl('users.save')
         ]);
 
