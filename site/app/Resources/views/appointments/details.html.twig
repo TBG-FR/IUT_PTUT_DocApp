@@ -10,18 +10,46 @@
 
     {% if appointment is defined %}
 
-        <p>
-		
-            <h1>[ Afficher Infos Médecin & RDV]</h1><br/>
-            {{ appointment.ID }}<br/>
-            {{ appointment.Date | date("F jS \\a\\t g:ia") }}<br/>
-            {{ appointment.StartTime | date("F jS \\a\\t g:ia") }}<br/>
-            {{ appointment.EndTime | date("F jS \\a\\t g:ia") }}<br/>
-            {{ appointment.Description }}<br/>
-        </p>
+        <div class="result details">
+        <div class="row">
+        <div class="col-2">
+
+                <div class="image">
+                    <img class="img-fluid img-thumbnail" src="/assets/images/profil.png" alt="Card image cap">
+                </div>
+
+                </div>
+
+            <div class="col-4">
+                <div class="name">
+                    Dr. {{ appointment.doctor.lastName }}
+                </div>
+
+                <div class="spe">
+                    {% set doctor_specialities = [] %}
+
+                    {% for speciality in appointment.doctor.specialities %}
+                        {% set doctor_specialities = doctor_specialities|merge([speciality.name]) %}
+                    {% endfor %}
+                    {{ doctor_specialities|join(' - ') }}
+                </div>
+            </div>
+            
+                <div class="col-6">
+                    <div class="time">
+                    {{ appointment.StartTime | date("H:i") }} - {{ appointment.EndTime | date("H:i") }}
+                    </div>
+                </div>
+            </div>
+            <div class="row desc">
+                Description :</br>{{ appointment.Description }}
+            </div>
+
+        </div>
 
         <div class="btn-group">
-        <a href="{{ path('appointments.reservation', {'id': appointment.ID}) }}" class="btn btn-primary">Réserver ce RDV</a>
+        <a href="{{ path('appointments.reservation', {'id': appointment.ID}) }}" class="btn btn-primary">Réserver ce
+            RDV</a>
 
     {% else %}
 

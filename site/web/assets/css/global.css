@@ -35,6 +35,10 @@ a {
     width: 200px;
     height: auto;
 }
+
+
+/*------------ ------------ Search Result ------------- ------------*/
+
 .result {
     margin-top: 3%;
     padding-top: 3%;
@@ -42,6 +46,7 @@ a {
     background-color: #e9f4ff;
     text-decoration: none;
 }
+
 .result > .row >.col-8> .lien {
     color: #1d2124;
     text-decoration: none;
@@ -57,6 +62,7 @@ a {
     min-height: 120px;
 
 }
+
 .result > .row>.col-8>.lien > .element:hover {
     background-color : #a6b3d4;
 }
@@ -71,8 +77,6 @@ a {
 
 
 }
-
-
 
 .result >  .row>.col-8>.lien > .element > .content {
     position: absolute;
@@ -107,4 +111,67 @@ a {
 
 #content {
     margin-top: 75px;
+}
+
+/*------------ ------------ Appointment Details ------------- ------------*/
+
+.details {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    background-color: #d0deff;
+    margin-bottom: 2%;
+    padding-top: 1%;
+}
+
+.result > .row {
+    margin-right: 1%;
+    margin-left: 1%;
+    padding: 1%;
+}
+
+.result > .row > {
+    color: #1d2124;
+    text-decoration: none;
+}
+.result > .row>.col-2> .image {
+    min-height: 15px;
+    border-radius: 0.5rem;
+    display: inline-block;
+    height: auto;
+}
+
+.result > .row>.col-4> .name {
+    font-size: calc(1em + 1vw);
+}
+
+.result > .row>.col-4> .spe {
+    font-size: calc(0.8em + 0.5vw);
+}
+
+.result > .row>.col-4{
+    padding-left: 0%;
+}
+
+.result > .row>.col-6{
+    text-align: right;
+}
+
+.result > .row>.col-6>.time{
+    font-weight: bold;
+    font-size: calc(1.5em + 1vw);
+}
+
+
+
+.result > .desc {
+    margin-right: 3%;
+    margin-left: 3%;
+    padding: 1%;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    background-color: #a6b3d4;
+}
+
+.result > .desc >.titre{
+
 }
