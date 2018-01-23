@@ -16,7 +16,8 @@ class DefaultController extends Controller
         $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
 
         return $this->render('default/index.html.twig', [
-            'specialities' => $specialities
+            'specialities' => $specialities,
+            'extended' => false
         ]);
     }
 }

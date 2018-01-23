@@ -13,6 +13,96 @@ html, body {
     color: #000;
 }
 
+<<<<<<< HEAD
+
 #content {
     margin-top: 75px;
+}
+
+a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+/* Header styles */
+#header {
+    position: relative;
+}
+
+#logo {
+    display: inline-block;
+    width: 200px;
+    height: auto;
+}
+.result {
+    margin-top: 3%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    background-color: #e9f4ff;
+    text-decoration: none;
+}
+.result > .row >.col-8> .lien {
+    color: #1d2124;
+    text-decoration: none;
+}
+
+.result > .row>.col-8>.lien >  .element {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    background-color: #d0deff;
+    padding: 1%;
+    margin : 2%;
+    position: relative;
+
+}
+.result > .row>.col-8>.lien > .element:hover {
+    background-color : #a6b3d4;
+}
+
+.result > .row>.col-8>.lien >  .element  > .image {
+    min-height: 15px;
+    border-radius: 0.5rem;
+    width: 20%;
+    display: inline-block;
+    max-width: 15%;
+    height: auto;
+
+
+}
+
+
+
+.result >  .row>.col-8>.lien > .element > .content {
+    position: absolute;
+    top: 50%; /* poussé de la moitié de hauteur du référent */
+    transform: translateY(-50%);
+    display: inline-block;
+    width: 80%;
+    margin: auto;
+    margin-left: 2.5%;
+
+}
+
+.result >  .row>.col-8>.lien >.element > .content > .float-left > .name {
+    font-size: calc(1em + 1vw);
+}
+.result >.row>.col-8>.lien > .element >  .content > .float-left > .spe {
+}
+.result >.row>.col-8>.lien >.element >  .content > .float-right > .hour {
+    font-weight: bold;
+    font-size: calc(1.5em + 1vw);
+}
+.result >.row>.col-8>.lien >.element >  .content > .float-right > .distance {
+    text-align: right;
+}
+
+.result >.row>.col-8>.lien >.element > .content > .float-right > {
+    position: absolute;
+    top: 50%; /* poussé de la moitié de hauteur du référent */
+    transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
+    text-align: right;
+=======
+#content {
+    margin-top: 75px;
+>>>>>>> 3523dad329b31dfad411081f3f6d583640da9fcb
 }
