@@ -12,6 +12,8 @@
 
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
+            <br/><br/><br/>
+
             <a href="{#{ path('appointment.reservation', {'id': appointment.ID}) }#}" role="button" class="btn btn-primary">Passer au Paiement</a>
 
             <!-- Button trigger modal -->

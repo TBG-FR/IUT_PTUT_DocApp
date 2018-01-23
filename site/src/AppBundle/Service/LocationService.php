@@ -4,7 +4,7 @@ namespace AppBundle\Service;
 
 class LocationService
 {
-    
+
     const GOOGLE_API_KEY = 'AIzaSyAFenKZ1t8RZbQBswYPG2B_fs3c0rQSXMQ';
 
     public function getCoordinatesFromString(string $string)
