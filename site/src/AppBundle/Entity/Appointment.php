@@ -95,7 +95,7 @@ class Appointment
         $this->date = $date;
     }
 
-    public function getStartTime()
+    public function getStartTime(): ?\DateTime
     {
         return $this->startTime;
     }
@@ -104,8 +104,8 @@ class Appointment
     {
         $this->startTime = $startTime;
     }
-
-    public function getEndTime()
+	
+    public function getEndTime(): ?\DateTime
     {
         return $this->endTime;
     }

@@ -28,7 +28,7 @@ security:
            logout:
                 path: /logout
                 target: /
-           anonymous: true
+           anonymous: false
     access_control:
         - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
