@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use UserBundle\Entity\Doctor;
 
 /**
  * Office
@@ -37,7 +38,7 @@ class Office
     private $address;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Doctor", inversedBy="offices")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\Doctor", inversedBy="offices")
      * @ORM\JoinColumn(name="doctor_id", referencedColumnName="id")
      */
     private $doctor;

@@ -1,19 +1,16 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace UserBundle\Controller;
 
-use AppBundle\Entity\Doctor;
 use AppBundle\Entity\Office;
 use AppBundle\Entity\Speciality;
-use AppBundle\Entity\User;
-use AppBundle\Form\DoctorType;
+use UserBundle\Form\DoctorType;
 use AppBundle\Service\LocationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use UserBundle\Entity\Doctor;
 
 class DoctorsController extends Controller
 {
@@ -28,8 +25,9 @@ class DoctorsController extends Controller
     /**
      * @Route("/doctors/register")
      */
-    public function createAction(Request $request, LocationService $locationService, UserPasswordEncoderInterface $passwordEncoder)
+    public function createAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
+        $locationService = new LocationService();
         $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
 
         $doctor = new Doctor;
@@ -55,7 +53,7 @@ class DoctorsController extends Controller
             $manager->flush();
 
             $this->get('session')->getFlashBag()->add('success', 'Vous êtes maintenant inscrit');
-            return $this->redirect($this->generateUrl('app_doctors_index'));
+            return $this->redirect($this->generateUrl('user_doctors_index'));
         }
 
         return $this->render('doctors/create.html.twig', [

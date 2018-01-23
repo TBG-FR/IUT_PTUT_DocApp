@@ -52,7 +52,7 @@ class Appointment
     private $office;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="appointments")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="appointments")
      */
     private $user;
 

@@ -1,7 +1,9 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace UserBundle\Entity;
 
+use AppBundle\Entity\Address;
+use AppBundle\Entity\Office;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;

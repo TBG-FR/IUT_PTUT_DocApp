@@ -1,7 +1,8 @@
 <?php
 
-namespace AppBundle\Form;
+namespace UserBundle\Form;
 
+use FOS\UserBundle\Form\Type\RegistrationFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -23,8 +24,6 @@ class UserType extends AbstractType
                 ->add('email', EmailType::class)
                 ->add('first_name', TextType::class)
                 ->add('last_name', TextType::class)
-                ->add('password', RepeatedType::class, ['type' => PasswordType::class])
-                ->add('save', SubmitType::class, ['attr' => ['class' => 'btn btn-primary']])
                 ->setAction('/users');
     }
     
@@ -46,5 +45,9 @@ class UserType extends AbstractType
         return 'appbundle_user';
     }
 
+    public function getParent()
+    {
+        return RegistrationFormType::class;
+    }
 
 }

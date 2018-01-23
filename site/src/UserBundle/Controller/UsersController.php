@@ -1,19 +1,17 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace UserBundle\Controller;
 
-use AppBundle\Entity\User;
+use UserBundle\Entity\User;
 use AppBundle\Form\UserType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class UsersController extends Controller
 {
     /**
-     * @Route("/profile", name="users.index")
-     * @Security("has_role('ROLE_USER')")
+     * @Route("/user/profile", name="users.index")
      */
     public function indexAction()
     {
@@ -32,7 +30,7 @@ class UsersController extends Controller
     }
 
     /**
-     * @Route("/users", name="users.save", methods={"POST"})
+     * @Route("/user", name="users.save", methods={"POST"})
      */
     public function saveAction(Request $request)
     {
@@ -48,7 +46,7 @@ class UsersController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            $this->addFlash('success', 'Post created successfully');
+            $this->addFlash('success', 'User created successfully');
 
             return $this->redirectToRoute('users.index');
         }
