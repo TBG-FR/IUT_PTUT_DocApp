@@ -27,7 +27,7 @@
                                     {{ appointment.startTime|date('H:i') }}
                                 </div>
                                 <div class="distance">
-                                    500 m
+                                    {{ appointment.distanceToUser|round(1,'floor') }} km
                                 </div>
                             </div>
                         </div>

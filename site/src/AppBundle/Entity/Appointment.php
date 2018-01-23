@@ -56,6 +56,8 @@ class Appointment
      */
     private $user;
 
+    private $distanceToUser = 0;
+
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
     public function __construct()
@@ -167,6 +169,16 @@ class Appointment
     public function isRegularAppointment()
     {
         return false;
+    }
+
+    public function getDistanceToUser()
+    {
+        return $this->distanceToUser;
+    }
+
+    public function setDistanceToUser($distanceToUser)
+    {
+        $this->distanceToUser = $distanceToUser;
     }
 
 }

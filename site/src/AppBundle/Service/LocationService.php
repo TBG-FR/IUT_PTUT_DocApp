@@ -19,6 +19,11 @@ class LocationService
         if($result->status === 'OK') {
             if(count($result->results) > 0) {
                 $result = $result->results[0];
+                if($result->geometry == null || $result->geometry->location == null)
+                    return [
+                        'latitude' => 0,
+                        'longitude' => 0
+                    ];
                 $lat = $result->geometry->location->lat;
                 $lng = $result->geometry->location->lng;
                 return [

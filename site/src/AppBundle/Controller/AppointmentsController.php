@@ -22,22 +22,25 @@ class AppointmentsController extends Controller
     public function executeSearchAction(Request $request, LocationService $locationService)
     {
         $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
-
+        $maxDistance = 50; //kilometers
         $data = $request->get('search');
-
         $minTime = new \DateTime($data['time']);
         $maxTime = new \DateTime($data['time']);
         $maxTime->add(new \DateInterval('PT8H'));
         $appointmentRepo = $this->getDoctrine()->getRepository(Appointment::class);
         $appointments = $appointmentRepo->getAvailableAppointmentsQueryBuilder()
-            ->where('a.startTime >= :time_min AND a.endTime > :time_max')
+            ->innerJoin('a.office', 'o')
+            ->innerJoin('o.doctor', 'd')
+            ->innerJoin('d.specialities', 's')
+            ->where('a.startTime >= :time_min AND a.startTime < :time_max AND a.user IS NULL AND s.id = :speciality_id')
             ->setParameter(':time_min', $minTime)
             ->setParameter(':time_max', $maxTime)
+            ->setParameter(':speciality_id', $data['speciality'])
             ->getQuery()
             ->getResult();
 
 
-        foreach($appointments as $appointment) {
+        foreach($appointments as $k => $appointment) {
             /** @var Appointment $appointment */
             $address = $appointment->getOffice()->getAddress();
             if($address->getLatitude() == null
@@ -53,6 +56,11 @@ class AppointmentsController extends Controller
             if(count($clientCoords) === 2) {
                 $distance = $locationService->distance($address->getLatitude(), $address->getLongitude(),
                     $clientCoords[0], $clientCoords[1]);
+                if($distance > $maxDistance) {
+                    unset($appointments[$k]);
+                    continue;
+                }
+                $appointment->setDistanceToUser($distance);
             }
         }
 
