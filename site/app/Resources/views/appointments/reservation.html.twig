@@ -59,7 +59,7 @@
                                 <p>Par respect du secret médical, aucun autre détail ne vous sera demandé par le site.</p>
                             </div>
                             <div class="modal-footer">
-                                <form action="{{ path('appointments.success') }}" method="post">
+                                <form action="{{ path('appointments.reservation_result') }}" method="post">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                                     <input type="hidden" name="paymentSuccessful" value="{{ appointment.ID }}">
                                     <button type="submit" class="btn btn-success">Valider</button>

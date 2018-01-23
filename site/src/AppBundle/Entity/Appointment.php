@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Entity\User;
 
 /**
  * Appointment
@@ -168,11 +169,17 @@ class Appointment
         $this->office = $office;
     }
 
+    /**
+     * @return mixed $user
+     */
     public function getUser()
     {
         return $this->user;
     }
 
+    /**
+     * @param User $user
+     */
     public function setUser($user)
     {
         $this->user = $user;
