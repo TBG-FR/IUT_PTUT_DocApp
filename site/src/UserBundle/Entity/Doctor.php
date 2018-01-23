@@ -4,6 +4,7 @@ namespace UserBundle\Entity;
 
 use AppBundle\Entity\Address;
 use AppBundle\Entity\Office;
+use AppBundle\Entity\Speciality;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -22,7 +23,7 @@ class Doctor extends User
     private $phone;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Speciality")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Speciality", inversedBy="doctors")
      */
     private $specialities;
 

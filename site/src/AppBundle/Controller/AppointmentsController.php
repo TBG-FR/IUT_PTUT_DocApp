@@ -157,14 +157,20 @@ class AppointmentsController extends Controller
         ]);
 
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $appointment->setDate(new \DateTime());
+            //$appointment->setDate(new \DateTime());
             $em = $this->getDoctrine()->getManager();
             $em->persist($appointment);
             $em->flush();
+
+            return $this->render(':appointments:success.html.twig', [ /* TODO : REDIRECT ON MANAGE PAGE */ ]);
         }
 
-        return $this->render(':appointments:create.html.twig', [
-            'form' => $form->createView()
-        ]);
+        else {
+
+            return $this->render(':appointments:create.html.twig', [
+                'form' => $form->createView()
+            ]);
+
+        }
     }
 }

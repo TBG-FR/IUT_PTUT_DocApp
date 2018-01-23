@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use UserBundle\Entity\Doctor;
 
 /**
  * Speciality
@@ -29,6 +30,16 @@ class Speciality
      * @ORM\Column(name="name", type="string")
      */
     private $name;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\Doctor", mappedBy="specialities")
+     */
+    private $doctors;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Appointment", mappedBy="specialities")
+     */
+    private $appointments;
 
     /**
      * @return int
@@ -60,6 +71,22 @@ class Speciality
     public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDoctors()
+    {
+        return $this->doctors;
+    }
+
+    /**
+     * @param mixed $doctors
+     */
+    public function setDoctors($doctors)
+    {
+        $this->doctors = $doctors;
     }
 
 }

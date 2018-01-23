@@ -49,6 +49,11 @@ class Appointment
     private $office;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Speciality", inversedBy="appointments")
+     */
+    private $specialities;
+
+    /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="appointments")
      */
     private $user;
@@ -59,6 +64,7 @@ class Appointment
 
     public function __construct()
     {
+        $this->setDate(new \DateTime());
         $this->setStartTime(new \DateTime());
         $this->setEndTime(new \DateTime());
     }
@@ -128,6 +134,22 @@ class Appointment
     public function setDescription(string $description)
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpecialities()
+    {
+        return $this->specialities;
+    }
+
+    /**
+     * @param mixed $specialities
+     */
+    public function setSpecialities($specialities)
+    {
+        $this->specialities = $specialities;
     }
 
     /**
