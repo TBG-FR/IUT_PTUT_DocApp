@@ -104,7 +104,7 @@ class Appointment
     {
         $this->startTime = $startTime;
     }
-
+	
     public function getEndTime(): ?\DateTime
     {
         return $this->endTime;

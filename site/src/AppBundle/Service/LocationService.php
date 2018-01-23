@@ -11,12 +11,11 @@ class LocationService
         $curl = curl_init();
         $url = 'https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($string).'&key=' . self::GOOGLE_API_KEY;
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
         $result = json_decode(curl_exec($curl));
-        
         if($result->status === 'OK') {
             if(count($result->results) > 0) {
                 $result = $result->results[0];
