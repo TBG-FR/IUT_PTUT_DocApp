@@ -9,9 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="appointment")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AppointmentRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn("type", type="string")
- * @ORM\DiscriminatorMap({"REGULAR_APPOINTMENT" = "RegularAppointment", "APPOINTMENT" = "Appointment"})
  */
 class Appointment
 {
@@ -149,12 +146,12 @@ class Appointment
         $this->office = $office;
     }
 
-    private function getUser()
+    public function getUser()
     {
         return $this->user;
     }
 
-    private function setUser($user)
+    public function setUser($user)
     {
         $this->user = $user;
     }
@@ -165,11 +162,6 @@ class Appointment
     }
 
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
-
-    public function isRegularAppointment()
-    {
-        return false;
-    }
 
     public function getDistanceToUser()
     {

@@ -27,20 +27,19 @@ class AppointmentsController extends Controller
         $minTime = new \DateTime($data['time']);
         $maxTime = new \DateTime($data['time']);
         $maxTime->add(new \DateInterval('PT8H'));
-        dump($minTime,$maxTime);
+
         $appointmentRepo = $this->getDoctrine()->getRepository(Appointment::class);
         $appointments = $appointmentRepo->getAvailableAppointmentsQueryBuilder()
             ->innerJoin('a.office', 'o')
             ->innerJoin('o.doctor', 'd')
             ->innerJoin('d.specialities', 's')
-            ->where('1 = 1 OR (a.startTime >= :time_min AND a.startTime < :time_max AND a.user IS NULL AND s.id = :speciality_id)')
+            ->where('a.startTime >= :time_min AND a.startTime < :time_max AND a.user IS NULL AND s.id = :speciality_id')
             ->setParameter(':time_min', $minTime)
             ->setParameter(':time_max', $maxTime)
             ->setParameter(':speciality_id', $data['speciality'])
             ->getQuery()
             ->getResult();
 
-        dump($appointments);
         foreach($appointments as $k => $appointment) {
             /** @var Appointment $appointment */
             $address = $appointment->getOffice()->getAddress();
@@ -54,7 +53,7 @@ class AppointmentsController extends Controller
                 $em->flush();
             }
             $clientCoords = explode(',', $data['coords']);
-            dump($clientCoords);
+
             if(count($clientCoords) === 2) {
                 $distance = $locationService->distance($address->getLatitude(), $address->getLongitude(),
                     $clientCoords[0], $clientCoords[1]);
@@ -158,20 +157,10 @@ class AppointmentsController extends Controller
         ]);
 
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $data = $request->get('appointment');
-            if(isset($data['regular_appointment']) && $data['regular_appointment'] == 1) {
-                $appointment = new RegularAppointment($appointment);
-                //TODO: verify frequency && frequency type
-                $appointment->setFrequency($data['frequency']);
-                $appointment->setFrequencyType($data['frequency_type']);
-            } else {
-                $appointment->setDate(new \DateTime());
-            }
-
+            $appointment->setDate(new \DateTime());
             $em = $this->getDoctrine()->getManager();
             $em->persist($appointment);
             $em->flush();
-
         }
 
         return $this->render(':appointments:create.html.twig', [
