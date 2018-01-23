@@ -1,7 +1,5 @@
 {% block content %}
 
-<<<<<<< HEAD
-
     <div class="result">
     <div class="row">
     <div class="col-8">
@@ -37,17 +35,6 @@
         <div class="col-4">
             FUTURE CARTE
         </div>
-=======
-    {% for appointment in appointments %}
-    <h1>Créneaux disponibles à partir de {{ startTime|date('H\\hi') }}</h1>
-    <div>
-        Dr. {{ appointment.doctor.lastName }}
-        <div>{{ appointment.office.name }}</div>
-        <div>{{ appointment.office.address.toAddressString }}</div>
-        <div>De {{ appointment.startTime|date('H\\hi') }} à {{ appointment.endTime|date('H\\hi') }}</div>
->>>>>>> 3523dad329b31dfad411081f3f6d583640da9fcb
-    </div>
-    {% endfor %}
 
     {% for appointment in appointments %}
         <h1>Créneaux disponibles à partir de {{ startTime|date('H\\hi') }}</h1>
