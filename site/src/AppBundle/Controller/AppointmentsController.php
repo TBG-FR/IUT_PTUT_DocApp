@@ -97,18 +97,39 @@ class AppointmentsController extends Controller
     }
 
     /**
-     * @Route("/appt/{id}/success", name="appointments.success")
+     * @Route("/appt/success", name="appointments.success")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function successAction($id, Request $request)
+    public function successAction(Request $request)
     {
-        $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
-        return $this->render(':appointments:success.html.twig', [
-            'appointment' => $appointment
-        ]);
+        if($request->isMethod('POST')) {
+
+            $id = $request->request->get('paymentSuccessful');
+            $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
+
+            /* TODO : IF Appointment is FREE */
+
+            /* TODO : Make link between User & Appt */
+
+            return $this->render(':appointments:success.html.twig', [
+                'appointment' => $appointment
+            ]);
+
+        }
+
+        else {
+
+            /* TODO : Error Messages */
+
+            return $this->render(':appointments:failure.html.twig', [
+                'error' => "errorTODO"
+            ]);
+
+        }
+
     }
 
     /**
