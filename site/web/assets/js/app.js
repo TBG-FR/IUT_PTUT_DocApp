@@ -36,6 +36,8 @@ function distance(lat1, long1, lat2, long2)
 
 function fetchLocationFromAddress(address_text)
 {
+    if(address_text.length === 0)
+        return;
     const address = encodeURIComponent(address_text);
     const url = 'https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key=' + GOOGLE_MAPS_KEY;
     $.get(url, function(data) {

@@ -13,3 +13,33 @@
     {% include ':appointments:search_results.html.twig' %}
 
 {% endblock %}
+    {% block javascripts %}
+        <script>
+            function initMap() {
+                const bounds = new google.maps.LatLngBounds();
+                const $appts = $('a.lien');
+                const locs = [];
+                $appts.each(function(idx, appt) {
+                    const $map = $(map);
+                    const loc = {
+                        lat: parseFloat($(appt).attr('data-lat')),
+                        lng: parseFloat($(appt).attr('data-lon'))
+                    };
+                    console.log(loc);
+                    locs.push(loc);
+
+                });
+                const gMap = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 14,
+                    center: locs[0]
+                });
+                for(let i = 0; i < locs.length; i++) {
+                    bounds.extend(new google.maps.Marker({
+                        position: locs[i],
+                        map: gMap
+                    }).position);
+                }
+                gMap.fitBounds(bounds);
+            }
+        </script>
+    {% endblock %}

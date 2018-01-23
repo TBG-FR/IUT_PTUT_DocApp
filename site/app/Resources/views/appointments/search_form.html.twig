@@ -1,9 +1,6 @@
 {% block content %}
-
     <div class="container">
-
         <form class="form-inline" action="{{ path('appointments.results') }}" method="post" role="form">
-
             <div class="input-group"> <!-- Speciality selection -->
                 <div class="input-group-prepend input-group-text"><span class="fa fa-graduation-cap"></span></div>
                 <select class="form-control" id="searchDocSpec" title="Speciality" name="search[speciality]">
@@ -12,7 +9,6 @@
                     {% endfor %}
                 </select>
             </div>
-
             <div class="input-group"> <!-- Location selection -->
                 <div class="input-group-prepend input-group-text"><span class="fa fa-map"></span></div>
                 <input type="hidden" name="search[coords]" value="">
@@ -22,30 +18,26 @@
                     <button id="geoLocateBtn" class="btn btn-success" type="button"><span class="fa fa-map-marker"></span></button>
                 </div>
             </div>
-
             <div class="input-group"> <!-- Hour selection -->
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <div class="input-group-prepend input-group-text"><span class="fa fa-clock-o"></span>
-                    <div><label class="left-space" for="searchHour">From :</label> </div></div>
-
+                    <div class="input-group-prepend input-group-text">
+                        <span class="fa fa-clock-o"></span>
+                        <label class="left-space" for="searchHour">From :</label>
+                    </div>
                     <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}" name="search[time]">
                 </div>
             </div>
-
             <button type="submit" class="btn btn-primary">DocInTime !</button>
-
         </form>
-
     </div>
-
     {% if extended %}
         <div class="container">
             <form class="form-inline" role="form">
                 <div class="form-group">
                     <div class="pull-left">
-                        <input type="text" value="1" width="10" id="input1" class="form-control" />
+                        <input type="text" value="1" width="10" id="input1" class="form-control" />-
                         <br />
-                        <label for="decimal_input">Label 1</label>
+                        <label for="input1">Label 1</label>
                     </div>
                     <div>
                         <input type="text" value="I" width="30" id="input2" class="form-control" />
@@ -56,5 +48,4 @@
             </form>
         </div>
     {% endif %}
-
 {% endblock %}

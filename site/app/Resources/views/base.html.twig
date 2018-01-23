@@ -46,17 +46,21 @@
             {% block content %}{% endblock %}
         </div>
 
-        {% block javascripts %}
+        <!-- JS : JQuery (3.2.1) -->
+        <script src="/assets/js/jquery-3.2.1.js"></script>
+        <!-- JS : Popper -->
+        <script src="/assets/js/popper.js"></script>
+        <!-- JS : Bootstrap (4.0.0-beta.2) -->
+        <script src="/assets/js/bootstrap.js"></script>
 
-            <!-- JS : JQuery (3.2.1) -->
-            <script src="/assets/js/jquery-3.2.1.js"></script>
-            <!-- JS : Popper -->
-            <script src="/assets/js/popper.js"></script>
-            <!-- JS : Bootstrap (4.0.0-beta.2) -->
-            <script src="/assets/js/bootstrap.js"></script>
+        <!-- Custom JS -->
+        <script src="/assets/js/app.js"></script>
 
-            <!-- Custom JS -->
-            <script src="/assets/js/app.js"></script>
-        {% endblock %}
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsKDPOXJk9M1smvblwa7r-JdNNM8GM6sQ&callback=initMap">
+        </script>
+
+
+        {% block javascripts %}{% endblock %}
     </body>
 </html>
