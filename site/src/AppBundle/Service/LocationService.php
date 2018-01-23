@@ -58,6 +58,6 @@ class LocationService
      */
     private function degToRad(float $degrees) : float
     {
-        return $degrees * 2 * pi() / 360;
+        return $degrees * 2.0 * pi() / 360.0;
     }
 }

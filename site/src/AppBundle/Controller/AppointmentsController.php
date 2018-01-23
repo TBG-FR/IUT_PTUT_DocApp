@@ -27,19 +27,25 @@ class AppointmentsController extends Controller
         $minTime = new \DateTime($data['time']);
         $maxTime = new \DateTime($data['time']);
         $maxTime->add(new \DateInterval('PT8H'));
-
+        // si on change de jour, on arrête la recherche à minuit le jour même
+        if($maxTime->format('d') != $minTime->format('d')) {
+            $maxTime = new \DateTime(date('Y-m-d'));
+            $maxTime->add(new \DateInterval('PT23H59M59S'));
+        }
+        $date = new \DateTime();
         $appointmentRepo = $this->getDoctrine()->getRepository(Appointment::class);
         $appointments = $appointmentRepo->getAvailableAppointmentsQueryBuilder()
             ->innerJoin('a.office', 'o')
             ->innerJoin('o.doctor', 'd')
             ->innerJoin('d.specialities', 's')
-            ->where('a.startTime >= :time_min AND a.startTime < :time_max AND a.user IS NULL AND s.id = :speciality_id')
+            ->where('a.startTime >= :time_min AND a.startTime < :time_max AND a.date = :date AND s.id = :speciality_id')
             ->setParameter(':time_min', $minTime)
             ->setParameter(':time_max', $maxTime)
             ->setParameter(':speciality_id', $data['speciality'])
+            ->setParameter(':date', $date->format('Y-m-d'))
             ->getQuery()
             ->getResult();
-
+        $clientCoords = [];
         foreach($appointments as $k => $appointment) {
             /** @var Appointment $appointment */
             $address = $appointment->getOffice()->getAddress();
@@ -57,7 +63,6 @@ class AppointmentsController extends Controller
             if(count($clientCoords) === 2) {
                 $distance = $locationService->distance($address->getLatitude(), $address->getLongitude(),
                     $clientCoords[0], $clientCoords[1]);
-                dump($distance);
 
                 if($distance > $maxDistance) {
                     unset($appointments[$k]);
@@ -73,7 +78,8 @@ class AppointmentsController extends Controller
             'specialities' => $specialities,
             'startTime' => $data['time'],
             'appointments' => $appointments,
-            'extended' => true
+            'extended' => false,
+            'myLoc' => $clientCoords
         ]);
     }
 
