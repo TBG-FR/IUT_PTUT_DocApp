@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use UserBundle\Entity\Doctor;
 use UserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -18,5 +19,14 @@ class AppointmentRepository extends EntityRepository
     {
         return $this->createQueryBuilder('a')
             ->where('a.user IS NULL');
+    }
+
+    public function getAppointmentsByDoctorQueryBuilder(Doctor $doctor)
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.office', 'o')
+            ->innerJoin('o.doctor', 'd')
+            ->where('d = :doctor')
+            ->setParameter(':doctor', $doctor);
     }
 }

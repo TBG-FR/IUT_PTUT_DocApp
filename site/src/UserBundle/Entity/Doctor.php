@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="UserBundle\Repository\DoctorRepository")
  */
 class Doctor extends User
 {

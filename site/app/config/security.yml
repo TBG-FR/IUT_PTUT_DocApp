@@ -34,3 +34,4 @@ security:
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user, roles: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/panel, roles: ROLE_DOCTOR } # URL propres aux médecins

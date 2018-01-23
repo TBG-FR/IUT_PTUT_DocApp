@@ -2,24 +2,30 @@
 
 namespace UserBundle\Controller;
 
+use AppBundle\Entity\Appointment;
 use AppBundle\Entity\Office;
 use AppBundle\Entity\Speciality;
-use UserBundle\Form\DoctorType;
 use AppBundle\Service\LocationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use UserBundle\Entity\Doctor;
+use UserBundle\Form\DoctorType;
 
 class DoctorsController extends Controller
 {
     /**
-     * @Route("/doctors")
+     * @Route("/panel")
      */
     public function index()
     {
-        return $this->render('doctors/index.html.twig');
+        $apptRepo = $this->getDoctrine()->getRepository(Appointment::class);
+        $appointments = $apptRepo->getAppointmentsByDoctorQueryBuilder($this->getUser())->getQuery()->getResult();
+
+        return $this->render('doctors/index.html.twig', [
+            'appointments' => $appointments
+        ]);
     }
 
     /**
@@ -36,6 +42,7 @@ class DoctorsController extends Controller
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $doctor->setPassword($passwordEncoder->encodePassword($doctor, $doctor->getPassword()));
             $doctor->setEnabled(false);
+            $doctor->addRole('ROLE_DOCTOR');
             $doctor->setUsername(strtolower($doctor->getFirstName().$doctor->getLastName()));
             //update address coords
             $coords = $locationService->getCoordinatesFromString($doctor->getAddress()->toAddressString());
