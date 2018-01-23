@@ -1,49 +1,43 @@
 {% block content %}
-
-    <div class="result">
-    <div class="row">
-    <div class="col-8">
-        <a class="lien" href="{{ path('appointments.details', { 'id': 1 }) }}">
-            <div class="element">
-
-                <div class="image">
-                    <img class="img-fluid img-thumbnail" src="/assets/images/profil.png" alt="Card image cap">
-                </div>
-                <div class="content">
-                    <div class="float-left">
-                        <div class="name">
-                            Jean BONNOT
-                        </div>
-                        <div class="spe">
-                            Urologue
-                        </div>
-                    </div>
-                    <div class="float-right">
-                        <div class="hour">
-                            13:05
-                        </div>
-                        <div class="distance">
-                            500 m
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </a>
-    </div>
-
-        <div class="col-4">
-            FUTURE CARTE
-        </div>
-
     {% for appointment in appointments %}
-        <h1>Créneaux disponibles à partir de {{ startTime|date('H\\hi') }}</h1>
-        <div>
-            Dr. {{ appointment.doctor.lastName }}
-            <div>{{ appointment.office.name }}</div>
-            <div>{{ appointment.office.address.toAddressString }}</div>
-            <div>De {{ appointment.startTime|date('H\\hi') }} à {{ appointment.endTime|date('H\\hi') }}</div>
-        </div>
-    {% endfor %}
+        <div class="result">
+        <div class="row">
+            <div class="col-8">
+                <a class="lien" href="{{ path('appointments.details', { 'id': appointment.id }) }}">
+                    <div class="element">
+                        <div class="image">
+                            <img class="img-fluid img-thumbnail" src="/assets/images/profil.png" alt="Card image cap">
+                        </div>
+                        <div class="content">
+                            <div class="float-left">
+                                <div class="name">
+                                    Dr. {{ appointment.doctor.lastName }}
+                                </div>
+                                <div class="spe">
+                                    {% set doctor_specialities = [] %}
 
+                                    {% for speciality in appointment.doctor.specialities %}
+                                        {% set doctor_specialities = doctor_specialities|merge([speciality.name]) %}
+                                    {% endfor %}
+                                    {{ doctor_specialities|join(' - ')}}
+                                </div>
+                            </div>
+                            <div class="float-right">
+                                <div class="hour">
+                                    {{ appointment.startTime|date('H:i') }}
+                                </div>
+                                <div class="distance">
+                                    500 m
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-4">
+                FUTURE CARTE
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 {% endblock %}
