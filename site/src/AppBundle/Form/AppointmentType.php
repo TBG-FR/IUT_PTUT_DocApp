@@ -25,34 +25,6 @@ class AppointmentType extends AbstractType
                     'input' => 'datetime'
                 ])
                 ->add('endTime', TimeType::class)
-                ->add('regular_appointment', CheckboxType::class, [
-                    'required' => false,
-                    'label' => 'Créneau récurrent',
-                    'mapped' => false
-                ])
-                ->add('frequency', IntegerType::class, [
-                    'mapped' => false,
-                    'required' => false,
-                    'label' => 'Fréquence de répétition',
-                    'attr' => [
-                        'style' => 'display:none;'
-                    ],
-                    'label_attr' => [
-                        'style' => 'display:none;'
-                    ]
-                ])
-                ->add('frequency_type', ChoiceType::class, [
-                    'choices' => RegularAppointment::getFancyFrenquencyTypeList(),
-                    'mapped' => false,
-                    'label' => 'Répétition',
-                    'required' => false,
-                    'attr' => [
-                        'style' => 'display:none;'
-                    ],
-                    'label_attr' => [
-                        'style' => 'display:none;'
-                    ]
-                ])
                 ->add('description', TextareaType::class, ['required' => false, 'label' => 'Commentaire'])
                 ->add('office', EntityType::class, [
                     'class' => 'AppBundle\Entity\Office',
