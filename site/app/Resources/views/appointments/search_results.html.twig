@@ -3,7 +3,8 @@
     <div class="result">
     <div class="row">
     <div class="col-8">
-        <a class="lien" href="{{ path('appointments.details', { 'id': 1 }) }}">
+        <a class="lien" href="{{ path('appointments.details', {'id': "1"}) }}">
+
             <div class="element">
 
                 <div class="image">
@@ -32,9 +33,12 @@
         </a>
     </div>
 
+
         <div class="col-4">
             FUTURE CARTE
         </div>
+    </div>
+    </div>
 
     {% for appointment in appointments %}
         <h1>Créneaux disponibles à partir de {{ startTime|date('H\\hi') }}</h1>
