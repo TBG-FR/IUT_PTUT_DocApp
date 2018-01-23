@@ -20,4 +20,12 @@ class DefaultController extends Controller
             'extended' => false
         ]);
     }
+
+    /**
+     * @Route("/", name="default.reviews")
+     */
+    public function reviewsAction()
+    {
+        return $this->render('default/reviews.html.twig', []);
+    }
 }
