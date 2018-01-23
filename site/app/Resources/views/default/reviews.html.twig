@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+    DocInTime - Find a Doctor, now. [Reviews]
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="home">
+        <h1 class="bigtitle">DocInTime</h1>
+        <p class="title">The quickest way to find an appointment with a Doctor !</p>
+    </div>
+
+    <h1>Avis & Améliorations</h1>
+
+    {# TODO : ---- Reviews ---- #}
+
+    {% include ':appointments:search_form.html.twig' %}
+
+{% endblock %}
