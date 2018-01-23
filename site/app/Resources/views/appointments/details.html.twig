@@ -11,7 +11,6 @@
     {% if appointment is defined %}
 
         <p>
-        <a href="{{ path('appointments.reservation', {'id': appointment.ID}) }}" class="btn btn-primary">Réserver ce RDV</a>
 		
             <h1>[ Afficher Infos Médecin & RDV]</h1><br/>
             {{ appointment.ID }}<br/>
@@ -21,13 +20,18 @@
             {{ appointment.Description }}<br/>
         </p>
 
+        <div class="btn-group">
+        <a href="{{ path('appointments.reservation', {'id': appointment.ID}) }}" class="btn btn-primary">Réserver ce RDV</a>
+
     {% else %}
 
         <p>[ Bootstrap : Error - No Appointment with this id / No Appointment selected ]</p>
+        <div class="btn-group">
 
     {% endif %}
-	
-    <a href="{{ path('appointments.results') }}" class="btn btn-danger">Retourner à la liste des RDVs</a>
+
+    <a href="{{ path('appointments.results') }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>
     {# TODO : Garder la recherche en mémoire ? Trouver un moyen de revenir à la même recherche ? #}
+    </div>
 
 {% endblock %}
