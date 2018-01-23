@@ -30,7 +30,7 @@ class AppointmentsController extends Controller
         $maxTime->add(new \DateInterval('PT8H'));
         $appointmentRepo = $this->getDoctrine()->getRepository(Appointment::class);
         $appointments = $appointmentRepo->getAvailableAppointmentsQueryBuilder()
-            ->where('a.startTime < :time_min AND a.endTime > :time_max')
+            ->where('a.startTime >= :time_min AND a.endTime > :time_max')
             ->setParameter(':time_min', $minTime)
             ->setParameter(':time_max', $maxTime)
             ->getQuery()
