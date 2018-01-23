@@ -1,8 +1,4 @@
-
-#site/web/config.php
-#site/var/SymfonyRequirements.php
-#site/composer.lock
-#site/bin/symfony_requirements
+##### GITIGNORE V2 #####
 
 # Cache and logs (Symfony2)
 site/app/cache/*
@@ -55,3 +51,8 @@ site/var/SymfonyRequirements.php
 
 # Various other things
 site/.idea
+site/composer.lock
+site/web/config.php
+site/var/SymfonyRequirements.php
+site/composer.lock
+site/bin/symfony_requirements

@@ -13,8 +13,6 @@ html, body {
     color: #000;
 }
 
-<<<<<<< HEAD
-
 #content {
     margin-top: 75px;
 }
@@ -53,6 +51,7 @@ a {
     padding: 1%;
     margin : 2%;
     position: relative;
+    min-height: 120px;
 
 }
 .result > .row>.col-8>.lien > .element:hover {
@@ -101,8 +100,8 @@ a {
     top: 50%; /* poussé de la moitié de hauteur du référent */
     transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
     text-align: right;
-=======
+}
+
 #content {
     margin-top: 75px;
->>>>>>> 3523dad329b31dfad411081f3f6d583640da9fcb
 }

@@ -8,16 +8,44 @@
 
 {% block content %}
 
-    <a href="{{ path('appointments.details', {'id': appointment.ID}) }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Primary link</a>
-    <a href="{{ path('appointments.details', {'id': appointment.ID}) }}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Link</a>
-
     {% if appointment is defined %}
 
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
+            <br/><br/><br/>
+
+            <a href="{#{ path('appointment.reservation', {'id': appointment.ID}) }#}" role="button" class="btn btn-primary">Passer au Paiement</a>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Paiement (virtuel)
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             Hi {{ app.user.username }}
             {{ dump(app.user) }}
-            {#{ dump(app.user.hasPayment) }#}
+            {#{ dump(app.user.hasBillingInfo) }#}
             {# TODO : PAIEMENT VIRTUEL #}
 
         {% else %}
@@ -36,7 +64,6 @@
         </p>
 
         <div class="btn-group">
-        <a href="{#{ path('appointment.reservation', {'id': appointment.ID}) }#}" role="button" class="btn btn-primary">Passer au Paiement</a>
         <a href="{{ path('appointments.details', {'id': appointment.ID}) }}" role="button" class="btn btn-secondary">Retourner aux détails du RDV</a>
 
     {% else %}
