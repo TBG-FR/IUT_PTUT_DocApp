@@ -30,7 +30,8 @@
             <button type="submit" class="btn btn-primary">DocInTime !</button>
         </form>
     </div>
-    {% if extended %}
+
+    {% if (extended is defined) and (extended) %}
         <div class="container">
             <form class="form-inline" role="form">
                 <div class="form-group">

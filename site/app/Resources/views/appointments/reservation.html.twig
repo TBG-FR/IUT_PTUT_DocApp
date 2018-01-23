@@ -12,63 +12,89 @@
 
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
-            <br/><br/><br/>
+            <div class="alert alert-success" role="alert">
+                <span id="logged">Vous êtes bien connecté en tant que {{ app.user.firstname }} {{ app.user.lastname }}</span>
+                <label for="logged" class="small font-italic float-right">(Ce n'est pas vous ? <a href="#">Déconnexion</a>)</label> {# TODO : Disconnection Link#}
+            </div>
 
-            <a href="{#{ path('appointment.reservation', {'id': appointment.ID}) }#}" role="button" class="btn btn-primary">Passer au Paiement</a>
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Paiement (virtuel)
-            </button>
+            <div class="payment text-center">
 
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                <p class="summary text-left bg-info">
+
+                    {#{ dump(appointment) }#}
+                    {# TODO : Recap Infos RDV #}
+                    RDV à 15h45<br/>
+                    Dr Jean Jo (Pneumologie)<br/>
+                    <br/>
+                    Maison Médicale de Bourg<br/>
+                    4 Rue des Tulipes<br/>
+                    01000 Bourg-en-Bresse, France
+
+                </p>
+
+                <p class="instructions">Pour procéder à la réservation de ce rendez-vous, merci de cliquer ci-dessous</p>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-lg btn-success" data-toggle="modal" data-target="#paymentModal">
+                    Paiement (virtuel)
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="paymentModalLabel">Réservation - Paiement (virtuel)</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Important</h5>
+                                <p>Une fois la réservation effectuée, vous ne pourrez plus revenir en arrière, vous devrez honorer ce rendez-vous.</p>
+                                {# TODO : Rules, Conditions Générales, Infos, etc #}
+                                <hr>
+                                <h5>Informations</h5>
+                                <p>Par respect du secret médical, aucun autre détail ne vous sera demandé par le site.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="{{ path('appointments.success') }}" method="post">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                    <input type="hidden" name="paymentSuccessful" value="{{ appointment.ID }}">
+                                    <button type="submit" class="btn btn-success">Valider</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-
-            Hi {{ app.user.username }}
-            {{ dump(app.user) }}
+            {#<br/><br/><br/><br/><br/><br/>#}
+            {#{ dump(app.user) }#}
             {#{ dump(app.user.hasBillingInfo) }#}
-            {# TODO : PAIEMENT VIRTUEL #}
+            {# TODO : VERIFICATION DES BILLING INFO #}
 
         {% else %}
 
-            <p>Veuillez vous connecter pour réserver ce RDV (obligation légale : informations de facturation)</p>
+            <div class="alert alert-warning" role="alert">
+                Veuillez vous connecter pour réserver ce rendez-vous (obligation légale : informations de facturation)
+                Please login yourself to reserve/book/hold this appointment (legal obligation : billing informations)
+            </div>
 
         {% endif %}
-
-        <p>
-        <h1>[ Afficher Infos Médecin & RDV]</h1><br/>
-        {{ appointment.ID }}<br/>
-        {{ appointment.Date | date("F jS \\a\\t g:ia") }}<br/>
-        {{ appointment.StartTime | date("F jS \\a\\t g:ia") }}<br/>
-        {{ appointment.EndTime | date("F jS \\a\\t g:ia") }}<br/>
-        {{ appointment.Description }}<br/>
-        </p>
 
         <div class="btn-group">
         <a href="{{ path('appointments.details', {'id': appointment.ID}) }}" role="button" class="btn btn-secondary">Retourner aux détails du RDV</a>
 
     {% else %}
 
-        <p>[ Bootstrap : Error - No Appointment with this id / No Appointment selected ]</p>
+        <div class="alert alert-danger" role="alert">
+            Erreur : Ce rendez-vous n'existe pas !
+            Error : This appointment doesn't exist !
+            {# TODO : Appointment already taken / not free anymore #}
+        </div>
+
         <div class="btn-group">
 
     {% endif %}
