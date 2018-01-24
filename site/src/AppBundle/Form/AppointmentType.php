@@ -30,7 +30,15 @@ class AppointmentType extends AbstractType
                 ->add('startTime', TimeType::class, [
                     'input' => 'datetime'
                 ])
-                ->add('endTime', TimeType::class)
+                ->add('duration', DateIntervalType::class, array (
+                    'with_minutes'=>true,
+                    'with_hours'=>true,
+                    'with_days'=>false,
+                    'with_months'=>false,
+                    'with_years'=>false,
+                    'mapped'=>false,
+                    'hours' => range(1, 4),
+                ))
 
                 ->add('specialities', EntityType::class, [
                     'class' => 'AppBundle\Entity\Speciality',
