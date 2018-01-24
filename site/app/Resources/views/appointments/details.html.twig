@@ -15,7 +15,6 @@
             <div class="alert alert-danger" role="alert">
                 Attention : Ce rendez-vous est déjà pris !
                 Warning : This appointment is already taken !
-                {# TODO : Appointment already taken / not free anymore #}
             </div>
 
         {% endif %}
@@ -67,7 +66,7 @@
 
             </div>
 
-            <div class="btn-group">
+            <div class="btn-group menu-bottom">
 
                 {% if appointment.user is not null %}
                     <a href="{{ path('appointments.reservation', {'id': appointment.ID}) }}" class="btn btn-primary disabled" aria-disabled="true">Réserver ce RDV</a>
