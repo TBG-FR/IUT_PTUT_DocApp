@@ -2,9 +2,11 @@
 
 namespace UserBundle\Form;
 
+use AppBundle\Form\ImageType;
 use FOS\UserBundle\Form\Type\RegistrationFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,7 +26,10 @@ class UserType extends AbstractType
                 ->add('email', EmailType::class)
                 ->add('first_name', TextType::class)
                 ->add('last_name', TextType::class)
-                ->setAction('/users');
+                ->add('avatar', ImageType::class, [
+                    'required' => false
+                ])
+                ->setAction('/user');
     }
     
     /**

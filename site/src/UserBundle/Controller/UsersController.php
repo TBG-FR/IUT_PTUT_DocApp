@@ -20,9 +20,7 @@ class UsersController extends Controller
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $user = $userRepo->find($this->getUser()->getId());
 
-        $form = $this->createForm(EditUserType::class, $user, [
-            'action' => $this->generateUrl('users.save')
-        ]);
+        $form = $this->createForm(EditUserType::class, $user);
 
         return $this->render('users/profile.html.twig', [
             'user' => $user,
@@ -31,7 +29,31 @@ class UsersController extends Controller
     }
 
     /**
-     * @Route("/user", name="users.save", methods={"POST"})
+     * @Route("/user/edit", name="users.edit", methods={"GET", "POST"})
+     */
+    public function editAction(Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditUserType::class, $user);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $file = $user->getAvatar()->getFile();
+            dump($file);
+            $fileName = uniqid() . '.' . $file->getExtension();
+            $user->getAvatar()->setUrl('/uploads/' . $fileName);
+            $file->move('uploads', $fileName);
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'User edited successfully');
+
+            return $this->redirectToRoute('users.index');
+        }
+
+        return $this->redirectToRoute('users.index');
+
+    }
+
+    /**
+     * @Route("/user", name="users.save", methods={"GET", "POST"})
      */
     public function saveAction(Request $request)
     {
@@ -42,8 +64,8 @@ class UsersController extends Controller
             'action' => $this->generateUrl('users.save')
         ]);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->handleRequest($request)->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
