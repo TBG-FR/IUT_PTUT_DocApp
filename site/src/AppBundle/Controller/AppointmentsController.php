@@ -7,6 +7,7 @@ use AppBundle\Entity\Appointment;
 use AppBundle\Entity\RegularAppointment;
 use AppBundle\Entity\Speciality;
 use AppBundle\Form\AppointmentType;
+use AppBundle\Form\AppointmentMultipleType;
 use Symfony\Component\Validator\Constraints\DateTime;
 use UserBundle\Entity\User;
 use UserBundle\Entity\Doctor;
@@ -207,6 +208,48 @@ class AppointmentsController extends Controller
         else {
 
             return $this->render(':appointments:create.html.twig', [
+                'form' => $form->createView()
+            ]);
+
+        }
+    }
+
+    /**
+     * @Route("/appt/create/multiple", name="appointments.create.multiple")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function createMultipleAction(Request $request)
+    {
+        $appointment = new Appointment();
+        $form = $this->get('form.factory')->create(AppointmentMultipleType::class, $appointment, [
+            'trait_choices' => $this->getUser()
+        ]);
+
+        if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+            /**/
+
+            //$appointment->setDate(new \DateTime());
+            //$interval=$request->request->get('duration');
+
+            $hours = $request->get('appointment')['duration']['hours']-1;
+            $minutes = $request->get('appointment')['duration']['minutes'];
+            $interval = new \DateInterval('PT' . $hours . 'H' . $minutes . 'M');
+            $start=new \DateTime($appointment->getStartTime()->format('H:i:s'));
+
+            $appointment->setEndTime($start->add($interval));
+            dump($appointment);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($appointment);
+            $em->flush();
+            return $this->render('holding_success.html.twig', [ /* TODO : REDIRECT ON MANAGE PAGE */ ]);
+        }
+
+        else {
+
+            return $this->render(':appointments:create_multiple.html.twig', [
                 'form' => $form->createView()
             ]);
 
