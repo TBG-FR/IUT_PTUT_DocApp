@@ -93,10 +93,24 @@ class AppointmentsController extends Controller
     public function displayDetailsAction($id, Request $request)
     {
         $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
+        $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
 
-        return $this->render(':appointments:details.html.twig', [
-            'appointment' => $appointment
-        ]);
+        if(is_null($appointment)) { // IF this appointment doesn't exist
+
+            //throw $this->createNotFoundException("This appointment doesn't exist !");
+            throw $this->createNotFoundException("Ce rendez-vous n'existe pas !");
+
+        }
+
+        else { // ELSE (this appointment exists)
+
+            return $this->render(':appointments:details.html.twig', [
+                'appointment' => $appointment,
+                'specialities' => $specialities,
+                'extended' => false
+            ]);
+
+        }
     }
 
     /**
@@ -105,37 +119,51 @@ class AppointmentsController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function reserveApptAction($id, Request $request)
+    public function reservationAction($id, Request $request)
     {
         $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
-        return $this->render(':holding:laststep.html.twig', [
-            'appointment' => $appointment
-        ]);
+        if(is_null($appointment)) { // IF this appointment doesn't exist
+
+            //throw $this->createNotFoundException("This appointment doesn't exist !");
+            throw $this->createNotFoundException("Ce rendez-vous n'existe pas !");
+
+        }
+
+        elseif(!is_null($appointment->getUser())) { // ELSE IF this appointment is taken
+
+            //throw $this->createNotFoundException("This appointment is already taken !");
+            throw $this->createNotFoundException("Ce rendez-vous est déjà pris !");
+
+        }
+
+        else { // ELSE (this appointment exists and is free)
+
+            return $this->render(':holding:laststep.html.twig', [
+                'appointment' => $appointment
+            ]);
+
+        }
     }
 
     /**
-     * @Route("/appt/reservation_result", name="appointments.reservation_result")
+     * @Route("/appt/reservation/result", name="appointments.reservation_result")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function successAction(Request $request)
+    public function reservationResultAction(Request $request)
     {
 
-        if($request->isMethod('POST')) {
+        if($request->isMethod('POST')) { // IF the user acceeded to that page after a payment
 
             $id = $request->request->get('paymentSuccessful');
             $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
-            dump($appointment->getUser());
-
-            if($appointment->getUser() instanceof User || $appointment->getUser() instanceof Doctor) {
-
-                /* TODO : Error Messages */
+            if($appointment->getUser() instanceof User || $appointment->getUser() instanceof Doctor) { //
 
                 return $this->render(':holding:failure.html.twig', [
-                    'error' => "errorTODO_AlreadyTaken",
+                    'error' => "already_taken",
                     'appointment' => $appointment
                 ]);
 
@@ -143,8 +171,10 @@ class AppointmentsController extends Controller
 
             else {
 
+                // Add the current User to that Appointment
                 $appointment->setUser($this->getUser());
 
+                // Apply modifications into EM & DB
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($appointment);
                 $em->flush();
@@ -157,13 +187,10 @@ class AppointmentsController extends Controller
 
         }
 
-        else {
+        else { // ELSE (the user acceeded to that page manually)
 
-            /* TODO : Error Messages */
-
-            return $this->render(':holding:failure.html.twig', [
-                'error' => "errorTODO_NoPOST"
-            ]);
+            //throw $this->createNotFoundException("You didn't made any holding or payment !");
+            throw $this->createNotFoundException("Vous n'avez fait aucune réservation ni paiement !");
 
         }
 
