@@ -42,11 +42,11 @@ function fetchLocationFromAddress(address_text)
     const url = 'https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key=' + GOOGLE_MAPS_KEY;
     $.get(url, function(data) {
         if(data.results.length > 0)
-            $('input[name="search[coords]"]')
+            $('input[name="coords"]')
                 .val(data.results[0].geometry.location.lat+','+data.results[0].geometry.location.lng);
     });
 }
-const $inputLocation = $('input[name="search[location]"]');
+const $inputLocation = $('input[name="location"]');
 $inputLocation.on('keyup', function(event) {
     const val = $(this).val();
     if(val.length >= 2 && val.length % 2 === 0)
@@ -64,7 +64,7 @@ $('#geoLocateBtn').click(function(event) {
         navigator.geolocation.getCurrentPosition(function(position) {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
-            $('input[name="search[coords]"]').val(lat + ',' + lon);
+            $('input[name="coords"]').val(lat + ',' + lon);
             const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lon+'&key=' + GOOGLE_MAPS_KEY;
             $.get(url, function(data) {
                 if(data.results.length > 0)

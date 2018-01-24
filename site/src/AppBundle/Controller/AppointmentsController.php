@@ -8,6 +8,7 @@ use AppBundle\Entity\RegularAppointment;
 use AppBundle\Entity\Speciality;
 use AppBundle\Form\AppointmentType;
 use Symfony\Component\BrowserKit\Response;
+use AppBundle\Form\AppointmentMultipleType;
 use Symfony\Component\Validator\Constraints\DateTime;
 use UserBundle\Entity\User;
 use UserBundle\Entity\Doctor;
@@ -27,9 +28,8 @@ class AppointmentsController extends Controller
     {
         $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
         $maxDistance = 50; //kilometers
-        $data = $request->get('search');
-        $minTime = new \DateTime($data['time']);
-        $maxTime = new \DateTime($data['time']);
+        $minTime = new \DateTime($request->get('time'));
+        $maxTime = new \DateTime($request->get('time'));
         $maxTime->add(new \DateInterval('PT8H'));
         // si on change de jour, on arrête la recherche à minuit le jour même
         if($maxTime->format('d') != $minTime->format('d')) {
@@ -44,7 +44,7 @@ class AppointmentsController extends Controller
             ->where('a.startTime >= :time_min AND a.startTime < :time_max AND a.date = :date AND s.id = :speciality_id')
             ->setParameter(':time_min', $minTime)
             ->setParameter(':time_max', $maxTime)
-            ->setParameter(':speciality_id', $data['speciality'])
+            ->setParameter(':speciality_id', $request->get('speciality'))
             ->setParameter(':date', $date->format('Y-m-d'))
             ->getQuery()
             ->getResult();
@@ -61,7 +61,7 @@ class AppointmentsController extends Controller
                 $em->persist($address);
                 $em->flush();
             }
-            $clientCoords = explode(',', $data['coords']);
+            $clientCoords = explode(',', $request->get('coords'));
 
             if(count($clientCoords) === 2) {
                 $distance = $locationService->distance($address->getLatitude(), $address->getLongitude(),
@@ -79,7 +79,7 @@ class AppointmentsController extends Controller
 
         return $this->render(':appointments:results.html.twig', [
             'specialities' => $specialities,
-            'startTime' => $data['time'],
+            'startTime' => $minTime,
             'appointments' => $appointments,
             'extended' => false,
             'myLoc' => $clientCoords
@@ -242,6 +242,48 @@ class AppointmentsController extends Controller
     }
 
     /**
+     * @Route("/appt/create/multiple", name="appointments.create.multiple")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function createMultipleAction(Request $request)
+    {
+        $appointment = new Appointment();
+        $form = $this->get('form.factory')->create(AppointmentMultipleType::class, $appointment, [
+            'trait_choices' => $this->getUser()
+        ]);
+
+        if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+            /**/
+
+            //$appointment->setDate(new \DateTime());
+            //$interval=$request->request->get('duration');
+
+            $hours = $request->get('appointment')['duration']['hours']-1;
+            $minutes = $request->get('appointment')['duration']['minutes'];
+            $interval = new \DateInterval('PT' . $hours . 'H' . $minutes . 'M');
+            $start=new \DateTime($appointment->getStartTime()->format('H:i:s'));
+
+            $appointment->setEndTime($start->add($interval));
+            dump($appointment);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($appointment);
+            $em->flush();
+            return $this->render('holding_success.html.twig', [ /* TODO : REDIRECT ON MANAGE PAGE */ ]);
+        }
+
+        else {
+
+            return $this->render(':appointments:create_multiple.html.twig', [
+                'form' => $form->createView()
+            ]);
+
+        }
+	}
+		
+	/**
      * @Route("/user/appointments", name="user_appointments")
      */
     public function userAppointmentsAction()
