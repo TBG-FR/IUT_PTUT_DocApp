@@ -7,6 +7,7 @@ use AppBundle\Entity\Appointment;
 use AppBundle\Entity\RegularAppointment;
 use AppBundle\Entity\Speciality;
 use AppBundle\Form\AppointmentType;
+use Symfony\Component\Validator\Constraints\DateTime;
 use UserBundle\Entity\User;
 use UserBundle\Entity\Doctor;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -184,12 +185,23 @@ class AppointmentsController extends Controller
         ]);
 
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+            /**/
+
             //$appointment->setDate(new \DateTime());
+            //$interval=$request->request->get('duration');
+
+            $hours = $request->get('appointment')['duration']['hours']-1;
+            $minutes = $request->get('appointment')['duration']['minutes'];
+            $interval = new \DateInterval('PT' . $hours . 'H' . $minutes . 'M');
+            $start=new \DateTime($appointment->getStartTime()->format('H:i:s'));
+
+            $appointment->setEndTime($start->add($interval));
+            dump($appointment);
             $em = $this->getDoctrine()->getManager();
             $em->persist($appointment);
             $em->flush();
-
-            return $this->render('reservation_success.html.twig', [ /* TODO : REDIRECT ON MANAGE PAGE */ ]);
+            return $this->render('holding_success.html.twig', [ /* TODO : REDIRECT ON MANAGE PAGE */ ]);
         }
 
         else {
