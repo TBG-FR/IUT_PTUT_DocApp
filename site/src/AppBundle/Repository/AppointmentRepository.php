@@ -29,4 +29,13 @@ class AppointmentRepository extends EntityRepository
             ->where('d = :doctor')
             ->setParameter(':doctor', $doctor);
     }
+
+    public function getByUser(User $user)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.user = :user')
+            ->orderBy('a.startTime')
+            ->setParameter(':user', $user)
+            ->getQuery()->getResult();
+    }
 }

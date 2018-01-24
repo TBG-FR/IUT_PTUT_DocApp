@@ -41,6 +41,11 @@ class User extends BaseUser
      */
     private $last_name;
 
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Image", cascade={"persist","remove"})
+     */
+    private $avatar;
+
    /**
      * Get id
      *
@@ -89,6 +94,16 @@ class User extends BaseUser
     public function isDoctor()
     {
         return false;
+    }
+
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar($avatar)
+    {
+        $this->avatar= $avatar;
     }
 }
 

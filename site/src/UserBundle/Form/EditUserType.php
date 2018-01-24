@@ -10,6 +10,7 @@ class EditUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->remove('plainPassword');
+        $builder->setAction('/user/edit');
     }
 
     public function getParent()

@@ -2,6 +2,7 @@
 
 {% block content %}
     <h1>{{ user.username }}'s profile</h1>
+    <a href="{{ path('user_appointments') }}" class="btn btn-primary">Mes rendez-vous</a>
     <h2>Mes infos</h2>
     <ul class="infos">
         <li><b>Name:</b> {{ user.lastName }}</li>
@@ -11,5 +12,6 @@
     <h2>Editer</h2>
     {{ form_start(form) }}
     {{ form_widget(form) }}
+    <input type="submit" class="btn btn-primary" value="Editer">
     {{ form_end(form) }}
 {% endblock %}
