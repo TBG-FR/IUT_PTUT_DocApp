@@ -94,10 +94,24 @@ class AppointmentsController extends Controller
     public function displayDetailsAction($id, Request $request)
     {
         $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
+        $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
 
-        return $this->render(':appointments:details.html.twig', [
-            'appointment' => $appointment
-        ]);
+        if(is_null($appointment)) { // IF this appointment doesn't exist
+
+            //throw $this->createNotFoundException("This appointment doesn't exist !");
+            throw $this->createNotFoundException("Ce rendez-vous n'existe pas !");
+
+        }
+
+        else { // ELSE (this appointment exists)
+
+            return $this->render(':appointments:details.html.twig', [
+                'appointment' => $appointment,
+                'specialities' => $specialities,
+                'extended' => false
+            ]);
+
+        }
     }
 
     /**
@@ -110,9 +124,27 @@ class AppointmentsController extends Controller
     {
         $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
-        return $this->render(':holding:laststep.html.twig', [
-            'appointment' => $appointment
-        ]);
+        if(is_null($appointment)) { // IF this appointment doesn't exist
+
+            //throw $this->createNotFoundException("This appointment doesn't exist !");
+            throw $this->createNotFoundException("Ce rendez-vous n'existe pas !");
+
+        }
+
+        elseif(!is_null($appointment->getUser())) { // ELSE IF this appointment is taken
+
+            //throw $this->createNotFoundException("This appointment is already taken !");
+            throw $this->createNotFoundException("Ce rendez-vous est déjà pris !");
+
+        }
+
+        else { // ELSE (this appointment exists and is free)
+
+            return $this->render(':holding:laststep.html.twig', [
+                'appointment' => $appointment
+            ]);
+
+        }
     }
 
     /**
