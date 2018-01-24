@@ -104,7 +104,7 @@ class AppointmentsController extends Controller
     {
         $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
-        return $this->render(':appointments:reservation.html.twig', [
+        return $this->render(':holding:laststep.html.twig', [
             'appointment' => $appointment
         ]);
     }
@@ -129,7 +129,7 @@ class AppointmentsController extends Controller
 
                 /* TODO : Error Messages */
 
-                return $this->render(':appointments:reservation_failure.html.twig', [
+                return $this->render(':holding:failure.html.twig', [
                     'error' => "errorTODO_AlreadyTaken",
                     'appointment' => $appointment
                 ]);
@@ -144,7 +144,7 @@ class AppointmentsController extends Controller
                 $em->persist($appointment);
                 $em->flush();
 
-                return $this->render(':appointments:reservation_success.html.twig', [
+                return $this->render(':holding:success.html.twig', [
                     'appointment' => $appointment
                 ]);
 
@@ -156,7 +156,7 @@ class AppointmentsController extends Controller
 
             /* TODO : Error Messages */
 
-            return $this->render(':appointments:reservation_failure.html.twig', [
+            return $this->render(':holding:failure.html.twig', [
                 'error' => "errorTODO_NoPOST"
             ]);
 
