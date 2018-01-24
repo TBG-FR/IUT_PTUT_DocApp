@@ -8,58 +8,74 @@
 
 {% block content %}
 
-    {% if appointment is defined %}
+    {% include ':appointments:search_form.html.twig' %}
 
-        <div class="result details">
-        <div class="row">
-        <div class="col-2">
+        {% if appointment.user is not null %}
 
-                <div class="image">
-                    <img class="img-fluid img-thumbnail" src="/assets/images/profil.png" alt="Card image cap">
-                </div>
-
-                </div>
-
-            <div class="col-4">
-                <div class="name">
-                    Dr. {{ appointment.doctor.lastName }}
-                </div>
-
-                <div class="spe">
-                    {% set doctor_specialities = [] %}
-
-                    {% for speciality in appointment.doctor.specialities %}
-                        {% set doctor_specialities = doctor_specialities|merge([speciality.name]) %}
-                    {% endfor %}
-                    {{ doctor_specialities|join(' - ') }}
-                </div>
+            <div class="alert alert-danger" role="alert">
+                Attention : Ce rendez-vous est déjà pris !
+                Warning : This appointment is already taken !
             </div>
-            
-                <div class="col-6">
-                    <div class="time">
-                    {{ appointment.StartTime | date("H:i") }} - {{ appointment.EndTime | date("H:i") }}
+
+        {% endif %}
+
+            <div class="result details">
+            <div class="row">
+            <div class="col-2">
+
+                    <div class="image">
+                        <img class="img-fluid img-thumbnail" src="/assets/images/profil.png" alt="Card image cap">
+                    </div>
+
+                    </div>
+
+                <div class="col-4">
+                    <div class="name">
+                        Dr. {{ appointment.doctor.lastName }}
+                    </div>
+
+                    <div class="spe">
+                        {% set doctor_specialities = [] %}
+
+                        {% for speciality in appointment.doctor.specialities %}
+                            {% set doctor_specialities = doctor_specialities|merge([speciality.name]) %}
+                        {% endfor %}
+                        {{ doctor_specialities|join(' - ') }}
                     </div>
                 </div>
+
+                    <div class="col-6">
+                        <div class="time">
+                        {{ appointment.StartTime | date("H:i") }} - {{ appointment.EndTime | date("H:i") }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row desc">
+                    Description :</br>{{ appointment.Description }}
+
+                    <div class="bg-warning">
+                        {# TODO : Better displaying of Appointment's Specialities ! #}
+                        Specialities (TEMP) :
+                        {% set appt_specialities = [] %}
+                        {% for speciality in appointment.specialities %}
+                            {% set appt_specialities = appt_specialities|merge([speciality.name]) %}
+                        {% endfor %}
+                        {{ appt_specialities|join(' - ') }}
+                    </div>
+                </div>
+
             </div>
-            <div class="row desc">
-                Description :</br>{{ appointment.Description }}
+
+            <div class="btn-group menu-bottom">
+
+                {% if appointment.user is not null %}
+                    <a href="{{ path('appointments.reservation', {'id': appointment.ID}) }}" class="btn btn-primary disabled" aria-disabled="true">Réserver ce RDV</a>
+                {% else %}
+                    <a href="{{ path('appointments.reservation', {'id': appointment.ID}) }}" class="btn btn-primary">Réserver ce RDV</a>
+                {% endif %}
+
+                <a href="{{ path('appointments.results') }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>
+                {# TODO : Garder la recherche en mémoire ? Trouver un moyen de revenir à la même recherche ? #}
             </div>
-
-        </div>
-
-        <div class="btn-group">
-        <a href="{{ path('appointments.reservation', {'id': appointment.ID}) }}" class="btn btn-primary">Réserver ce
-            RDV</a>
-
-    {% else %}
-
-        <p>[ Bootstrap : Error - No Appointment with this id / No Appointment selected ]</p>
-        <div class="btn-group">
-
-    {% endif %}
-
-    <a href="{{ path('appointments.results') }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>
-    {# TODO : Garder la recherche en mémoire ? Trouver un moyen de revenir à la même recherche ? #}
-    </div>
 
 {% endblock %}

@@ -14,31 +14,48 @@
 
 {% endblock %}
     {% block javascripts %}
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsKDPOXJk9M1smvblwa7r-JdNNM8GM6sQ&callback=initMap">
+        </script>
         <script>
             function initMap() {
                 const bounds = new google.maps.LatLngBounds();
                 const $appts = $('a.lien');
                 const locs = [];
                 $appts.each(function(idx, appt) {
-                    const $map = $(map);
                     const loc = {
                         lat: parseFloat($(appt).attr('data-lat')),
-                        lng: parseFloat($(appt).attr('data-lon'))
+                        lng: parseFloat($(appt).attr('data-lon')),
+                        icon: null
                     };
-                    console.log(loc);
                     locs.push(loc);
-
                 });
+                console.log(locs);
                 const gMap = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 14,
+                    zoom: 13,
                     center: locs[0]
                 });
+
+
+                {% if myLoc|length == 2 %}
+                    const loc = {
+                        lat: parseFloat("{{ myLoc[0] }}"),
+                        lng: parseFloat("{{ myLoc[1] }}"),
+                        icon: '/assets/images/map_person.png'
+                    };
+                    locs.push(loc);
+                {% endif %}
+
                 for(let i = 0; i < locs.length; i++) {
                     bounds.extend(new google.maps.Marker({
                         position: locs[i],
-                        map: gMap
+                        map: gMap,
+                        icon: locs[i].icon
                     }).position);
                 }
+
+
+
                 gMap.fitBounds(bounds);
             }
         </script>

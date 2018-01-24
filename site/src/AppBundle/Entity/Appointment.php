@@ -59,6 +59,16 @@ class Appointment
      */
     private $user;
 
+    /**
+     * @ORM\Column(name="closed", type="boolean")
+     */
+    private $closed;
+
+    /**
+     * @ORM\Column(name="summary", type="text")
+     */
+    private $summary;
+
     private $distanceToUser = 0;
 
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
@@ -200,6 +210,38 @@ class Appointment
     public function setDistanceToUser($distanceToUser)
     {
         $this->distanceToUser = $distanceToUser;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClosed()
+    {
+        return $this->closed;
+    }
+
+    /**
+     * @param mixed $closed
+     */
+    public function setClosed($closed): void
+    {
+        $this->closed = $closed;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * @param mixed $summary
+     */
+    public function setSummary($summary): void
+    {
+        $this->summary = $summary;
     }
 
 }

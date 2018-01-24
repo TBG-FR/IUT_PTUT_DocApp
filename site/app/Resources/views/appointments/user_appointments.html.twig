@@ -1,16 +1,17 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-    <h1>Gestion</h1>
     <div class="appointments">
         {% for appointment in appointments %}
             <div class="appointment">
                 <h2>Cabinet: {{ appointment.office.address.toAddressString }}</h2>
                 <span>{{ appointment.startTime|date('H:i') }} - {{  appointment.endTime|date('H:i') }}</span>
                 {% if appointment.User is null %}
-                <span class="text-danger font-weight-bold">Non réservé</span>
+                    <span class="text-danger font-weight-bold">Non réservé</span>
                 {% endif %}
             </div>
             <hr>
+        {% else %}
+            Aucun historique
         {% endfor %}
     </div>
 {% endblock %}

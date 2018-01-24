@@ -27,9 +27,8 @@ class AppointmentsController extends Controller
     {
         $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
         $maxDistance = 50; //kilometers
-        $data = $request->get('search');
-        $minTime = new \DateTime($data['time']);
-        $maxTime = new \DateTime($data['time']);
+        $minTime = new \DateTime($request->get('time'));
+        $maxTime = new \DateTime($request->get('time'));
         $maxTime->add(new \DateInterval('PT8H'));
         // si on change de jour, on arrête la recherche à minuit le jour même
         if($maxTime->format('d') != $minTime->format('d')) {
@@ -40,12 +39,11 @@ class AppointmentsController extends Controller
         $appointmentRepo = $this->getDoctrine()->getRepository(Appointment::class);
         $appointments = $appointmentRepo->getAvailableAppointmentsQueryBuilder()
             ->innerJoin('a.office', 'o')
-            ->innerJoin('o.doctor', 'd')
-            ->innerJoin('d.specialities', 's')
+            ->innerJoin('a.specialities', 's')
             ->where('a.startTime >= :time_min AND a.startTime < :time_max AND a.date = :date AND s.id = :speciality_id')
             ->setParameter(':time_min', $minTime)
             ->setParameter(':time_max', $maxTime)
-            ->setParameter(':speciality_id', $data['speciality'])
+            ->setParameter(':speciality_id', $request->get('speciality'))
             ->setParameter(':date', $date->format('Y-m-d'))
             ->getQuery()
             ->getResult();
@@ -62,7 +60,7 @@ class AppointmentsController extends Controller
                 $em->persist($address);
                 $em->flush();
             }
-            $clientCoords = explode(',', $data['coords']);
+            $clientCoords = explode(',', $request->get('coords'));
 
             if(count($clientCoords) === 2) {
                 $distance = $locationService->distance($address->getLatitude(), $address->getLongitude(),
@@ -80,7 +78,7 @@ class AppointmentsController extends Controller
 
         return $this->render(':appointments:results.html.twig', [
             'specialities' => $specialities,
-            'startTime' => $data['time'],
+            'startTime' => $minTime,
             'appointments' => $appointments,
             'extended' => false,
             'myLoc' => $clientCoords
@@ -96,10 +94,24 @@ class AppointmentsController extends Controller
     public function displayDetailsAction($id, Request $request)
     {
         $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
+        $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
 
-        return $this->render(':appointments:details.html.twig', [
-            'appointment' => $appointment
-        ]);
+        if(is_null($appointment)) { // IF this appointment doesn't exist
+
+            //throw $this->createNotFoundException("This appointment doesn't exist !");
+            throw $this->createNotFoundException("Ce rendez-vous n'existe pas !");
+
+        }
+
+        else { // ELSE (this appointment exists)
+
+            return $this->render(':appointments:details.html.twig', [
+                'appointment' => $appointment,
+                'specialities' => $specialities,
+                'extended' => false
+            ]);
+
+        }
     }
 
     /**
@@ -108,37 +120,51 @@ class AppointmentsController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function reserveApptAction($id, Request $request)
+    public function reservationAction($id, Request $request)
     {
         $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
-        return $this->render(':holding:laststep.html.twig', [
-            'appointment' => $appointment
-        ]);
+        if(is_null($appointment)) { // IF this appointment doesn't exist
+
+            //throw $this->createNotFoundException("This appointment doesn't exist !");
+            throw $this->createNotFoundException("Ce rendez-vous n'existe pas !");
+
+        }
+
+        elseif(!is_null($appointment->getUser())) { // ELSE IF this appointment is taken
+
+            //throw $this->createNotFoundException("This appointment is already taken !");
+            throw $this->createNotFoundException("Ce rendez-vous est déjà pris !");
+
+        }
+
+        else { // ELSE (this appointment exists and is free)
+
+            return $this->render(':holding:laststep.html.twig', [
+                'appointment' => $appointment
+            ]);
+
+        }
     }
 
     /**
-     * @Route("/appt/reservation_result", name="appointments.reservation_result")
+     * @Route("/appt/reservation/result", name="appointments.reservation_result")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function successAction(Request $request)
+    public function reservationResultAction(Request $request)
     {
 
-        if($request->isMethod('POST')) {
+        if($request->isMethod('POST')) { // IF the user acceeded to that page after a payment
 
             $id = $request->request->get('paymentSuccessful');
             $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
-            dump($appointment->getUser());
-
-            if($appointment->getUser() instanceof User || $appointment->getUser() instanceof Doctor) {
-
-                /* TODO : Error Messages */
+            if($appointment->getUser() instanceof User || $appointment->getUser() instanceof Doctor) { //
 
                 return $this->render(':holding:failure.html.twig', [
-                    'error' => "errorTODO_AlreadyTaken",
+                    'error' => "already_taken",
                     'appointment' => $appointment
                 ]);
 
@@ -146,8 +172,10 @@ class AppointmentsController extends Controller
 
             else {
 
+                // Add the current User to that Appointment
                 $appointment->setUser($this->getUser());
 
+                // Apply modifications into EM & DB
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($appointment);
                 $em->flush();
@@ -160,13 +188,10 @@ class AppointmentsController extends Controller
 
         }
 
-        else {
+        else { // ELSE (the user acceeded to that page manually)
 
-            /* TODO : Error Messages */
-
-            return $this->render(':holding:failure.html.twig', [
-                'error' => "errorTODO_NoPOST"
-            ]);
+            //throw $this->createNotFoundException("You didn't made any holding or payment !");
+            throw $this->createNotFoundException("Vous n'avez fait aucune réservation ni paiement !");
 
         }
 
@@ -202,7 +227,8 @@ class AppointmentsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($appointment);
             $em->flush();
-            return $this->render('holding_success.html.twig', [ /* TODO : REDIRECT ON MANAGE PAGE */ ]);
+
+            return $this->redirect($this->generateUrl('doctor_panel'));
         }
 
         else {
@@ -254,5 +280,17 @@ class AppointmentsController extends Controller
             ]);
 
         }
+		
+	/**
+     * @Route("/user/appointments", name="user_appointments")
+     */
+    public function userAppointmentsAction()
+    {
+        $appointments = $this->getDoctrine()->getRepository(Appointment::class)
+            ->getByUser($this->getUser());
+
+        return $this->render(':appointments:user_appointments.html.twig', [
+            'appointments' => $appointments
+        ]);
     }
 }
