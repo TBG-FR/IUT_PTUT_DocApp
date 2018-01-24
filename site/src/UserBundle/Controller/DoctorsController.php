@@ -16,7 +16,7 @@ use UserBundle\Form\DoctorType;
 class DoctorsController extends Controller
 {
     /**
-     * @Route("/panel")
+     * @Route("/panel",name="doctor_panel")
      */
     public function index()
     {

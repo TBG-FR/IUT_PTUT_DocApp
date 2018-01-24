@@ -38,8 +38,7 @@ class AppointmentsController extends Controller
         $appointmentRepo = $this->getDoctrine()->getRepository(Appointment::class);
         $appointments = $appointmentRepo->getAvailableAppointmentsQueryBuilder()
             ->innerJoin('a.office', 'o')
-            ->innerJoin('o.doctor', 'd')
-            ->innerJoin('d.specialities', 's')
+            ->innerJoin('a.specialities', 's')
             ->where('a.startTime >= :time_min AND a.startTime < :time_max AND a.date = :date AND s.id = :speciality_id')
             ->setParameter(':time_min', $minTime)
             ->setParameter(':time_max', $maxTime)
@@ -189,7 +188,7 @@ class AppointmentsController extends Controller
             $em->persist($appointment);
             $em->flush();
 
-            return $this->render('reservation_success.html.twig', [ /* TODO : REDIRECT ON MANAGE PAGE */ ]);
+            return $this->redirect($this->generateUrl('doctor_panel'));
         }
 
         else {
@@ -199,5 +198,18 @@ class AppointmentsController extends Controller
             ]);
 
         }
+    }
+
+    /**
+     * @Route("/user/appointments", name="user_appointments")
+     */
+    public function userAppointmentsAction()
+    {
+        $appointments = $this->getDoctrine()->getRepository(Appointment::class)
+            ->getByUser($this->getUser());
+
+        return $this->render(':appointments:user_appointments.html.twig', [
+            'appointments' => $appointments
+        ]);
     }
 }
