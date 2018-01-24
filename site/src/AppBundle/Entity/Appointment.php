@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Entity\User;
 
 /**
  * Appointment
@@ -49,6 +50,11 @@ class Appointment
     private $office;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Speciality", inversedBy="appointments")
+     */
+    private $specialities;
+
+    /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="appointments")
      */
     private $user;
@@ -59,6 +65,7 @@ class Appointment
 
     public function __construct()
     {
+        $this->setDate(new \DateTime());
         $this->setStartTime(new \DateTime());
         $this->setEndTime(new \DateTime());
     }
@@ -131,6 +138,22 @@ class Appointment
     }
 
     /**
+     * @return mixed
+     */
+    public function getSpecialities()
+    {
+        return $this->specialities;
+    }
+
+    /**
+     * @param mixed $specialities
+     */
+    public function setSpecialities($specialities)
+    {
+        $this->specialities = $specialities;
+    }
+
+    /**
      * @return Appointment
      */
     public function getOffice()
@@ -146,11 +169,17 @@ class Appointment
         $this->office = $office;
     }
 
+    /**
+     * @return mixed $user
+     */
     public function getUser()
     {
         return $this->user;
     }
 
+    /**
+     * @param User $user
+     */
     public function setUser($user)
     {
         $this->user = $user;

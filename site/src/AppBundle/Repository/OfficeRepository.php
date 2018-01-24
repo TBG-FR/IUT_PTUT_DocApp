@@ -16,8 +16,8 @@ class OfficeRepository extends EntityRepository
 {
     public function getFindByUserQueryBuilder(User $user) : QueryBuilder
     {
-        return $this->createQueryBuilder('a')
-            ->where('a.doctor = :user')
+        return $this->createQueryBuilder('o')
+            ->where('o.doctor = :user')
             ->setParameter(':user', $user->getId());
     }
 }

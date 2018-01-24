@@ -7,6 +7,8 @@ use AppBundle\Entity\Appointment;
 use AppBundle\Entity\RegularAppointment;
 use AppBundle\Entity\Speciality;
 use AppBundle\Form\AppointmentType;
+use UserBundle\Entity\User;
+use UserBundle\Entity\Doctor;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -108,13 +110,13 @@ class AppointmentsController extends Controller
     {
         $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
-        return $this->render(':appointments:reservation.html.twig', [
+        return $this->render(':holding:laststep.html.twig', [
             'appointment' => $appointment
         ]);
     }
 
     /**
-     * @Route("/appt/success", name="appointments.success")
+     * @Route("/appt/reservation_result", name="appointments.reservation_result")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -127,13 +129,32 @@ class AppointmentsController extends Controller
             $id = $request->request->get('paymentSuccessful');
             $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
-            /* TODO : IF Appointment is FREE */
+            dump($appointment->getUser());
 
-            /* TODO : Make link between User & Appt */
+            if($appointment->getUser() instanceof User || $appointment->getUser() instanceof Doctor) {
 
-            return $this->render(':appointments:success.html.twig', [
-                'appointment' => $appointment
-            ]);
+                /* TODO : Error Messages */
+
+                return $this->render(':holding:failure.html.twig', [
+                    'error' => "errorTODO_AlreadyTaken",
+                    'appointment' => $appointment
+                ]);
+
+            }
+
+            else {
+
+                $appointment->setUser($this->getUser());
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($appointment);
+                $em->flush();
+
+                return $this->render(':holding:success.html.twig', [
+                    'appointment' => $appointment
+                ]);
+
+            }
 
         }
 
@@ -141,8 +162,8 @@ class AppointmentsController extends Controller
 
             /* TODO : Error Messages */
 
-            return $this->render(':appointments:failure.html.twig', [
-                'error' => "errorTODO"
+            return $this->render(':holding:failure.html.twig', [
+                'error' => "errorTODO_NoPOST"
             ]);
 
         }
@@ -163,14 +184,20 @@ class AppointmentsController extends Controller
         ]);
 
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $appointment->setDate(new \DateTime());
+            //$appointment->setDate(new \DateTime());
             $em = $this->getDoctrine()->getManager();
             $em->persist($appointment);
             $em->flush();
+
+            return $this->render('reservation_success.html.twig', [ /* TODO : REDIRECT ON MANAGE PAGE */ ]);
         }
 
-        return $this->render(':appointments:create.html.twig', [
-            'form' => $form->createView()
-        ]);
+        else {
+
+            return $this->render(':appointments:create.html.twig', [
+                'form' => $form->createView()
+            ]);
+
+        }
     }
 }
