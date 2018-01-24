@@ -7,6 +7,7 @@ use AppBundle\Entity\Appointment;
 use AppBundle\Entity\RegularAppointment;
 use AppBundle\Entity\Speciality;
 use AppBundle\Form\AppointmentType;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Validator\Constraints\DateTime;
 use UserBundle\Entity\User;
 use UserBundle\Entity\Doctor;
