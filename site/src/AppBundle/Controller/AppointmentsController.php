@@ -280,6 +280,7 @@ class AppointmentsController extends Controller
             ]);
 
         }
+	}
 		
 	/**
      * @Route("/user/appointments", name="user_appointments")
