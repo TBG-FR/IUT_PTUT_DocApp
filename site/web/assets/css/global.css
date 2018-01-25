@@ -36,6 +36,21 @@ a {
     height: auto;
 }
 
+.reviews-alert {
+
+    text-decoration: none;
+
+}
+
+.reviews-alert:hover {
+
+    text-decoration: none;
+    background-color: dimgrey;
+    border-radius: 2.5px; /* 0.5vw */
+    padding: 2.5px; /* 0.5vw */
+    color: white;
+
+}
 
 /*------------ ------------ Search Result ------------- ------------*/
 
