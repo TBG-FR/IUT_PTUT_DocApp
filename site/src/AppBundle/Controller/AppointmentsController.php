@@ -7,6 +7,7 @@ use AppBundle\Entity\Appointment;
 use AppBundle\Entity\RegularAppointment;
 use AppBundle\Entity\Speciality;
 use AppBundle\Form\AppointmentType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\BrowserKit\Response;
 use AppBundle\Form\AppointmentMultipleType;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -96,7 +97,7 @@ class AppointmentsController extends Controller
             else return ($time1 < $time2) ? -1 : 1;
         });
 
-        return $this->render(':appointments:results.html.twig', [
+        return $this->render(':appointments:display_results.html.twig', [
             'specialities' => $specialities,
             'startTime' => $minTime,
             'appointments' => $appointments,
@@ -141,7 +142,7 @@ class AppointmentsController extends Controller
 
         else { // ELSE (this appointment exists)
 
-            return $this->render(':appointments:details.html.twig', [
+            return $this->render(':appointments:display_details.html.twig', [
                 'appointment' => $appointment,
                 'specialities' => $specialities,
                 'extended' => false
@@ -249,7 +250,20 @@ class AppointmentsController extends Controller
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
             dump($form->get('specialities'));
-            /* TODO : Check if the values are right (especially if there is/are >= 1 specialitiy */
+            dump($appointment->getSpecialities()->isEmpty());
+
+            if($appointment->getSpecialities()->isEmpty()) { // IF the user entered no speciality
+
+                $this->get('session')->getFlashBag()->add('danger','<span class="fa fa-warning"></span> Vous devez sélectionner <strong>au moins une spécialité</strong> !');
+                $this->get('session')->getFlashBag()->add('danger','<span class="fa fa-warning"></span> You must choose <strong>at least one speciality</strong> !');
+
+                return $this->render(':appointments:create.html.twig', [
+                    'form' => $form->createView()
+                ]);
+
+            }
+
+            else { // ELSE (the user entered at least one speciality)
 
             //$appointment->setDate(new \DateTime());
             //$interval=$request->request->get('duration');
@@ -265,6 +279,8 @@ class AppointmentsController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('doctor_panel'));
+
+            }
         }
 
         else {
@@ -313,8 +329,8 @@ class AppointmentsController extends Controller
                 $appointment->setStartTime($currentStart);
                 $NbCreneaux=$NbCreneaux-1;
             }
-			
-            return $this->render('holding_success.html.twig', [ /* TODO : REDIRECT ON MANAGE PAGE */ ]);
+
+            return $this->redirect($this->generateUrl('doctor_panel'));
         }
 
         else {

@@ -64,6 +64,23 @@
         </div>
 
         <div id="content" class="container">
+
+            {# TODO : Make a specific TWIG for alerts, with different displaying for each type (success/warning/danger) #}
+            {% for type, messages in app.session.flashbag.all() %}
+
+                {% for message in messages %}
+
+                    <div class="notices alert alert-{{type}} alert-dismissible fade show" role="alert">
+                        {{ message | raw }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                {% endfor %}
+
+            {% endfor %}
+
             {% block content %}{% endblock %}
         </div>
 
@@ -78,5 +95,6 @@
         <script src="/assets/js/app.js"></script>
 
         {% block javascripts %}{% endblock %}
+
     </body>
 </html>
