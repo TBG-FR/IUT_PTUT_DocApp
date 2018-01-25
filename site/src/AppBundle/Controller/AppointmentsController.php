@@ -324,8 +324,7 @@ class AppointmentsController extends Controller
      */
     public function userAppointmentsAction()
     {
-        $appointments = $this->getDoctrine()->getRepository(Appointment::class)
-            ->getByUser($this->getUser());
+        $appointments = $this->getUser()->getAppointments();
 
         return $this->render(':appointments:user_appointments.html.twig', [
             'appointments' => $appointments
