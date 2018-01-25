@@ -2,47 +2,59 @@
     <div class="result">
     <div class="row">
         <div class="col-8">
-            {% for appointment in appointments %}
-                <a class="lien" href="{{ path('appointments.details', { 'id': appointment.id }) }}"
-                   data-lat="{{ appointment.office.address.latitude }}"
-                   data-lon="{{ appointment.office.address.longitude }}">
-                <div class="element">
-                    <div class="image">
-                        <img class="img-fluid img-thumbnail" src="{{ appointment.office.doctor.avatar.url ?? '/assets/images/profil.png' }}"
-                             alt="Card image cap">
-                    </div>
-                    <div class="content">
-                        <div class="float-left">
-                            <div class="name">
-                                Dr. {{ appointment.doctor.lastName }}
-                            </div>
-                            <div class="spe">
-                                {% set doctor_specialities = [] %}
 
-                                {% for speciality in appointment.doctor.specialities %}
-                                    {% set doctor_specialities = doctor_specialities|merge([speciality.name]) %}
-                                {% endfor %}
-                                {{ doctor_specialities|join(' - ')}}
-                            </div>
-                        </div>
-                        <div class="float-right">
-                            <div class="hour">
-                                {{ appointment.startTime|date('H:i') }}
-                            </div>
-                            <div class="distance">
-                                {{ appointment.distanceToUser|round(2) }} km
-                                - {{ appointment.distanceToUserTime['hours']|strpad(2, '0') }}h{{ appointment.distanceToUserTime['minutes']|strpad(2,'0') }}
-                            </div>
-                        </div>
-                    </div>
+            {% if (appointments is null) or (appointments is not defined) or (appointments is empty) %}
+
+                <div class="alert alert-danger" role="alert">
+                    Aucun créneau de rendez-vous n'a été trouvé avec vos paramètres de recherche<br/>
+                    Réessayez avec des paramètres différents ou <a href="#" class="alert-link">placez une alerte</a> pour être informé si une place se libère !
                 </div>
-            </a>
+                <div class="alert alert-warning" role="alert">
+                    No appointment time slot has been found with your search settings<br/>
+                    Try again with different settings or <a href="#" class="alert-link">put an alert</a> to be notified if ones becomes available !
+                </div>
+                    
+            {% else %}
+                    
+                {% for appointment in appointments %}
 
-    {% endfor %}
+                        <a class="lien" href="{{ path('appointments.details', { 'id': appointment.id }) }}" data-lat="{{ appointment.office.address.latitude }}" data-lon="{{ appointment.office.address.longitude }}">
+                                <div class="element">
+                                    <div class="image">
+                                        <img class="img-fluid img-thumbnail" src="{{ appointment.office.doctor.avatar.url }}" alt="Card image cap">
+                                    </div>
+                                    <div class="content">
+                                        <div class="float-left">
+                                            <div class="name">
+                                                Dr. {{ appointment.doctor.lastName }}
+                                            </div>
+                                            <div class="spe">
+                                                {% set doctor_specialities = [] %}
+
+                                                {% for speciality in appointment.doctor.specialities %}
+                                                    {% set doctor_specialities = doctor_specialities|merge([speciality.name]) %}
+                                                {% endfor %}
+                                                {{ doctor_specialities|join(' - ')}}
+                                            </div>
+                                        </div>
+                                        <div class="float-right">
+                                            <div class="hour">
+                                                {{ appointment.startTime|date('H:i') }}
+                                            </div>
+                                            <div class="distance">
+                                                {{ appointment.distanceToUser|round(2) }} km
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                    {% endfor %}
+
+            {% endif %}
         </div>
         <div class="col-4">
-            <div id="map" style="width: 100%;height: 300px;"
-                 ></div>
+            <div id="map" style="width: 100%;height: 300px;"></div>
         </div>
     </div>
     </div>

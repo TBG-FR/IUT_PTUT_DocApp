@@ -192,7 +192,7 @@ class AppointmentsController extends Controller
     public function reservationResultAction(Request $request)
     {
 
-        if($request->isMethod('POST')) { // IF the user acceeded to that page after a payment
+        if($request->isMethod('POST')) { // IF the user acceeded to that page with POST (= after a payment)
 
             $id = $request->request->get('paymentSuccessful');
             $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
@@ -248,7 +248,8 @@ class AppointmentsController extends Controller
 
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
-            /**/
+            dump($form->get('specialities'));
+            /* TODO : Check if the values are right (especially if there is/are >= 1 specialitiy */
 
             //$appointment->setDate(new \DateTime());
             //$interval=$request->request->get('duration');
