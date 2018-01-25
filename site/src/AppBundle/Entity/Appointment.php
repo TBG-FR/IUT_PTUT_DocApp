@@ -40,7 +40,7 @@ class Appointment
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string")
+     * @ORM\Column(name="description", type="string", nullable=true)
      */
     private $description;
 
@@ -62,15 +62,15 @@ class Appointment
     /**
      * @ORM\Column(name="closed", type="boolean")
      */
-    private $closed;
+    private $closed = false;
 
     /**
-     * @ORM\Column(name="summary", type="text")
+     * @ORM\Column(name="summary", type="text", nullable=true)
      */
     private $summary;
 
     private $distanceToUser = 0;
-
+    private $distanceToUserTime = [];
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
     public function __construct()
@@ -210,6 +210,16 @@ class Appointment
     public function setDistanceToUser($distanceToUser)
     {
         $this->distanceToUser = $distanceToUser;
+    }
+
+    public function getDistanceToUserTime()
+    {
+        return $this->distanceToUserTime;
+    }
+
+    public function setDistanceToUserTime($distanceToUserTime)
+    {
+        $this->distanceToUserTime = $distanceToUserTime;
     }
 
     /**

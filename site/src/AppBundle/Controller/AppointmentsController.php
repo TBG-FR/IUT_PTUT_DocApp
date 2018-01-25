@@ -30,7 +30,7 @@ class AppointmentsController extends Controller
         $maxDistance = 50; //kilometers
         $minTime = new \DateTime($request->get('time'));
         $maxTime = new \DateTime($request->get('time'));
-        $maxTime->add(new \DateInterval('PT8H'));
+        $maxTime->add(new \DateInterval('PT12H'));
         // si on change de jour, on arrête la recherche à minuit le jour même
         if($maxTime->format('d') != $minTime->format('d')) {
             $maxTime = new \DateTime(date('Y-m-d'));
@@ -75,6 +75,28 @@ class AppointmentsController extends Controller
             }
         }
 
+        //sort appointments
+        usort($appointments, function($first, $second) {
+            $time1 = $this->getDistanceTime($first->getDistanceToUser());
+            $time2 = $this->getDistanceTime($second->getDistanceToUser());
+            $first->setDistanceToUserTime($time1);
+            $second->setDistanceToUserTime($time2);
+            $time1 = (clone $first->getStartTime())->add(new \DateInterval('PT' .
+                    $time1['hours'] . 'H' .
+                    $time1['minutes'] . 'M' .
+                    $time1['seconds'] . 'S'
+            ));
+            $time2 = (clone $second->getStartTime())->add(new \DateInterval('PT' .
+                        $time2['hours'] . 'H' .
+                        $time2['minutes'] . 'M' .
+                        $time2['seconds'] . 'S'
+            ));
+
+            if($time1 == $time2) return 0;
+            else return ($time1 < $time2) ? -1 : 1;
+        });
+
+
         //TODO: verify data and find all matching appointments
 
         return $this->render(':appointments:results.html.twig', [
@@ -84,6 +106,22 @@ class AppointmentsController extends Controller
             'extended' => false,
             'myLoc' => $clientCoords
         ]);
+    }
+
+    private function getDistanceTime(float $distance)
+    {
+        $speed = 70;//kmh
+        $factor = (1/$speed) * $distance;
+        $hours = floor($factor);
+        $minutes = ($factor - floor($factor)) * 60;
+        $seconds = floor(($minutes - floor($minutes)) * 60);
+        $minutes = floor($minutes);
+
+        return [
+            'hours' => $hours,
+            'minutes' => $minutes,
+            'seconds' => $seconds
+        ];
     }
 
     /**
@@ -199,7 +237,7 @@ class AppointmentsController extends Controller
     }
 
     /**
-     * @Route("/appt/create", name="appointments.create")
+     * @Route("/panel/appt/create", name="appointments.create")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -224,7 +262,6 @@ class AppointmentsController extends Controller
             $start=new \DateTime($appointment->getStartTime()->format('H:i:s'));
 
             $appointment->setEndTime($start->add($interval));
-            dump($appointment);
             $em = $this->getDoctrine()->getManager();
             $em->persist($appointment);
             $em->flush();
@@ -267,7 +304,6 @@ class AppointmentsController extends Controller
             $start=new \DateTime($appointment->getStartTime()->format('H:i:s'));
 
             $appointment->setEndTime($start->add($interval));
-            dump($appointment);
             $em = $this->getDoctrine()->getManager();
             $em->persist($appointment);
             $em->flush();

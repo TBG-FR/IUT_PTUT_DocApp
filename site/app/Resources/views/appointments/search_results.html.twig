@@ -8,7 +8,8 @@
                    data-lon="{{ appointment.office.address.longitude }}">
                 <div class="element">
                     <div class="image">
-                        <img class="img-fluid img-thumbnail" src="{{ appointment.office.doctor.avatar.url }}" alt="Card image cap">
+                        <img class="img-fluid img-thumbnail" src="{{ appointment.office.doctor.avatar.url ?? '/assets/images/profil.png' }}"
+                             alt="Card image cap">
                     </div>
                     <div class="content">
                         <div class="float-left">
@@ -30,6 +31,7 @@
                             </div>
                             <div class="distance">
                                 {{ appointment.distanceToUser|round(2) }} km
+                                - {{ appointment.distanceToUserTime['hours']|strpad(2, '0') }}h{{ appointment.distanceToUserTime['minutes']|strpad(2,'0') }}
                             </div>
                         </div>
                     </div>
