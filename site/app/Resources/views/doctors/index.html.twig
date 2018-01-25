@@ -2,15 +2,72 @@
 {% block content %}
     <h1>Gestion</h1>
     <div class="appointments">
-        {% for appointment in appointments %}
+
+        <h2>En cours</h2>
+        {% for appointment in appointments
+            if (appointment.startTime|date('H:i:s') <= 'now'|date('H:i:s')
+                and appointment.date|date('Y-m-d') == 'now'|date('Y-m-d')
+                and appointment.endTime|date('H:i:s') >= 'now'|date('H:i:s'))
+            or ((appointment.date|date('Y-m-d') < 'now'|date('Y-m-d')
+                    or (appointment.endTime|date('H:i:s') <= 'now'|date('H:i:s')
+                        and appointment.date|date('Y-m-d') == 'now'|date('Y-m-d')))
+                and not appointment.closed)
+        %}
             <div class="appointment">
                 <h2>Cabinet: {{ appointment.office.address.toAddressString }}</h2>
-                <span>{{ appointment.startTime|date('H:i') }} - {{  appointment.endTime|date('H:i') }}</span>
+                <span>Le {{ appointment.date|date('d/m') }} à {{ appointment.startTime|date('H:i') }} - {{  appointment.endTime|date('H:i') }}</span>
                 {% if appointment.User is null %}
-                <span class="text-danger font-weight-bold">Non réservé</span>
+                    <span class="text-danger font-weight-bold">Non réservé</span>
+                {% else %}
+                    <span class="text-success font-weight-bold">
+                        Réservé par {{ appointment.user.lastName ~ ' ' ~ appointment.user.firstName }}
+                    </span>
                 {% endif %}
             </div>
             <hr>
+        {% else %}
+            Aucun
+        {% endfor %}
+        <h2>A venir</h2>
+        {% for appointment in appointments
+            if appointment.startTime|date('H:i:s') > 'now'|date('H:i:s')
+            and appointment.date|date('Y-m-d') >= 'now'|date('Y-m-d')
+        %}
+            <div class="appointment">
+                <h2>Cabinet: {{ appointment.office.address.toAddressString }}</h2>
+                <span>Le {{ appointment.date|date('d/m') }} à {{ appointment.startTime|date('H:i') }} - {{  appointment.endTime|date('H:i') }}</span>
+                {% if appointment.User is null %}
+                    <span class="text-danger font-weight-bold">Non réservé</span>
+                {% else %}
+                    <span class="text-success font-weight-bold">
+                        Réservé par {{ appointment.user.lastName ~ ' ' ~ appointment.user.firstName }}
+                    </span>
+                {% endif %}
+            </div>
+            <hr>
+        {% else %}
+            Aucun
+        {% endfor %}
+        <h2>Passés</h2>
+        {% for appointment in appointments
+            if appointment.endTime|date('H:i:s') < 'now'|date('H:i:s')
+            and appointment.date|date('Y-m-d') <= 'now'|date('Y-m-d')
+            and appointment.closed
+        %}
+            <div class="appointment">
+                <h2>Cabinet: {{ appointment.office.address.toAddressString }}</h2>
+                <span>Le {{ appointment.date|date('d/m') }} à {{ appointment.startTime|date('H:i') }} - {{  appointment.endTime|date('H:i') }}</span>
+                {% if appointment.User is null %}
+                    <span class="text-danger font-weight-bold">Non réservé</span>
+                {% else %}
+                    <span class="text-success font-weight-bold">
+                        Réservé par {{ appointment.user.lastName ~ ' ' ~ appointment.user.firstName }}
+                    </span>
+                {% endif %}
+            </div>
+            <hr>
+        {% else %}
+            Aucun
         {% endfor %}
     </div>
 {% endblock %}

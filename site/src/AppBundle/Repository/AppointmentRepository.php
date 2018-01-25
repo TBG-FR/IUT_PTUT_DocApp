@@ -18,7 +18,7 @@ class AppointmentRepository extends EntityRepository
     public function getAvailableAppointmentsQueryBuilder() : QueryBuilder
     {
         return $this->createQueryBuilder('a')
-            ->where('a.user IS NULL');
+            ->where('a.user_id IS NULL');
     }
 
     public function getAppointmentsByDoctorQueryBuilder(Doctor $doctor)
