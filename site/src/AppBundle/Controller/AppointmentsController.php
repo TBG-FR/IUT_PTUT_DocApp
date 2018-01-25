@@ -28,8 +28,8 @@ class AppointmentsController extends Controller
     {
         $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
         $maxDistance = 50; //kilometers
-        $minTime = new \DateTime($request->get('time'));
-        $maxTime = new \DateTime($request->get('time'));
+        $minTime = new \DateTime(urldecode($request->get('time')));
+        $maxTime = new \DateTime(urldecode($request->get('time')));
         $maxTime->add(new \DateInterval('PT12H'));
         // si on change de jour, on arrête la recherche à minuit le jour même
         if($maxTime->format('d') != $minTime->format('d')) {
