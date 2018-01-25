@@ -14,8 +14,11 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
 
+    AppBundle\Twig\AppExtension:
+        tags: ['twig.extension']
+
     AppBundle.Services.LocationService:
-        class: AppBundle\Services\LocationService
+        class: AppBundle\Service\LocationService
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     AppBundle\:
