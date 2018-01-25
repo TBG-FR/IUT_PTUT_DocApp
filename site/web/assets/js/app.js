@@ -86,3 +86,60 @@ $('#appointment_regular_appointment').on('change', function(event) {
        $checkBoxGroup.parent().find('#appointment_frequency_type,label[for=appointment_frequency_type]').hide();
    }
 });
+
+
+$('#appointment_multiple_NbCrenaux').on('change', function(event) {
+    updateEndTime();
+});
+
+$('#appointment_multiple_startTime_hour').on('change', function(event) {
+    updateEndTime();
+});
+
+$('#appointment_multiple_startTime_minute').on('change', function(event) {
+    updateEndTime();
+});
+
+$('#appointment_multiple_DureeCrenaux_hours').on('change', function(event) {
+    updateEndTime();
+});
+
+$('#appointment_multiple_DureeCrenaux_minutes').on('change', function(event) {
+    updateEndTime();
+});
+
+
+function updateEndTime()
+{
+    //var theForm = document.forms["form_multiple"];
+    //var NbCreneaux = theForm.elements["NbCrenaux"];
+    var NbCrenaux = parseInt(document.getElementById("appointment_multiple_NbCrenaux" ).value);
+    var startTimeHour = parseInt(document.getElementById("appointment_multiple_startTime_hour" ).value);
+    var startTimeMinute = parseInt(document.getElementById("appointment_multiple_startTime_minute" ).value);
+    var DureeCreneauxHours = parseInt(document.getElementById("appointment_multiple_DureeCrenaux_hours" ).value)-1;
+    var DureeCreneauxMinutes = parseInt(document.getElementById("appointment_multiple_DureeCrenaux_minutes" ).value);
+
+    var endTimeHour;
+    var endTimeMinute;
+    var totalMinute;
+    var totalHeure;
+    totalMinute=DureeCreneauxMinutes*NbCrenaux;
+    totalHeure=DureeCreneauxHours*NbCrenaux;
+
+    while (totalMinute-60>=0){
+        totalMinute=totalMinute-60;
+        totalHeure++;
+    }
+
+    endTimeHour=startTimeHour+totalHeure;
+    if(endTimeHour>=24){
+        document.getElementById("appointment_multiple_NbCrenaux" ).value=NbCrenaux-1;
+        return updateEndTime();
+    }
+    endTimeMinute=startTimeMinute+totalMinute;
+    document.getElementById("appointment_multiple_endTimeHour" ).value=endTimeHour;
+    document.getElementById("appointment_multiple_endTimeMinute" ).value=endTimeMinute;
+}
+
+
+

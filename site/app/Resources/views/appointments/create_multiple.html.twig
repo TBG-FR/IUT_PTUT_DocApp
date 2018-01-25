@@ -9,7 +9,7 @@
 {% block content %}
 
     <div class="create_multiple form">
-        {{ form_start(form,{'attr':{'class':'form-horizontal'}}) }}
+        {{ form_start(form,{'attr':{'class':'form-horizontal'}},{'id': 'form_multiple'}) }}
         {{ form_errors(form) }}
         <div class="row">
             <div class="col">
@@ -17,16 +17,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col-6">
                 {{ form_row(form.startTime) }}
             </div>
-            <div class="col">
-                {{ form_row(form.endTime) }}
+            <div class="col-3">
+                {{ form_row(form.endTimeHour) }}
+            </div>
+            <div class="col-3">
+                {{ form_row(form.endTimeMinute) }}
             </div>
         </div>
         <div class="row">
             <div class="col">
-                {{ form_row(form.NbCrenaux) }}
+                {{ form_row(form.NbCrenaux,{'attr':{'value': 0}}) }}
             </div>
 
             <div class="col">
@@ -34,11 +37,30 @@
             </div>
 
         </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.specialities) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.description) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.office) }}
+            </div>
+        </div>
         <div class="row">
             <div class="col">
             {{ form_row(form.submit) }}
             </div>
         </div>
+
 
         {{ form_rest(form) }}
         {{ form_end(form) }}
