@@ -26,19 +26,31 @@ class AppointmentMultipleType extends AbstractType
     {
         $builder->add('date', DateType::class, [
                     'input' => 'datetime',
-                    'mapped'=>false,
                 ])
                 ->add('startTime', TimeType::class, [
                     'input' => 'datetime',
                     'mapped'=>false,
                 ])
-                ->add('endTime', TimeType::class, [
-                    'input' => 'datetime',
+
+                ->add('endTimeHour', IntegerType::class, [
+                    'required' => false,
+                    'label' => ' ',
                     'mapped'=>false,
+                    'attr' => ['readonly' => true],
+                ])
+                ->add('endTimeMinute', IntegerType::class, [
+                    'required' => false,
+                    'label' => ' ',
+                    'mapped'=>false,
+                    'attr' => ['readonly' => true],
                 ])
 
-                ->add('NbCrenaux', IntegerType::class, ['required' => false, 'label' => 'NbCrenaux',
-                    'mapped'=>false,])
+                ->add('NbCrenaux', IntegerType::class, [
+                    'required' => false,
+                    'label' => 'Nombre Crenaux',
+                    'mapped'=>false,
+                    ])
+
                 ->add('DureeCrenaux', DateIntervalType::class, array (
                 'with_minutes'=>true,
                 'with_hours'=>true,
@@ -48,6 +60,29 @@ class AppointmentMultipleType extends AbstractType
                 'mapped'=>false,
                 'hours' => range(1, 4),
             ))
+
+            ->add('specialities', EntityType::class, [
+                'class' => 'AppBundle\Entity\Speciality',
+                'choice_label' => 'name',
+                'label' => 'Spécialité(s)',
+                'multiple' => true,
+                'expanded' => true,
+                'query_builder' => function(SpecialityRepository $speciality) use($options) {
+                    return $speciality->getFindByUserQueryBuilder($options['trait_choices']);
+                }
+            ])
+
+            ->add('description', TextareaType::class, ['required' => false, 'label' => 'Informations Additionnelles'])
+
+            ->add('office', EntityType::class, [
+                'class' => 'AppBundle\Entity\Office',
+                'choice_label' => 'display',
+                'label' => 'Cabinet',
+                'multiple' => false,
+                'query_builder' => function(OfficeRepository $repository) use($options) {
+                    return $repository->getFindByUserQueryBuilder($options['trait_choices']);
+                }
+            ])
 
                 ->add('submit', SubmitType::class, ['label' => 'Ajouter ces RDV']);
     }

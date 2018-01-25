@@ -257,19 +257,28 @@ class AppointmentsController extends Controller
 
             /**/
 
-            //$appointment->setDate(new \DateTime());
+            $appointment->setClosed(false);
+            $appointment->setSummary("");
             //$interval=$request->request->get('duration');
-
-            $hours = $request->get('appointment')['duration']['hours']-1;
-            $minutes = $request->get('appointment')['duration']['minutes'];
+            $NbCreneaux = $request->get('appointment_multiple')['NbCrenaux'];
+            $hours = $request->get('appointment_multiple')['DureeCrenaux']['hours']-1;
+            $minutes = $request->get('appointment_multiple')['DureeCrenaux']['minutes'];
+            dump( $request->get('appointment_multiple')['DureeCrenaux']);
             $interval = new \DateInterval('PT' . $hours . 'H' . $minutes . 'M');
-            $start=new \DateTime($appointment->getStartTime()->format('H:i:s'));
+            $currentStart=new \DateTime($appointment->getStartTime()->format('H:i:s'));
 
-            $appointment->setEndTime($start->add($interval));
-            dump($appointment);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($appointment);
-            $em->flush();
+            while ($NbCreneaux>0){
+                $appointment->setEndTime($currentStart->add($interval));
+
+                dump($appointment);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($appointment);
+                $em->flush();
+                $appointment->setStartTime($currentStart);
+                $NbCreneaux=$NbCreneaux-1;
+            }
+
+
             return $this->render('holding_success.html.twig', [ /* TODO : REDIRECT ON MANAGE PAGE */ ]);
         }
 
