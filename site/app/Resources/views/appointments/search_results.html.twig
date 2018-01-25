@@ -21,7 +21,11 @@
                         <a class="lien" href="{{ path('appointments.details', { 'id': appointment.id }) }}" data-lat="{{ appointment.office.address.latitude }}" data-lon="{{ appointment.office.address.longitude }}">
                                 <div class="element">
                                     <div class="image">
+                                        {% if appointment.office.doctor.avatar %}
                                         <img class="img-fluid img-thumbnail" src="{{ appointment.office.doctor.avatar.url }}" alt="Card image cap">
+                                        {% else %}
+                                            <img class="img-fluid img-thumbnail" src="{{ asset('assets/images/profil.png') }}" alt="{{ appointment.office.doctor.lastName }}">
+                                        {% endif %}
                                     </div>
                                     <div class="content">
                                         <div class="float-left">
