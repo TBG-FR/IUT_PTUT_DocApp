@@ -2,6 +2,7 @@
 
 namespace UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -46,7 +47,18 @@ class User extends BaseUser
      */
     private $avatar;
 
-   /**
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Appointment", mappedBy="user")
+     */
+    private $appointments;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->appointments = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -105,5 +117,22 @@ class User extends BaseUser
     {
         $this->avatar= $avatar;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAppointments()
+    {
+        return $this->appointments;
+    }
+
+    /**
+     * @param mixed $appointments
+     */
+    public function setAppointments($appointments)
+    {
+        $this->appointments = $appointments;
+    }
+
 }
 

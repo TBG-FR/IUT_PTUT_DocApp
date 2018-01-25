@@ -38,7 +38,6 @@ class UsersController extends Controller
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $file = $user->getAvatar()->getFile();
-            dump($file);
             $fileName = uniqid() . '.' . $file->getExtension();
             $user->getAvatar()->setUrl('/uploads/' . $fileName);
             $file->move('uploads', $fileName);
