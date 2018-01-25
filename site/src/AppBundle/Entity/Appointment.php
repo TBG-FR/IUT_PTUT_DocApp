@@ -70,7 +70,11 @@ class Appointment
     private $summary;
 
     private $distanceToUser = 0;
-    private $distanceToUserTime = [];
+    private $distanceToUserTime = [
+        'hours' => 0,
+        'minutes' => 0,
+        'seconds' => 0
+    ];
     /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
     public function __construct()

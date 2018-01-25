@@ -96,9 +96,6 @@ class AppointmentsController extends Controller
             else return ($time1 < $time2) ? -1 : 1;
         });
 
-
-        //TODO: verify data and find all matching appointments
-
         return $this->render(':appointments:results.html.twig', [
             'specialities' => $specialities,
             'startTime' => $minTime,
