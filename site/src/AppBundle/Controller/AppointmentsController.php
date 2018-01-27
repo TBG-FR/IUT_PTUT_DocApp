@@ -291,26 +291,39 @@ class AppointmentsController extends Controller
 
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
-            /**/
-
-            $appointment->setClosed(false);
-            $appointment->setSummary("");
-            //$interval=$request->request->get('duration');
+            $date= $request->get('appointment_multiple')['date'];
             $NbCreneaux = $request->get('appointment_multiple')['NbCrenaux'];
             $hours = $request->get('appointment_multiple')['DureeCrenaux']['hours']-1;
             $minutes = $request->get('appointment_multiple')['DureeCrenaux']['minutes'];
-            dump( $request->get('appointment_multiple')['DureeCrenaux']);
+            $description= $request->get('appointment_multiple')['description'];
+
+
+            $office= $request->get('appointment_multiple')['office']; //arrive pas à recuperer l'entity
+            dump($office);
             $interval = new \DateInterval('PT' . $hours . 'H' . $minutes . 'M');
             $currentStart=new \DateTime($appointment->getStartTime()->format('H:i:s'));
+            $specialities= $request->get('appointment_multiple')['specialities'];
+            dump($specialities);
 
-            while ($NbCreneaux>0){
+            while ($NbCreneaux>=0){
+
+                $appointment = new Appointment();
+                $appointment->setClosed(false);
+                $appointment->setSummary("");
+                $appointment->setStartTime($currentStart);
                 $appointment->setEndTime($currentStart->add($interval));
+                $appointment->setDate($date);
+                $appointment->setDescription($description);
+                $appointment->setOffice($office);
+                $appointment->setSpecialities($specialities);
 
-                dump($appointment);
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($appointment);
                 $em->flush();
-                $appointment->setStartTime($currentStart);
+
+
+
                 $NbCreneaux=$NbCreneaux-1;
             }
 			

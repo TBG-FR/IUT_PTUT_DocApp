@@ -133,8 +133,18 @@ function updateEndTime()
 
     endTimeHour=startTimeHour+totalHeure;
     if(endTimeHour>=24){
-        document.getElementById("appointment_multiple_NbCrenaux" ).value=NbCrenaux-1;
-        return updateEndTime();
+        window.alert("Attention ! vous dépassez les 00:00");
+        while(endTimeHour>=24){
+            document.getElementById("appointment_multiple_NbCrenaux" ).value=NbCrenaux-1;
+            NbCrenaux=NbCrenaux-1;
+            totalMinute=DureeCreneauxMinutes*NbCrenaux;
+            totalHeure=DureeCreneauxHours*NbCrenaux;
+            while (totalMinute-60>=0){
+                totalMinute=totalMinute-60;
+                totalHeure++;
+            }
+            endTimeHour=startTimeHour+totalHeure;
+        }
     }
     endTimeMinute=startTimeMinute+totalMinute;
     document.getElementById("appointment_multiple_endTimeHour" ).value=endTimeHour;

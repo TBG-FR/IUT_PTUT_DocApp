@@ -29,7 +29,6 @@ class AppointmentMultipleType extends AbstractType
                 ])
                 ->add('startTime', TimeType::class, [
                     'input' => 'datetime',
-                    'mapped'=>false,
                 ])
 
                 ->add('endTimeHour', IntegerType::class, [
