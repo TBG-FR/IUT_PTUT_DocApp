@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="row desc">
-                    Description :</br>{{ appointment.Description }}
+                    Description :<br/>{{ appointment.Description }}
 
                     <div class="bg-warning">
                         {# TODO : Better displaying of Appointment's Specialities ! #}
@@ -73,8 +73,8 @@
                 {% else %}
                     <a href="{{ path('appointments.reservation', {'id': appointment.ID}) }}" class="btn btn-primary">Réserver ce RDV</a>
                 {% endif %}
-
-                <a href="{{ path('appointments.results') }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>
+                {#<a href="{{ path('appointments.results', app.request.headers.get('referer')|urlparams()) }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>#}
+                <a href="{{ app.request.headers.get('referer') }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>
                 {# TODO : Garder la recherche en mémoire ? Trouver un moyen de revenir à la même recherche ? #}
             </div>
 

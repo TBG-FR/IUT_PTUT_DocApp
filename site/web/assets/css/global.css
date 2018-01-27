@@ -52,6 +52,14 @@ a {
 
 }
 
+.notices {
+
+    width: 100%;
+    margin: auto;
+    margin-bottom: 5px;
+
+}
+
 /*------------ ------------ Search Result ------------- ------------*/
 
 .result {

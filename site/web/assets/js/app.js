@@ -113,6 +113,9 @@ function updateEndTime()
 {
     //var theForm = document.forms["form_multiple"];
     //var NbCreneaux = theForm.elements["NbCrenaux"];
+    /*
+        au lieu de faire document.getElementById tu peux utiliser $('#TonIdIci') ça va plus vite
+     */
     var NbCrenaux = parseInt(document.getElementById("appointment_multiple_NbCrenaux" ).value);
     var startTimeHour = parseInt(document.getElementById("appointment_multiple_startTime_hour" ).value);
     var startTimeMinute = parseInt(document.getElementById("appointment_multiple_startTime_minute" ).value);
