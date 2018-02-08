@@ -60,12 +60,32 @@ class DoctorsController extends Controller
             $manager->flush();
 
             $this->get('session')->getFlashBag()->add('success', 'Vous êtes maintenant inscrit');
-            return $this->redirect($this->generateUrl('user_doctors_index'));
+            return $this->redirect($this->generateUrl('doctor_panel'));
         }
 
         return $this->render('doctors/create.html.twig', [
             'form' => $form->createView(),
             'specialities' => $specialities
+        ]);
+    }
+
+    /**
+     * @Route("/panel/appt/{id}", name="doctor_appointment_details")
+     * @param Appointment $appointment
+     */
+    public function apptDetailsAction(Appointment $appointment, Request $request)
+    {
+        if($request->isMethod('POST')) {
+            $content = $request->get('details');
+            $appointment->setSummary($content);
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->get('session')->getFlashBag()->add('success', 'Rendez-vous clôturé');
+            $this->redirect($this->generateUrl('doctor_panel'));
+        }
+
+        return $this->render('doctors/appointment_details.html.twig', [
+            'appointment' => $appointment
         ]);
     }
 

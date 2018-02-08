@@ -5,67 +5,34 @@
 
         <h2>En cours</h2>
         {% for appointment in appointments
-            if (appointment.startTime|date('H:i:s') <= 'now'|date('H:i:s')
+            if (date(appointment.startTime|date('H:i:s')) <= date('now'|date('H:i:s'))
                 and appointment.date|date('Y-m-d') == 'now'|date('Y-m-d')
-                and appointment.endTime|date('H:i:s') >= 'now'|date('H:i:s'))
-            or ((appointment.date|date('Y-m-d') < 'now'|date('Y-m-d')
-                    or (appointment.endTime|date('H:i:s') <= 'now'|date('H:i:s')
+                and date(appointment.endTime|date('H:i:s')) >= date('now'|date('H:i:s')))
+            or ((date(appointment.date|date('Y-m-d')) < date('now'|date('Y-m-d'))
+                    or (date(appointment.endTime|date('H:i:s')) <= date('now'|date('H:i:s'))
                         and appointment.date|date('Y-m-d') == 'now'|date('Y-m-d')))
-                and not appointment.closed)
+                and not appointment.closed and appointment.user is not null)
         %}
-            <div class="appointment">
-                <h2>Cabinet: {{ appointment.office.address.toAddressString }}</h2>
-                <span>Le {{ appointment.date|date('d/m') }} à {{ appointment.startTime|date('H:i') }} - {{  appointment.endTime|date('H:i') }}</span>
-                {% if appointment.User is null %}
-                    <span class="text-danger font-weight-bold">Non réservé</span>
-                {% else %}
-                    <span class="text-success font-weight-bold">
-                        Réservé par {{ appointment.user.lastName ~ ' ' ~ appointment.user.firstName }}
-                    </span>
-                {% endif %}
-            </div>
-            <hr>
+            {% include 'doctors/appointment_frame.html.twig' %}
         {% else %}
             Aucun
         {% endfor %}
         <h2>A venir</h2>
         {% for appointment in appointments
-            if appointment.startTime|date('H:i:s') > 'now'|date('H:i:s')
-            and appointment.date|date('Y-m-d') >= 'now'|date('Y-m-d')
+            if date(appointment.startTime|date('H:i:s')) > date('now'|date('H:i:s'))
+            and date(appointment.date|date('Y-m-d')) >= date('now'|date('Y-m-d'))
         %}
-            <div class="appointment">
-                <h2>Cabinet: {{ appointment.office.address.toAddressString }}</h2>
-                <span>Le {{ appointment.date|date('d/m') }} à {{ appointment.startTime|date('H:i') }} - {{  appointment.endTime|date('H:i') }}</span>
-                {% if appointment.User is null %}
-                    <span class="text-danger font-weight-bold">Non réservé</span>
-                {% else %}
-                    <span class="text-success font-weight-bold">
-                        Réservé par {{ appointment.user.lastName ~ ' ' ~ appointment.user.firstName }}
-                    </span>
-                {% endif %}
-            </div>
-            <hr>
+            {% include 'doctors/appointment_frame.html.twig' %}
         {% else %}
             Aucun
         {% endfor %}
         <h2>Passés</h2>
-        {% for appointment in appointments
-            if appointment.endTime|date('H:i:s') < 'now'|date('H:i:s')
-            and appointment.date|date('Y-m-d') <= 'now'|date('Y-m-d')
-            and appointment.closed
+        {% for appointment in appointments if appointment.closed or (
+            date(appointment.date|date('Y-m-d')) < date('now'|date('Y-m-d'))
+            and appointment.user is null
+            )
         %}
-            <div class="appointment">
-                <h2>Cabinet: {{ appointment.office.address.toAddressString }}</h2>
-                <span>Le {{ appointment.date|date('d/m') }} à {{ appointment.startTime|date('H:i') }} - {{  appointment.endTime|date('H:i') }}</span>
-                {% if appointment.User is null %}
-                    <span class="text-danger font-weight-bold">Non réservé</span>
-                {% else %}
-                    <span class="text-success font-weight-bold">
-                        Réservé par {{ appointment.user.lastName ~ ' ' ~ appointment.user.firstName }}
-                    </span>
-                {% endif %}
-            </div>
-            <hr>
+            {% include 'doctors/appointment_frame.html.twig' %}
         {% else %}
             Aucun
         {% endfor %}
