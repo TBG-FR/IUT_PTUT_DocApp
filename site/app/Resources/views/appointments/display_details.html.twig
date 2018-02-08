@@ -76,9 +76,7 @@
                         'back': app.request.headers.get('referer')  
                     }) }}" class="btn btn-primary">Réserver ce RDV</a>
                 {% endif %}
-                {#<a href="{{ path('appointments.results', app.request.headers.get('referer')|urlparams()) }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>#}
                 <a href="{{ app.request.headers.get('referer') }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>
-                {# TODO : Garder la recherche en mémoire ? Trouver un moyen de revenir à la même recherche ? #}
             </div>
 
 {% endblock %}
