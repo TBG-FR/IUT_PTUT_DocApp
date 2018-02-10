@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class FeedbackController extends Controller
 {
     /**
-     * @Route("/feedback/list", name="appointments.results")
+     * @Route("/feedback/list", name="feedback.list")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
