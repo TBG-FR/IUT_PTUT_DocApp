@@ -2,7 +2,6 @@
 
 namespace AppBundle\Repository;
 
-use UserBundle\Entity\Feedback;
 use Doctrine\ORM\EntityRepository;
 
 /**

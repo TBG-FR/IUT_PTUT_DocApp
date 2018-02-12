@@ -246,11 +246,7 @@ class AppointmentsController extends Controller
         $form = $this->get('form.factory')->create(AppointmentType::class, $appointment, [
             'trait_choices' => $this->getUser()
         ]);
-
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-
-            dump($form->get('specialities'));
-            dump($appointment->getSpecialities()->isEmpty());
 
             if($appointment->getSpecialities()->isEmpty()) { // IF the user entered no speciality
 

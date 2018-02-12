@@ -70,7 +70,7 @@ class DoctorsController extends Controller
     }
 
     /**
-     * @Route("/panel/appt/{id}", name="doctor_appointment_details")
+     * @Route("/panel/appt/{id}", name="doctor_appointment_details", requirements={"id":"[0-9]+"})
      * @param Appointment $appointment
      */
     public function apptDetailsAction(Appointment $appointment, Request $request)

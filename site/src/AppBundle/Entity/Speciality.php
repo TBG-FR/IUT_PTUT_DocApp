@@ -4,7 +4,6 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use UserBundle\Entity\Doctor;
 
 /**
  * Speciality
@@ -87,6 +86,22 @@ class Speciality
     public function setDoctors($doctors)
     {
         $this->doctors = $doctors;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAppointments()
+    {
+        return $this->appointments;
+    }
+
+    /**
+     * @param mixed $appointments
+     */
+    public function setAppointments($appointments)
+    {
+        $this->appointments = $appointments;
     }
 
 }
