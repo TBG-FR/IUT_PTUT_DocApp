@@ -50,53 +50,58 @@ class AppointmentsController extends Controller
             ->setParameter(':date', $date->format('Y-m-d'))
             ->getQuery()
             ->getResult();
+
         $clientCoords = [];
-        foreach($appointments as $k => $appointment) {
-            /** @var Appointment $appointment */
-            $address = $appointment->getOffice()->getAddress();
-            if($address->getLatitude() == null
-                || $address->getLongitude() == null) {
-                $coordinates = $locationService->getCoordinatesFromString($address->toAddressString());
-                $address->setLatitude($coordinates['latitude']);
-                $address->setLongitude($coordinates['longitude']);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($address);
-                $em->flush();
-            }
-            $clientCoords = explode(',', $request->get('coords'));
 
-            if(count($clientCoords) === 2) {
-                $distance = $locationService->distance($address->getLatitude(), $address->getLongitude(),
-                    $clientCoords[0], $clientCoords[1]);
-
-                if($distance > $maxDistance) {
-                    unset($appointments[$k]);
-                    continue;
+        if(count($appointments) > 0) {
+            foreach($appointments as $k => $appointment) {
+                /** @var Appointment $appointment */
+                $address = $appointment->getOffice()->getAddress();
+                if($address->getLatitude() == null
+                    || $address->getLongitude() == null) {
+                    $coordinates = $locationService->getCoordinatesFromString($address->toAddressString());
+                    $address->setLatitude($coordinates['latitude']);
+                    $address->setLongitude($coordinates['longitude']);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($address);
+                    $em->flush();
                 }
-                $appointment->setDistanceToUser($distance);
-            }
-        }
+                $clientCoords = explode(',', $request->get('coords'));
 
-        //sort appointments
-        usort($appointments, function($first, $second) {
-            $time1 = $this->getDistanceTime($first->getDistanceToUser());
-            $time2 = $this->getDistanceTime($second->getDistanceToUser());
-            $first->setDistanceToUserTime($time1);
-            $second->setDistanceToUserTime($time2);
-            $time1 = (clone $first->getStartTime())->add(new \DateInterval('PT' .
+                if(count($clientCoords) === 2) {
+                    $distance = $locationService->distance($address->getLatitude(), $address->getLongitude(),
+                        $clientCoords[0], $clientCoords[1]);
+
+                    if($distance > $maxDistance) {
+                        unset($appointments[$k]);
+                        continue;
+                    }
+                    $appointment->setDistanceToUser($distance);
+                }
+            }
+
+            //sort appointments
+            usort($appointments, function($first, $second) {
+                $time1 = $this->getDistanceTime($first->getDistanceToUser());
+                $time2 = $this->getDistanceTime($second->getDistanceToUser());
+                $first->setDistanceToUserTime($time1);
+                $second->setDistanceToUserTime($time2);
+                $time1 = (clone $first->getStartTime())->add(new \DateInterval('PT' .
                     $time1['hours'] . 'H' .
                     $time1['minutes'] . 'M' .
                     $time1['seconds'] . 'S'
-            ));
-            $time2 = (clone $second->getStartTime())->add(new \DateInterval('PT' .
-                        $time2['hours'] . 'H' .
-                        $time2['minutes'] . 'M' .
-                        $time2['seconds'] . 'S'
-            ));
+                ));
+                $time2 = (clone $second->getStartTime())->add(new \DateInterval('PT' .
+                    $time2['hours'] . 'H' .
+                    $time2['minutes'] . 'M' .
+                    $time2['seconds'] . 'S'
+                ));
 
-            if($time1 == $time2) return 0;
-            else return ($time1 < $time2) ? -1 : 1;
-        });
+                if($time1 == $time2) return 0;
+                else return ($time1 < $time2) ? -1 : 1;
+            });
+
+        }
 
         return $this->render(':appointments:display_results.html.twig', [
             'specialities' => $specialities,
