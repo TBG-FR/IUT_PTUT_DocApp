@@ -326,12 +326,12 @@ class AppointmentsController extends Controller
             }
             dump($specialities);
 
-            while ($NbCreneaux>=0){
+            while ($NbCreneaux>0){
 
                 $appointment = new Appointment();
                 $appointment->setClosed(false);
                 $appointment->setSummary("");
-                $appointment->setStartTime($currentStart);
+                $appointment->setStartTime(new \DateTime($currentStart->format('H:i:s')));
                 $appointment->setEndTime($currentStart->add($interval));
                 $appointment->setDate($date);
                 $appointment->setDescription($description);
