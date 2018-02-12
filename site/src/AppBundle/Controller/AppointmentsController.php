@@ -6,6 +6,7 @@ use AppBundle\Service\LocationService;
 use AppBundle\Entity\Appointment;
 use AppBundle\Entity\RegularAppointment;
 use AppBundle\Entity\Speciality;
+use AppBundle\Entity\Office;
 use AppBundle\Form\AppointmentType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\BrowserKit\Response;
@@ -307,18 +308,26 @@ class AppointmentsController extends Controller
 
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
-            $date= $request->get('appointment_multiple')['date'];
+            $date= new \DateTime($request->get('appointment_multiple')['date']['year']."-".$request->get('appointment_multiple')['date']['month'].'-'.$request->get('appointment_multiple')['date']['day']);
             $NbCreneaux = $request->get('appointment_multiple')['NbCrenaux'];
             $hours = $request->get('appointment_multiple')['DureeCrenaux']['hours']-1;
             $minutes = $request->get('appointment_multiple')['DureeCrenaux']['minutes'];
             $description= $request->get('appointment_multiple')['description'];
 
+            $office = $this->getDoctrine()
+                ->getRepository(Office::class)
+                ->find($request->get('appointment_multiple')['office']);
 
-            $office= $request->get('appointment_multiple')['office']; //arrive pas à recuperer l'entity
             dump($office);
             $interval = new \DateInterval('PT' . $hours . 'H' . $minutes . 'M');
             $currentStart=new \DateTime($appointment->getStartTime()->format('H:i:s'));
-            $specialities= $request->get('appointment_multiple')['specialities'];
+            $spe= $request->get('appointment_multiple')['specialities'];
+            $specialities=new ArrayCollection();
+            foreach ($spe as $s){
+                $specialities->add(  $this->getDoctrine()
+                    ->getRepository(Speciality::class)
+                    ->find($s));
+            }
             dump($specialities);
 
             while ($NbCreneaux>=0){
@@ -333,7 +342,7 @@ class AppointmentsController extends Controller
                 $appointment->setOffice($office);
                 $appointment->setSpecialities($specialities);
 
-
+                dump($appointment);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($appointment);
                 $em->flush();
