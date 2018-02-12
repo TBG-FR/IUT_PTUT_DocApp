@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+    DocInTime - Find a Doctor, now. [Feedback sent !]
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="alert alert-success" role="alert">
+        Votre avis a été envoyé avec succès !
+        Your review has been sent with success !
+    </div>
+
+    <div class="summary text-left bg-secondary">
+
+        {#} dump(appointment) #}
+        {# TODO : Recap Infos Review ? #}
+
+    </div>
+
+    <div class="btn-group menu-bottom">
+
+            <a href="{{ path('default.index') }}" role="button" class="btn btn-primary">Retourner à l'accueil</a>
+
+    </div>
+
+{% endblock %}

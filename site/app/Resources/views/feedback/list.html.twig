@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+    DocInTime - Find a Doctor, now. [Feeback list]
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="result">
+        <div class="row">
+            <div class="col-8">
+
+                {% if (feedbacks is null) or (feedbacks is not defined) or (feedbacks is empty) %}
+
+                <div class="alert alert-danger" role="alert">
+                    Aucun feedback trouvé !<br/>
+                </div>
+                <div class="alert alert-danger" role="alert">
+                    No feedback found !<br/>
+                </div>
+
+                {% else %}
+
+                    {% for feedback in feedbacks %}
+
+                        <div class="element">
+                            <div class="content">
+
+                                {# TODO : DESIGN #}
+
+                                <div class="card">
+
+                                    <div class="card-header">
+
+                                        {{ feedback.getName() }} - {{ feedback.getMail() }}
+
+                                    </div>
+
+                                    <div class="card-body">
+
+                                        {{ feedback.getContent() }}
+
+                                    </div>
+
+                                </div>
+
+                                <br />
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

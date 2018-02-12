@@ -89,7 +89,7 @@
 
     <div class="btn-group menu-bottom">
         <a href="{{ path('appointments.details', {'id': appointment.ID}) }}" role="button" class="btn btn-secondary">Retourner aux détails du RDV</a>
-        <a href="{{ path('appointments.results') }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>
+        <a href="{{ app.request.get('back') }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>
         {# TODO : Garder la recherche en mémoire ? Trouver un moyen de revenir à la même recherche ? #}
     </div>
 

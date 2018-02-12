@@ -1,0 +1,13 @@
+<div class="appointment">
+    <h2>Cabinet: {{ appointment.office.address.toAddressString }}</h2>
+    <span>Le {{ appointment.date|date('d/m') }} à {{ appointment.startTime|date('H:i') }} - {{  appointment.endTime|date('H:i') }}</span>
+    {% if appointment.User is null %}
+        <span class="text-danger font-weight-bold">Non réservé</span>
+    {% else %}
+        <span class="text-success font-weight-bold">
+                        Réservé par {{ appointment.user.lastName ~ ' ' ~ appointment.user.firstName }}
+                    </span>
+    {% endif %}
+    <a href="{{ path('doctor_appointment_details', {id: appointment.id})}}" class="btn btn-primary">Détails</a>
+</div>
+<hr>
