@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}
+
+    DocInTime - Find a Doctor, now. [Doctor - Appointment Details]
+
+{% endblock %}
+
 {% block content %}
-    {% if appointment.user is not null %}
 
-        <div class="alert alert-danger" role="alert">
-            Attention : Ce rendez-vous est déjà pris !
-            Warning : This appointment is already taken !
-        </div>
-
-    {% endif %}
+    {# TODO : REVIEW THIS TWIG -- COPY :appointments:display_details.html.twig ? #}
 
     <div class="result details">
         <div class="row">

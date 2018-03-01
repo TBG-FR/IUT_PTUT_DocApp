@@ -1,73 +1,84 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}
+
+    DocInTime - Find a Doctor, now. [Doctor - Index/Appointments]
+
+{% endblock %}
+
 {% block content %}
 
-    <h1>Gestion</h1>
+    <h1 class="page_title">Gestion des Rendez-vous</h1>
 
     <div class="appointments">
 
-    <div class="card">
+        <div class="card">
 
-        <nav>
-            <div class="card-header nav nav-pills nav-fill" id="appts-menu" role="tablist">
-                <a class="nav-item nav-link card-header-tabs" id="appts-past-tab" data-toggle="pill" href="#appts-past" role="tab" aria-controls="appts-past" aria-selected="false"><h1>Passés</h1></a>
-                <a class="nav-item nav-link card-header-tabs active" id="appts-present-tab" data-toggle="pill" href="#appts-present" role="tab" aria-controls="appts-present" aria-selected="true"><h1>En cours</h1></a>
-                <a class="nav-item nav-link card-header-tabs" id="appts-next-tab" data-toggle="pill" href="#appts-next" role="tab" aria-controls="appts-next" aria-selected="false"><h1>A venir</h1></a>
-            </div>
-        </nav>
+            <nav>
+                <div class="card-header nav nav-pills nav-fill" id="appts-menu" role="tablist">
+                    <a class="nav-item nav-link card-header-tabs" id="appts-past-tab" data-toggle="pill"
+                       href="#appts-past" role="tab" aria-controls="appts-past" aria-selected="false"><h1>Passés</h1>
+                    </a>
+                    <a class="nav-item nav-link card-header-tabs active" id="appts-present-tab" data-toggle="pill"
+                       href="#appts-present" role="tab" aria-controls="appts-present" aria-selected="true"><h1>En
+                            cours</h1></a>
+                    <a class="nav-item nav-link card-header-tabs" id="appts-next-tab" data-toggle="pill"
+                       href="#appts-next" role="tab" aria-controls="appts-next" aria-selected="false"><h1>A venir</h1>
+                    </a>
+                </div>
+            </nav>
 
-        <div class="tab-content" id="appts-content">
+            <div class="tab-content" id="appts-content">
 
-            <div class="tab-pane fade card-body" id="appts-past" role="tabpanel" aria-labelledby="appts-past-tab">
+                <div class="tab-pane fade card-body" id="appts-past" role="tabpanel" aria-labelledby="appts-past-tab">
 
-                <h2>Passés</h2>
-                {% for appointment in appointments if appointment.closed or (
-                date(appointment.date|date('Y-m-d')) < date('now'|date('Y-m-d'))
-                and appointment.user is null
-                )
-                %}
-                    {% include 'doctors/appointment_frame.html.twig' %}
-                {% else %}
-                    Aucun
-                {% endfor %}
+                    <h2>Passés</h2>
+                    {% for appointment in appointments if appointment.closed or (
+                        date(appointment.date|date('Y-m-d')) < date('now'|date('Y-m-d'))
+                        and appointment.user is null
+                        ) %}
+                        {% include 'doctors/appointment_frame.html.twig' %}
+                    {% else %}
+                        Aucun
+                    {% endfor %}
 
-            </div>
+                </div>
 
-            <div class="tab-pane fade card-body show active" id="appts-present" role="tabpanel" aria-labelledby="appts-present-tab">
+                <div class="tab-pane fade card-body show active" id="appts-present" role="tabpanel"
+                     aria-labelledby="appts-present-tab">
 
-                <h2>En cours</h2>
-                {% for appointment in appointments
-                if (date(appointment.startTime|date('H:i:s')) <= date('now'|date('H:i:s'))
-                and appointment.date|date('Y-m-d') == 'now'|date('Y-m-d')
-                and date(appointment.endTime|date('H:i:s')) >= date('now'|date('H:i:s')))
-                or ((date(appointment.date|date('Y-m-d')) < date('now'|date('Y-m-d'))
-                or (date(appointment.endTime|date('H:i:s')) <= date('now'|date('H:i:s'))
-                and appointment.date|date('Y-m-d') == 'now'|date('Y-m-d')))
-                and not appointment.closed and appointment.user is not null)
-                %}
-                    {% include 'doctors/appointment_frame.html.twig' %}
-                {% else %}
-                    Aucun
-                {% endfor %}
+                    <h2>En cours</h2>
+                    {% for appointment in appointments
+                        if (date(appointment.startTime|date('H:i:s')) <= date('now'|date('H:i:s'))
+                        and appointment.date|date('Y-m-d') == 'now'|date('Y-m-d')
+                        and date(appointment.endTime|date('H:i:s')) >= date('now'|date('H:i:s')))
+                        or ((date(appointment.date|date('Y-m-d')) < date('now'|date('Y-m-d'))
+                        or (date(appointment.endTime|date('H:i:s')) <= date('now'|date('H:i:s'))
+                        and appointment.date|date('Y-m-d') == 'now'|date('Y-m-d')))
+                        and not appointment.closed and appointment.user is not null) %}
+                        {% include 'doctors/appointment_frame.html.twig' %}
+                    {% else %}
+                        Aucun
+                    {% endfor %}
 
-            </div>
+                </div>
 
-            <div class="tab-pane fade card-body" id="appts-next" role="tabpanel" aria-labelledby="appts-next-tab">
+                <div class="tab-pane fade card-body" id="appts-next" role="tabpanel" aria-labelledby="appts-next-tab">
 
-                <h2>A venir</h2>
-                {% for appointment in appointments
-                if date(appointment.startTime|date('H:i:s')) > date('now'|date('H:i:s'))
-                and date(appointment.date|date('Y-m-d')) >= date('now'|date('Y-m-d'))
-                %}
-                    {% include 'doctors/appointment_frame.html.twig' %}
-                {% else %}
-                    Aucun
-                {% endfor %}
+                    <h2>A venir</h2>
+                    {% for appointment in appointments
+                        if date(appointment.startTime|date('H:i:s')) > date('now'|date('H:i:s'))
+                        and date(appointment.date|date('Y-m-d')) >= date('now'|date('Y-m-d')) %}
+                        {% include 'doctors/appointment_frame.html.twig' %}
+                    {% else %}
+                        Aucun
+                    {% endfor %}
+
+                </div>
 
             </div>
 
         </div>
-
-    </div>
 
     </div>
 

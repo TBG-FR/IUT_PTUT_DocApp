@@ -2,20 +2,25 @@
 
 {% block title %}
 
-    DocInTime - Find a Doctor, now. [Add an Appointment]
+    DocInTime - Find a Doctor, now. [Appointments - Add Multiple]
 
 {% endblock %}
 
 {% block content %}
 
+    <h1 class="page_title">Ajout d'une Plage de Rendez-vous (plusieurs créneaux)</h1>
+
     <div class="create_multiple form">
+
         {{ form_start(form,{'attr':{'class':'form-horizontal'}},{'id': 'form_multiple'}) }}
         {{ form_errors(form) }}
+
         <div class="row">
             <div class="col">
                 {{ form_row(form.date) }}
             </div>
         </div>
+
         <div class="row">
             <div class="col-6">
                 {{ form_row(form.startTime) }}
@@ -27,6 +32,7 @@
                 {{ form_row(form.endTimeMinute) }}
             </div>
         </div>
+
         <div class="row">
             <div class="col">
                 {{ form_row(form.NbCrenaux,{'attr':{'value': 0}}) }}
@@ -55,39 +61,22 @@
                 {{ form_row(form.office) }}
             </div>
         </div>
+
         <div class="row">
             <div class="col">
-            {{ form_row(form.submit) }}
+                {{ form_row(form.submit) }}
             </div>
         </div>
-
 
         {{ form_rest(form) }}
         {{ form_end(form) }}
 
-
-
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
+
+{% endblock %}
+
+
+</div>
 
 {% endblock %}
 

@@ -1,5 +1,17 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}
+
+    DocInTime - Find a Doctor, now. [User - Index/Appointments]
+
+{% endblock %}
+
 {% block content %}
+
+{% block content %}
+
+    <h1 class="page_title">Rendez-vous Réservés</h1>
+
     <div class="appointments">
         {% for appointment in appointments %}
             <div class="appointment">
@@ -14,4 +26,5 @@
             Aucun historique
         {% endfor %}
     </div>
+
 {% endblock %}

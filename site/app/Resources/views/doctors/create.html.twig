@@ -1,7 +1,17 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+
+    DocInTime - Find a Doctor, now. [Doctor - Registration]
+
+{% endblock %}
+
 {% block content %}
-    <h1>S'inscrire en tant que médecin</h1>
+
+{% block content %}
+
+    <h1 class="page_title">Inscription en tant que Médecin</h1>
+
     {{ form_start(form) }}
         <h2>Informations</h2>
         <div class="row">
@@ -39,4 +49,5 @@
         {{ form_row(form.specialities) }}
         <hr>
     {{ form_end(form)}}
+
 {% endblock %}
