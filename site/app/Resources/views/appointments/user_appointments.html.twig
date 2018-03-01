@@ -6,9 +6,13 @@
 
 {% endblock %}
 
-{% block content %}
+{% block page_title %}
 
     <h1 class="page_title">Rendez-vous Réservés</h1>
+
+{% endblock %}
+
+{% block content %}
 
     <div class="appointments">
         {% for appointment in appointments %}

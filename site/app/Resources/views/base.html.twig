@@ -1,59 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
+
         <meta charset="UTF-8" />
         <title>{% block title %}DocInTime - Find a Doctor, now.{% endblock %}</title>
         <link rel="icon" href="/assets/images/favicon_dev.png">
-        {% block stylesheets %}
 
+        {% block stylesheets %}
             <!-- CSS : Bootstrap (4.0.0-beta.2) -->
             <link rel="stylesheet" href=/assets/css/bootstrap.css>
             <!-- CSS : FontAwesome (4.7.0) -->
             <link rel="stylesheet" href=/assets/css/font-awesome.css>
             <!-- CSS : Our own CSS -->
             <link rel="stylesheet" href=/assets/css/global.css>
-
         {% endblock %}
+
     </head>
 
     <body>
 
         <header id="header">
 
-            <nav id="nav" class="navbar navbar-light bg-dark navbar-expand-md">
-                <a class="navbar-brand text-light" href="{{ path('default.index') }}">DocInTime</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="container p-0">
-                        <ul class="navbar-nav mr-auto m-0">
-                            <li class="nav-item active"><a href="{{ path('default.index') }}" class="nav-link text-light">Home</a></li>
-                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                <li class="nav-item"><a href="{{ path('user_appointments') }}" class="nav-link text-light">My Appointments</a></li>
-                                <li class="nav-item"><a href="{{ path('users.index') }}" class="nav-link text-light">My Profile</a></li>
-                                <li class="nav-item"><a href="{{ path('fos_user_security_logout') }}" class="nav-link text-light">Logout</a></li>
-                            {% else %}
-                                <li class="nav-item"><a href="{{ path('fos_user_security_login') }}" class="nav-link text-light">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
-                                <li class="nav-item"><a href="{{ path('fos_user_registration_register') }}" class="nav-link text-light">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
-                            {% endif %}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-light" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Espace praticien
-                                </a>
-                                <div class="dropdown-menu">
-                                    {% if app.user and app.user.isDoctor %}
-                                        <a href="{{ path('doctor_panel') }}" class="dropdown-item">Manage appointments</a>
-                                    {% else %}
-                                        <a href="{{ path('user_doctors_create') }}" class="dropdown-item">Créer un compte praticien</a>
-                                    {% endif %}
-                                </div>
-
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            {% include 'navbar.html.twig' %}
 
             <div class="alert alert-info" role="alert">
                 Ce projet est en développement , nous avons besoin de vos avis...
@@ -69,23 +37,29 @@
 
         <div id="content" class="container">
 
+            {% block page_title %}{% endblock %}
+
             {% include 'flashbags.html.twig' %}
 
             {% block content %}{% endblock %}
 
         </div>
 
-        <!-- JS : JQuery (3.2.1) -->
-        <script src="/assets/js/jquery-3.2.1.js"></script>
-        <!-- JS : Popper -->
-        <script src="/assets/js/popper.js"></script>
-        <!-- JS : Bootstrap (4.0.0-beta.2) -->
-        <script src="/assets/js/bootstrap.js"></script>
+        <div id="scripts">
 
-        <!-- Custom JS -->
-        <script src="/assets/js/app.js"></script>
+            <!-- JS : JQuery (3.2.1) -->
+            <script src="/assets/js/jquery-3.2.1.js"></script>
+            <!-- JS : Popper -->
+            <script src="/assets/js/popper.js"></script>
+            <!-- JS : Bootstrap (4.x.x) -->
+            <script src="/assets/js/bootstrap.js"></script>
 
-        {% block javascripts %}{% endblock %}
+            <!-- Custom JS -->
+            <script src="/assets/js/app.js"></script>
+
+            {% block javascripts %}{% endblock %}
+
+        </div>
 
     </body>
 </html>
