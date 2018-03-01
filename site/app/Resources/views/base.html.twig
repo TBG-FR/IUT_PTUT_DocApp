@@ -15,7 +15,9 @@
 
         {% endblock %}
     </head>
+
     <body>
+
         <header id="header">
             <nav id="nav" class="navbar navbar-light bg-dark navbar-expand-md">
                 <a class="navbar-brand text-light" href="{{ path('default.index') }}">DocInTime</a>
@@ -65,23 +67,10 @@
 
         <div id="content" class="container">
 
-            {# TODO : Make a specific TWIG for alerts, with different displaying for each type (success/warning/danger) #}
-            {% for type, messages in app.session.flashbag.all() %}
-
-                {% for message in messages %}
-
-                    <div class="notices alert alert-{{type}} alert-dismissible fade show" role="alert">
-                        {{ message | raw }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                {% endfor %}
-
-            {% endfor %}
+            {% include 'flashbags.html.twig' %}
 
             {% block content %}{% endblock %}
+
         </div>
 
         <!-- JS : JQuery (3.2.1) -->
