@@ -13,21 +13,14 @@ html, body {
     color: #000;
 }
 
-#content {
-    margin-top: 75px;
-}
+/*------------ ------------ Header (Logo + Navbar + Reviews Message) ------------- ------------*/
 
-/*
-a {
-    color: inherit;
-    text-decoration: underline;
-}
-*/
-
-
-/* Header styles */
 #header {
+
     position: relative;
+
+    margin-bottom: 5%;
+
 }
 
 #logo {
@@ -52,10 +45,28 @@ a {
 
 }
 
+/*------------ ------------ Content (Notices + Page Body) ------------- ------------*/
+
+#content {
+
+    /*margin-top : 5%;*/
+
+}
+
+/*------------ ------------ Notices (Alerts from Flashbag) ------------- ------------*/
+
 .notices {
 
     width: 100%;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-bottom : 5%;
+
+}
+
+.notices > .alert {
+
     margin-bottom: 5px;
 
 }
