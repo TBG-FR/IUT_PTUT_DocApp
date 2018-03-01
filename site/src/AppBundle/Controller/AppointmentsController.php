@@ -319,9 +319,10 @@ class AppointmentsController extends Controller
                 ->getRepository(Office::class)
                 ->find($request->get('appointment_multiple')['office']);
 
-            dump($office);
+            //dump($office);
             $interval = new \DateInterval('PT' . $hours . 'H' . $minutes . 'M');
             $currentStart=new \DateTime($appointment->getStartTime()->format('H:i:s'));
+
             $spe= $request->get('appointment_multiple')['specialities'];
             $specialities=new ArrayCollection();
             foreach ($spe as $s){
@@ -329,9 +330,27 @@ class AppointmentsController extends Controller
                     ->getRepository(Speciality::class)
                     ->find($s));
             }
-            dump($specialities);
 
+            $doc=$office->getDoctor();
+
+            dump($doc);
+            $appointmentsDoc= $this->getDoctrine()
+                ->getRepository(Appointment::class)
+                ->findBy(
+                    ['office' => $office->getID()],
+                        ['id' => 'ASC']
+                    );
+
+            foreach ($appointmentsDoc as $appointmentDoc) {
+                $appointmentDoc->setStartTime(new \DateTime($appointmentDoc->getStartTime()->format('H:i:s')));
+                $appointmentDoc->setEndTime(new \DateTime($appointmentDoc->getEndTime()->format('H:i:s')));
+            }
+            //dump($appointmentsDoc);
+            //die();
             while ($NbCreneaux>0){
+
+
+
 
                 $appointment = new Appointment();
                 $appointment->setClosed(false);
@@ -343,16 +362,27 @@ class AppointmentsController extends Controller
                 $appointment->setOffice($office);
                 $appointment->setSpecialities($specialities);
 
+                foreach ($appointmentsDoc as $appointmentDoc){
+
+                    if($appointmentDoc->getDate()==$appointment->getDate()){
+                        if(($appointmentDoc->getStartTime()>$appointment->getStartTime()&&$appointmentDoc->getStartTime()<$appointment->getEndTime())||
+                            ($appointmentDoc->getEndTime()>=$appointment->getStartTime()&&$appointmentDoc->getEndTime()<=$appointment->getEndTime())||
+                            ($appointmentDoc->getStartTime()<$appointment->getStartTime()&&$appointmentDoc->getEndTime()>$appointment->getEndTime())||($appointmentDoc->getStartTime()>$appointment->getStartTime()&&$appointmentDoc->getEndTime()<$appointment->getEndTime())){
+
+                            return $this->render(':appointments:create_multiple.html.twig', [
+                                'form' => $form->createView()
+                            ]);
+                        }
+                    }
+                }
+
                 dump($appointment);
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($appointment);
                 $em->flush();
-
-
-
                 $NbCreneaux=$NbCreneaux-1;
             }
-
             return $this->redirect($this->generateUrl('doctor_panel'));
         }
 
