@@ -19,7 +19,7 @@ html, body {
 
     position: relative;
 
-    margin-bottom: 5%;
+    /*margin-bottom: 5%;*/
 
 }
 
@@ -67,13 +67,13 @@ html, body {
 
 .notices > .alert {
 
-    margin-bottom: 5px;
+    /*margin-bottom: 5px;*/
 
 }
 
-/*------------ ------------ Search Result ------------- ------------*/
+/*------------ ------------ Search Results ------------- ------------*/
 
-.result {
+.results {
     margin-top: 3%;
     padding-top: 3%;
     padding-bottom: 3%;
@@ -81,12 +81,12 @@ html, body {
     text-decoration: none;
 }
 
-.result > .row >.col-8> .lien {
+.results > .row > .col-8 > .lien {
     color: #1d2124;
     text-decoration: none;
 }
 
-.result > .row>.col-8>.lien >  .element {
+.results > .row > .col-8 > .lien > .element {
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
     background-color: #d0deff;
@@ -97,11 +97,11 @@ html, body {
 
 }
 
-.result > .row>.col-8>.lien > .element:hover {
+.results > .row > .col-8 > .lien > .element:hover {
     background-color : #a6b3d4;
 }
 
-.result > .row>.col-8>.lien >  .element  > .image {
+.results > .row > .col-8 > .lien > .element > .image {
     min-height: 15px;
     border-radius: 0.5rem;
     width: 20%;
@@ -112,7 +112,7 @@ html, body {
 
 }
 
-.result >  .row>.col-8>.lien > .element > .content {
+.results > .row > .col-8 > .lien > .element > .content {
     position: absolute;
     top: 50%; /* poussé de la moitié de hauteur du référent */
     transform: translateY(-50%);
@@ -123,31 +123,37 @@ html, body {
 
 }
 
-.result >  .row>.col-8>.lien >.element > .content > .float-left > .name {
+.results > .row >.col-8 > .lien >.element > .content > .float-left > .name {
     font-size: calc(1em + 1vw);
 }
-.result >.row>.col-8>.lien > .element >  .content > .float-left > .spe {
+
+.results > .row > .col-8 > .lien > .element > .content > .float-left > .spe {
 }
-.result >.row>.col-8>.lien >.element >  .content > .float-right > .hour {
+
+.results > .row > .col-8 > .lien > .element > .content > .float-right > .hour {
     font-weight: bold;
     font-size: calc(1.5em + 1vw);
 }
-.result >.row>.col-8>.lien >.element >  .content > .float-right > .distance {
+
+.results > .row > .col-8 > .lien > .element > .content > .float-right > .distance {
     text-align: right;
 }
 
-.result >.row>.col-8>.lien >.element > .content > .float-right > {
+.results > .row > .col-8 > .lien > .element > .content > .float-right > {
     position: absolute;
     top: 50%; /* poussé de la moitié de hauteur du référent */
     transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
     text-align: right;
 }
 
-#content {
-    margin-top: 75px;
+.results > .row > .col-4 > #map {
+
+    width: 100%;
+    height: 300px;
+
 }
 
-/*------------ ------------ Appointment Details ------------- ------------*/
+/*------------ ------------ Appointments Details ------------- ------------*/
 
 .details {
     border: 1px solid rgba(0, 0, 0, 0.125);
@@ -157,47 +163,45 @@ html, body {
     padding-top: 1%;
 }
 
-.result > .row {
+.details > .row {
     margin-right: 1%;
     margin-left: 1%;
     padding: 1%;
 }
 
-.result > .row > {
+.details > .row > {
     color: #1d2124;
     text-decoration: none;
 }
-.result > .row>.col-2> .image {
+.details > .row > .col-2 > .image {
     min-height: 15px;
     border-radius: 0.5rem;
     display: inline-block;
     height: auto;
 }
 
-.result > .row>.col-4> .name {
+.details > .row > .col-4 > .name {
     font-size: calc(1em + 1vw);
 }
 
-.result > .row>.col-4> .spe {
+.details > .row > .col-4 > .spe {
     font-size: calc(0.8em + 0.5vw);
 }
 
-.result > .row>.col-4{
+.details > .row > .col-4 {
     padding-left: 0%;
 }
 
-.result > .row>.col-6{
+.details > .row > .col-6 {
     text-align: right;
 }
 
-.result > .row>.col-6>.time{
+.details > .row > .col-6 > .time {
     font-weight: bold;
     font-size: calc(1.5em + 1vw);
 }
 
-
-
-.result > .desc {
+.details > .desc {
     margin-right: 3%;
     margin-left: 3%;
     padding: 1%;
@@ -206,6 +210,9 @@ html, body {
     background-color: #a6b3d4;
 }
 
-.result > .desc >.titre{
+.details > .desc > .titre {
 
 }
+
+/*------------ ------------ OTH ------------- ------------*/
+/* TODO : Add other CSS parts/things here */
