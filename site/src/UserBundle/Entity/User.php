@@ -44,6 +44,7 @@ class User extends BaseUser
 
     /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Image", cascade={"persist","remove"})
+     * @ORM\JoinColumn("avatar_id", referencedColumnName="id", nullable=true)
      */
     private $avatar;
 
@@ -66,6 +67,20 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setEmail($email)
+    {
+        $this->setUsername($email);
+
+        return parent::setEmail($email);
+    }
+
+    public function setEmailCanonical($emailCanonical)
+    {
+        $this->setUsernameCanonical($emailCanonical);
+
+        return parent::setEmailCanonical($emailCanonical);
     }
 
     /**

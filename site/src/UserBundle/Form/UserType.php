@@ -22,13 +22,13 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                ->add('username', TextType::class)
+                ->remove('username')
                 ->add('email', EmailType::class)
                 ->add('first_name', TextType::class)
                 ->add('last_name', TextType::class)
-                ->add('avatar', ImageType::class, [
+                /*>add('avatar', ImageType::class, [
                     'required' => false
-                ])
+                ])*/
                 ->setAction('/user');
     }
     
@@ -47,12 +47,17 @@ class UserType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_user';
+        return 'app_user_registration';
     }
 
     public function getParent()
     {
-        return RegistrationFormType::class;
+        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
+    }
+
+    public function getName()
+    {
+        return 'app_user_registration';
     }
 
 }
