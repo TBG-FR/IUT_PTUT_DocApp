@@ -2,7 +2,7 @@
 
 {% block title %}
 
-    DocInTime - Find a Doctor, now. [Results]
+    DocInTime - Find a Doctor, now. [Appointments - Results]
 
 {% endblock %}
 
@@ -16,15 +16,14 @@
 
 {% block javascripts %}
 
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsKDPOXJk9M1smvblwa7r-JdNNM8GM6sQ&callback=initMap">
-    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsKDPOXJk9M1smvblwa7r-JdNNM8GM6sQ&callback=initMap"></script>
+
     <script>
         function initMap() {
             const bounds = new google.maps.LatLngBounds();
             const $appts = $('a.lien');
             const locs = [];
-            $appts.each(function(idx, appt) {
+            $appts.each(function (idx, appt) {
                 const loc = {
                     lat: parseFloat($(appt).attr('data-lat')),
                     lng: parseFloat($(appt).attr('data-lon')),
@@ -37,14 +36,14 @@
                 center: locs[0]
             });
             {% if myLoc|length == 2 %}
-                const loc = {
-                    lat: parseFloat("{{ myLoc[0] }}"),
-                    lng: parseFloat("{{ myLoc[1] }}"),
-                    icon: '/assets/images/map_person.png'
-                };
-                locs.push(loc);
+            const loc = {
+                lat: parseFloat("{{ myLoc[0] }}"),
+                lng: parseFloat("{{ myLoc[1] }}"),
+                icon: '/assets/images/map_person.png'
+            };
+            locs.push(loc);
             {% endif %}
-            for(let i = 0; i < locs.length; i++) {
+            for (let i = 0; i < locs.length; i++) {
                 bounds.extend(new google.maps.Marker({
                     position: locs[i],
                     map: gMap,

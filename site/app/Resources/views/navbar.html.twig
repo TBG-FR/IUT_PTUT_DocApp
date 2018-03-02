@@ -1,0 +1,48 @@
+
+{# 'navbar.html.twig' : Navigation bar/menu #}
+
+<nav id="nav" class="navbar navbar-light bg-dark navbar-expand-md">
+
+    <a class="navbar-brand text-light" href="{{ path('default.index') }}">DocInTime</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <div class="container p-0">
+
+            <ul class="navbar-nav mr-auto m-0">
+
+                <li class="nav-item active"><a href="{{ path('default.index') }}" class="nav-link text-light">Home</a></li>
+
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <li class="nav-item"><a href="{{ path('user_appointments') }}" class="nav-link text-light">My Appointments</a></li>
+                    <li class="nav-item"><a href="{{ path('users.index') }}" class="nav-link text-light">My Profile</a></li>
+                    <li class="nav-item"><a href="{{ path('fos_user_security_logout') }}" class="nav-link text-light">Logout</a></li>
+
+                {% else %}
+                    <li class="nav-item"><a href="{{ path('fos_user_security_login') }}" class="nav-link text-light">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+                    <li class="nav-item"><a href="{{ path('fos_user_registration_register') }}" class="nav-link text-light">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
+
+                {% endif %}
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Espace praticien
+                    </a>
+
+                    <div class="dropdown-menu">
+                        {% if app.user and app.user.isDoctor %}
+                            <a href="{{ path('doctor_panel') }}" class="dropdown-item">Manage appointments</a>
+                        {% else %}
+                            <a href="{{ path('user_doctors_create') }}" class="dropdown-item">Créer un compte praticien</a>
+                        {% endif %}
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

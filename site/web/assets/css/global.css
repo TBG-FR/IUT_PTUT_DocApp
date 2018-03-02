@@ -1,10 +1,5 @@
-/* Slag Dev Styles */
+/* ------------ ------------ ------------ Global CSS (Whole page) ------------ ------------ ------------ */
 
-.form-inline > .input-group {
-    margin-right: 2.5%;
-}
-
-/* Global styles */
 html, body {
     width: 100%;
     height: 100%;
@@ -13,28 +8,25 @@ html, body {
     color: #000;
 }
 
-#content {
-    margin-top: 75px;
-}
+/* ------------ ------------ ------------ Header (Logo/Navbar/etc) ------------ ------------ ------------ */
 
-/*
-a {
-    color: inherit;
-    text-decoration: underline;
-}
-*/
-
-
-/* Header styles */
 #header {
+
     position: relative;
+
+    margin-bottom: 2.5%;
+
 }
+
+/*------------ ------------ Header : Logo ------------- ------------*/
 
 #logo {
     display: inline-block;
     width: 200px;
     height: auto;
 }
+
+/*------------ ------------ Header : Reviews Alert ------------- ------------*/
 
 .reviews-alert {
 
@@ -52,17 +44,43 @@ a {
 
 }
 
-.notices {
+/* ------------ ------------ ------------ Content (Notices/Page) ------------ ------------ ------------ */
 
-    width: 100%;
-    margin: auto;
-    margin-bottom: 5px;
+#content {
+
+    /*margin-top : 5%;*/
 
 }
 
-/*------------ ------------ Search Result ------------- ------------*/
+/*------------ ------------ Content : Notices (Alerts) ------------- ------------*/
 
-.result {
+.notices {
+
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom : 2.5%;
+
+}
+
+.notices > .alert {
+
+    margin-bottom: 0.5%;
+
+}
+
+/*------------ ------------ Content : Page Content ------------- ------------*/
+
+.page_title, .page_title > h1, h1.page_title {
+
+    text-align: center;
+
+
+}
+
+/*------------ ------------ Content : Search Results ------------- ------------*/
+
+.results {
     margin-top: 3%;
     padding-top: 3%;
     padding-bottom: 3%;
@@ -70,12 +88,12 @@ a {
     text-decoration: none;
 }
 
-.result > .row >.col-8> .lien {
+.results > .row > .col-8 > .lien {
     color: #1d2124;
     text-decoration: none;
 }
 
-.result > .row>.col-8>.lien >  .element {
+.results > .row > .col-8 > .lien > .element {
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
     background-color: #d0deff;
@@ -86,11 +104,11 @@ a {
 
 }
 
-.result > .row>.col-8>.lien > .element:hover {
+.results > .row > .col-8 > .lien > .element:hover {
     background-color : #a6b3d4;
 }
 
-.result > .row>.col-8>.lien >  .element  > .image {
+.results > .row > .col-8 > .lien > .element > .image {
     min-height: 15px;
     border-radius: 0.5rem;
     width: 20%;
@@ -98,10 +116,9 @@ a {
     max-width: 15%;
     height: auto;
 
-
 }
 
-.result >  .row>.col-8>.lien > .element > .content {
+.results > .row > .col-8 > .lien > .element > .content {
     position: absolute;
     top: 50%; /* poussé de la moitié de hauteur du référent */
     transform: translateY(-50%);
@@ -112,31 +129,37 @@ a {
 
 }
 
-.result >  .row>.col-8>.lien >.element > .content > .float-left > .name {
+.results > .row >.col-8 > .lien >.element > .content > .float-left > .name {
     font-size: calc(1em + 1vw);
 }
-.result >.row>.col-8>.lien > .element >  .content > .float-left > .spe {
+
+.results > .row > .col-8 > .lien > .element > .content > .float-left > .spe {
 }
-.result >.row>.col-8>.lien >.element >  .content > .float-right > .hour {
+
+.results > .row > .col-8 > .lien > .element > .content > .float-right > .hour {
     font-weight: bold;
     font-size: calc(1.5em + 1vw);
 }
-.result >.row>.col-8>.lien >.element >  .content > .float-right > .distance {
+
+.results > .row > .col-8 > .lien > .element > .content > .float-right > .distance {
     text-align: right;
 }
 
-.result >.row>.col-8>.lien >.element > .content > .float-right > {
+.results > .row > .col-8 > .lien > .element > .content > .float-right > {
     position: absolute;
     top: 50%; /* poussé de la moitié de hauteur du référent */
     transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
     text-align: right;
 }
 
-#content {
-    margin-top: 75px;
+.results > .row > .col-4 > #map {
+
+    width: 100%;
+    height: 300px;
+
 }
 
-/*------------ ------------ Appointment Details ------------- ------------*/
+/*------------ ------------ Content : Appointments Details ------------- ------------*/
 
 .details {
     border: 1px solid rgba(0, 0, 0, 0.125);
@@ -146,47 +169,45 @@ a {
     padding-top: 1%;
 }
 
-.result > .row {
+.details > .row {
     margin-right: 1%;
     margin-left: 1%;
     padding: 1%;
 }
 
-.result > .row > {
+.details > .row > {
     color: #1d2124;
     text-decoration: none;
 }
-.result > .row>.col-2> .image {
+.details > .row > .col-2 > .image {
     min-height: 15px;
     border-radius: 0.5rem;
     display: inline-block;
     height: auto;
 }
 
-.result > .row>.col-4> .name {
+.details > .row > .col-4 > .name {
     font-size: calc(1em + 1vw);
 }
 
-.result > .row>.col-4> .spe {
+.details > .row > .col-4 > .spe {
     font-size: calc(0.8em + 0.5vw);
 }
 
-.result > .row>.col-4{
+.details > .row > .col-4 {
     padding-left: 0%;
 }
 
-.result > .row>.col-6{
+.details > .row > .col-6 {
     text-align: right;
 }
 
-.result > .row>.col-6>.time{
+.details > .row > .col-6 > .time {
     font-weight: bold;
     font-size: calc(1.5em + 1vw);
 }
 
-
-
-.result > .desc {
+.details > .desc {
     margin-right: 3%;
     margin-left: 3%;
     padding: 1%;
@@ -195,6 +216,13 @@ a {
     background-color: #a6b3d4;
 }
 
-.result > .desc >.titre{
+.details > .desc > .titre {
 
+}
+
+/*------------ ------------ OTH ------------- ------------*/
+/* TODO : Add other CSS parts/things here */
+
+.form-inline > .input-group {
+    margin-right: 2.5%;
 }

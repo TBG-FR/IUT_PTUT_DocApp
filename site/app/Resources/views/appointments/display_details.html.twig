@@ -2,7 +2,7 @@
 
 {% block title %}
 
-    DocInTime - Find a Doctor, now. [Details]
+    DocInTime - Find a Doctor, now. [Appointments - Details]
 
 {% endblock %}
 
@@ -10,73 +10,76 @@
 
     {% include ':appointments:search_form.html.twig' %}
 
+    {% if appointment.user is not null %}
+
+        <div class="alert alert-danger" role="alert">
+            Attention : Ce rendez-vous est déjà pris !
+            Warning : This appointment is already taken !
+        </div>
+
+    {% endif %}
+
+    <div class="details">
+        <div class="row">
+            <div class="col-2">
+
+                <div class="image">
+                    <img class="img-fluid img-thumbnail" src="/assets/images/profil.png" alt="Card image cap">
+                </div>
+
+            </div>
+
+            <div class="col-4">
+                <div class="name">
+                    Dr. {{ appointment.doctor.lastName }}
+                </div>
+
+                <div class="spe">
+                    {% set doctor_specialities = [] %}
+
+                    {% for speciality in appointment.doctor.specialities %}
+                        {% set doctor_specialities = doctor_specialities|merge([speciality.name]) %}
+                    {% endfor %}
+                    {{ doctor_specialities|join(' - ') }}
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="time">
+                    {{ appointment.StartTime | date("H:i") }} - {{ appointment.EndTime | date("H:i") }}
+                </div>
+            </div>
+        </div>
+        <div class="row desc">
+            Description :<br/>{{ appointment.Description }}
+
+            <div class="bg-warning">
+                {# TODO : Better displaying of Appointment's Specialities ! #}
+                Specialities (TEMP) :
+                {% set appt_specialities = [] %}
+                {% for speciality in appointment.specialities %}
+                    {% set appt_specialities = appt_specialities|merge([speciality.name]) %}
+                {% endfor %}
+                {{ appt_specialities|join(' - ') }}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="btn-group menu-bottom">
+
         {% if appointment.user is not null %}
 
-            <div class="alert alert-danger" role="alert">
-                Attention : Ce rendez-vous est déjà pris !
-                Warning : This appointment is already taken !
-            </div>
+            <a href="#" class="btn btn-primary disabled" aria-disabled="true">Réserver ce RDV</a>
+
+        {% else %}
+
+            <a href="{{ path('appointments.reservation', {'id': appointment.ID, 'back': app.request.headers.get('referer') }) }}" class="btn btn-primary">Réserver ce RDV</a>
 
         {% endif %}
 
-            <div class="result details">
-            <div class="row">
-            <div class="col-2">
+        <a href="{{ app.request.headers.get('referer') }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>
 
-                    <div class="image">
-                        <img class="img-fluid img-thumbnail" src="/assets/images/profil.png" alt="Card image cap">
-                    </div>
-
-                    </div>
-
-                <div class="col-4">
-                    <div class="name">
-                        Dr. {{ appointment.doctor.lastName }}
-                    </div>
-
-                    <div class="spe">
-                        {% set doctor_specialities = [] %}
-
-                        {% for speciality in appointment.doctor.specialities %}
-                            {% set doctor_specialities = doctor_specialities|merge([speciality.name]) %}
-                        {% endfor %}
-                        {{ doctor_specialities|join(' - ') }}
-                    </div>
-                </div>
-
-                    <div class="col-6">
-                        <div class="time">
-                        {{ appointment.StartTime | date("H:i") }} - {{ appointment.EndTime | date("H:i") }}
-                        </div>
-                    </div>
-                </div>
-                <div class="row desc">
-                    Description :<br/>{{ appointment.Description }}
-
-                    <div class="bg-warning">
-                        {# TODO : Better displaying of Appointment's Specialities ! #}
-                        Specialities (TEMP) :
-                        {% set appt_specialities = [] %}
-                        {% for speciality in appointment.specialities %}
-                            {% set appt_specialities = appt_specialities|merge([speciality.name]) %}
-                        {% endfor %}
-                        {{ appt_specialities|join(' - ') }}
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="btn-group menu-bottom">
-
-                {% if appointment.user is not null %}
-                    <a href="#" class="btn btn-primary disabled" aria-disabled="true">Réserver ce RDV</a>
-                {% else %}
-                    <a href="{{ path('appointments.reservation', {
-                        'id': appointment.ID,
-                        'back': app.request.headers.get('referer')  
-                    }) }}" class="btn btn-primary">Réserver ce RDV</a>
-                {% endif %}
-                <a href="{{ app.request.headers.get('referer') }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>
-            </div>
+    </div>
 
 {% endblock %}

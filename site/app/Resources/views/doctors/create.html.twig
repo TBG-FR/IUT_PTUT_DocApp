@@ -1,42 +1,72 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+
+    DocInTime - Find a Doctor, now. [Doctor - Registration]
+
+{% endblock %}
+
+{% block page_title %}
+
+    <h1 class="page_title">Inscription en tant que Médecin</h1>
+
+{% endblock %}
+
 {% block content %}
-    <h1>S'inscrire en tant que médecin</h1>
+
+    <h1 class="page_title">Inscription en tant que Médecin</h1>
+
     {{ form_start(form) }}
         <h2>Informations</h2>
+
         <div class="row">
+
             <div class="form-group col-sm-6">
                 {{ form_label(form.email, 'Adresse email') }}
                 {{ form_widget(form.email) }}
             </div>
+
             <div class="form-group col-sm-6">
                 {{ form_label(form.phone, 'Téléphone') }}
                 {{ form_widget(form.phone) }}
             </div>
         </div>
+
         <div class="row">
+
             <div class="form-group col-sm-6">
                 {{ form_label(form.last_name, 'Nom') }}
                 {{ form_widget(form.last_name) }}
             </div>
+
             <div class="form-group col-sm-6">
                 {{ form_label(form.first_name, 'Prénom') }}
                 {{ form_widget(form.first_name) }}
             </div>
+
         </div>
+
         <div class="row">
+
             <div class="form-group col-sm-6">
                 {{ form_label(form.plainPassword.first, 'Mot de passe') }}
                 {{ form_widget(form.plainPassword.first, {label: 'Mot de passe'}) }}
             </div>
+
             <div class="form-group col-sm-6">
                 {{ form_label(form.plainPassword.second, 'Confirmez votre mot de passe') }}
                 {{ form_widget(form.plainPassword.second, {label: 'Mot de passe'}) }}
             </div>
+
         </div>
+
         <h2>Adresse</h2>
+
         {{ form_widget(form.address) }}
         {{ form_row(form.specialities) }}
+
         <hr>
+
     {{ form_end(form)}}
+
 {% endblock %}

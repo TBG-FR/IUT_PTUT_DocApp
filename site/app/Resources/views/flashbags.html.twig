@@ -1,0 +1,28 @@
+
+{# 'flashbags.html.twig' : display the messages inside Session's flashbag, using Bootstrap's alerts #}
+
+{% for type, messages in app.session.flashbag.all() %}
+
+    {% if messages is defined %}
+
+        <div class="notices">
+
+            {% for message in messages %}
+
+                <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+
+                    {{ message | raw }}
+
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+{% endfor %}
