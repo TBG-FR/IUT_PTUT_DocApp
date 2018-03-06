@@ -6,16 +6,20 @@
                 <div class="input-group-prepend input-group-text"><span class="fa fa-graduation-cap"></span></div>
                 <select class="form-control" id="searchDocSpec" title="Spécialité" name="speciality">
                     {% for speciality in specialities %}
-                        <option value="{{ speciality.id }}">{{ speciality.name }}</option>
+                        <option value="{{ speciality.id }}"
+                        {% if app.request.get('speciality') == speciality.id %} selected {% endif %}>
+                            {{ speciality.name }}
+                        </option>
                     {% endfor %}
                 </select>
             </div>
 
             <div class="input-group"> <!-- Location selection -->
                 <div class="input-group-prepend input-group-text"><span class="fa fa-map"></span></div>
-                <input type="hidden" name="coords" value="">
+                <input type="hidden" name="coords" value="{{ app.request.get('coords') }}">
                 <!-- placeholder="City name, zip code, street name, ..." -->
-                <input type="text" class="form-control" id="searchLocation" placeholder="Ville, Code Postal, Nom de rue, ..." name="location">
+                <input type="text" class="form-control" id="searchLocation" placeholder="Ville, Code Postal, Nom de rue, ..." name="location"
+                value="{{ app.request.get('location') }}">
                 <div class="input-group-append">
                     <button id="geoLocateBtn" class="btn btn-success" type="button"><span class="fa fa-map-marker"></span></button>
                 </div>
@@ -27,7 +31,7 @@
                         <span class="fa fa-clock-o"></span>
                         <label class="left-space" for="searchHour">&nbsp;Dès :</label>
                     </div>
-                    <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}" name="time">
+                    <input type="time" class="form-control" id="searchHour" value="{{ app.request.get('time') ?? "now"|date("H:i") }}" name="time">
                 </div>
             </div>
 
