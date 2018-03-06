@@ -10,13 +10,15 @@
 
                     <div class="alert alert-danger" role="alert">
                         Aucun créneau de rendez-vous n'a été trouvé avec vos paramètres de recherche<br/>
-                        Réessayez avec des paramètres différents ou <a href="#" class="alert-link">mettez en place une alerte</a> pour être informé si une place se libère !
+                        Réessayez avec des paramètres différents {# TODO : Alerts Link + Alerts System <!-- ou <a href="#" class="alert-link">mettez en place une alerte</a> pour être informé si une place se libère --> #} !
                     </div>
 
+                    {# TODO : Translation
                     <div class="alert alert-danger" role="alert">
                         No appointment time slot has been found with your search settings<br/>
-                        Try again with different parameters or <a href="#" class="alert-link">set up an alert</a> to be notified if ones becomes available !
+                        Try again with different parameters TODO : Alerts Link + Alerts System <!-- or <a href="#" class="alert-link">set up an alert</a> to be notified if ones becomes available --> !
                     </div>
+                    #}
                     
                 {% else %}
                     
@@ -26,7 +28,7 @@
                                     <div class="element">
                                         <div class="image">
                                             {% if appointment.office.doctor.avatar %}
-                                            <img class="img-fluid img-thumbnail" src="{{ appointment.office.doctor.avatar.url }}" alt="Card image cap">
+                                            <img class="img-fluid img-thumbnail" src="{{ appointment.office.doctor.avatar.url }}" alt="Doctor avatar">
                                             {% else %}
                                                 <img class="img-fluid img-thumbnail" src="{{ asset('assets/images/profil.png') }}" alt="{{ appointment.office.doctor.lastName }}">
                                             {% endif %}

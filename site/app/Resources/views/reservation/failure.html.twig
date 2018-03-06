@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+    {# DocInTime - Find a Doctor, now. [Reservation - Failure] #}
+    DocInTime - Trouver un Docteur, maintenant. [Réservation - Échec]
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="text-left bg-secondary">
+
+        <p class="error">Il y a eu un problème lors du paiement ou de la validation du rendez-vous...<br/></p>
+
+        <p>
+            Ressurez-vous, vous n'avez pas été débité !<br/>
+            <br/>
+            Veuillez nous excuser pour le dérangement. Nous vous proposons d'aller rechercher un autre rendez-vous !<br/>
+        </p>
+
+    </div>
+
+    <div class="btn-group menu-bottom">
+
+        <a href="{{ path('user_appointments') }}" class="btn btn-primary">Voir la liste de vos RDVs</a>
+        <a href="{{ path('appointments_results') }}" role="button" class="btn btn-danger">Retourner à la recherche de RDVs</a>
+
+    </div>
+
+{% endblock %}

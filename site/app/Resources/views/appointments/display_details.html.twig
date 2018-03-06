@@ -2,7 +2,8 @@
 
 {% block title %}
 
-    DocInTime - Find a Doctor, now. [Appointments - Details]
+    {# DocInTime - Find a Doctor, now. [Appointments - Details] #}
+    DocInTime - Trouver un Docteur, maintenant. [Rendez-vous - Détails]
 
 {% endblock %}
 
@@ -74,7 +75,7 @@
 
         {% else %}
 
-            <a href="{{ path('appointments.reservation', {'id': appointment.ID, 'back': app.request.headers.get('referer') }) }}" class="btn btn-primary">Réserver ce RDV</a>
+            <a href="{{ path('appointments_reservation', {'id': appointment.ID, 'back': app.request.headers.get('referer') }) }}" class="btn btn-primary">Réserver ce RDV</a>
 
         {% endif %}
 

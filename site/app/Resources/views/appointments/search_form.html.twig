@@ -1,34 +1,38 @@
 {% block content %}
 
     <div class="container">
-        <form class="form-inline" action="{{ path('appointments.results') }}" role="form">
+        <form class="form-inline" action="{{ path('appointments_results') }}" role="form">
             <div class="input-group"> <!-- Speciality selection -->
                 <div class="input-group-prepend input-group-text"><span class="fa fa-graduation-cap"></span></div>
-                <select class="form-control" id="searchDocSpec" title="Speciality" name="speciality">
+                <select class="form-control" id="searchDocSpec" title="Spécialité" name="speciality">
                     {% for speciality in specialities %}
                         <option value="{{ speciality.id }}">{{ speciality.name }}</option>
                     {% endfor %}
                 </select>
             </div>
+
             <div class="input-group"> <!-- Location selection -->
                 <div class="input-group-prepend input-group-text"><span class="fa fa-map"></span></div>
                 <input type="hidden" name="coords" value="">
-                <input type="text" class="form-control" id="searchLocation" placeholder="City name, zip code, street name, ..."
-                       name="location">
+                <!-- placeholder="City name, zip code, street name, ..." -->
+                <input type="text" class="form-control" id="searchLocation" placeholder="Ville, Code Postal, Nom de rue, ..." name="location">
                 <div class="input-group-append">
                     <button id="geoLocateBtn" class="btn btn-success" type="button"><span class="fa fa-map-marker"></span></button>
                 </div>
             </div>
+
             <div class="input-group"> <!-- Hour selection -->
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <div class="input-group-prepend input-group-text">
                         <span class="fa fa-clock-o"></span>
-                        <label class="left-space" for="searchHour">&nbsp;From :</label>
+                        <label class="left-space" for="searchHour">&nbsp;Dès :</label>
                     </div>
                     <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}" name="time">
                 </div>
             </div>
+
             <button type="submit" class="btn btn-primary">DocInTime !</button>
+
         </form>
     </div>
 

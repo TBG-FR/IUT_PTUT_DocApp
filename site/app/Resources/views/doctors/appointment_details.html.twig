@@ -2,7 +2,8 @@
 
 {% block title %}
 
-    DocInTime - Find a Doctor, now. [Doctor - Appointment Details]
+    {# DocInTime - Find a Doctor, now. [Doctor - Appointment Details] #}
+    DocInTime - Trouver un Docteur, maintenant. [Docteur - Détails du RDV]
 
 {% endblock %}
 
@@ -56,15 +57,19 @@
         </div>
 
     </div>
+
     <form action="" method="post">
         <div class="form-group">
             <label for="inputDetails">Détails du rendez-vous</label>
             <textarea name="details" id="inputDetails" class="form-control" cols="30" rows="5">{{ appointment.summary }}</textarea>
         </div>
         <input type="hidden" value="{{ csrf_token('intention') }}" name="_token">
-        <input type="submit" class="btn btn-danger" value="Clôre ce rendez-vous">
+        <input type="submit" class="btn btn-danger" value="Clôturer ce rendez-vous">
+
+        <div class="btn-group menu-bottom">
+        <a href="{{ path('doctor_panel') }}" role="button" class="btn btn-primary">Retour à la gestion des Créneaux</a>
+        </div>
+
     </form>
-    <div class="btn-group menu-bottom">
-        <a href="{{ app.request.headers.get('referer') }}" role="button" class="btn btn-primary">Retour</a>
-    </div>
+
 {% endblock %}

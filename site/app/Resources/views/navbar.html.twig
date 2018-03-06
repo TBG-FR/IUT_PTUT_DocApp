@@ -3,7 +3,7 @@
 
 <nav id="nav" class="navbar navbar-light bg-dark navbar-expand-md">
 
-    <a class="navbar-brand text-light" href="{{ path('default.index') }}">DocInTime</a>
+    <a class="navbar-brand text-light" href="{{ path('default_index') }}">DocInTime</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -15,12 +15,12 @@
 
             <ul class="navbar-nav mr-auto m-0">
 
-                <li class="nav-item active"><a href="{{ path('default.index') }}" class="nav-link text-light">Home</a></li>
+                <li class="nav-item"><a href="{{ path('default_index') }}" class="nav-link text-light">Accueil</a></li>
 
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <li class="nav-item"><a href="{{ path('user_appointments') }}" class="nav-link text-light">My Appointments</a></li>
-                    <li class="nav-item"><a href="{{ path('users.index') }}" class="nav-link text-light">My Profile</a></li>
-                    <li class="nav-item"><a href="{{ path('fos_user_security_logout') }}" class="nav-link text-light">Logout</a></li>
+                    <li class="nav-item"><a href="{{ path('user_appointments') }}" class="nav-link text-light">Mes Rendez-vous</a></li>
+                    <li class="nav-item"><a href="{{ path('users_index') }}" class="nav-link text-light">Mon Profil</a></li>
+                    <li class="nav-item"><a href="{{ path('fos_user_security_logout') }}" class="nav-link text-light">Déconnexion</a></li>
 
                 {% else %}
                     <li class="nav-item"><a href="{{ path('fos_user_security_login') }}" class="nav-link text-light">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
@@ -35,9 +35,11 @@
 
                     <div class="dropdown-menu">
                         {% if app.user and app.user.isDoctor %}
-                            <a href="{{ path('doctor_panel') }}" class="dropdown-item">Manage appointments</a>
+                            <a href="{{ path('doctor_panel') }}" class="dropdown-item">Gérer les Créneaux de RDV</a>
+                            <a href="{{ path('appointments_create_single') }}" class="dropdown-item">Ajouter un Créneau de RDV</a>
+                            <a href="{{ path('appointments_create_multiple') }}" class="dropdown-item">Ajouter une Plage de RDV</a>
                         {% else %}
-                            <a href="{{ path('user_doctors_create') }}" class="dropdown-item">Créer un compte praticien</a>
+                            <a href="{{ path('user_doctors_create') }}" class="dropdown-item">Inscription (Praticien)</a>
                         {% endif %}
                     </div>
 

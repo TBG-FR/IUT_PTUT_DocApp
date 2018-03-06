@@ -1,3 +1,4 @@
+
 <div class="appointment">
     <h2>Cabinet: {{ appointment.office.address.toAddressString }}</h2>
     <span>Le {{ appointment.date|date('d/m') }} à {{ appointment.startTime|date('H:i') }} - {{  appointment.endTime|date('H:i') }}</span>

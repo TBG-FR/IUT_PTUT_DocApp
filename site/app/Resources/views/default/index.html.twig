@@ -2,17 +2,35 @@
 
 {% block title %}
 
-    DocInTime - Find a Doctor, now. [Home]
+    {# DocInTime - Find a Doctor, now. [Home] #}
+    DocInTime - Trouver un Docteur, maintenant. [Accueil]
 
 {% endblock %}
 
 {% block content %}
 
     <div class="home">
-        <h1 class="bigtitle">DocInTime</h1>
-        <p class="title">The quickest way to find an appointment with a Doctor !</p>
+        <!-- <h1 class="bigtitle">DocInTime</h1>
+        <p class="title">The quickest way to find an appointment with a Doctor !</p> -->
+        <h1 class="bigtitle">DocInTime - PTUT Info</h1>
+        <p class="title">
+            <span class="removed">Le moyen le plus rapide d'obtenir un rendez-vous avec un Docteur !</span><br/>
+            Prendre rendez-vous avec l'Infirmière de l'IUT (Lyon 1 - Bourg-en-Bresse)
+        </p>
     </div>
 
     {% include ':appointments:search_form.html.twig' %}
 
+{% endblock %}
+
+
+{% block footer %}
+    <div id="footer" class="long">
+
+        <p>
+            Projet Tutoré - Département Informatique - IUT Lyon1, site de Bourg-en-Bresse<br/>
+            Étudiants : Dyvia Fleury, Théo Champion et Tom-Brian Garcia
+        </p>
+
+    </div>
 {% endblock %}
