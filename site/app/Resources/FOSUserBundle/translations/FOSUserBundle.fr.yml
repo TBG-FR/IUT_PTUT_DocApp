@@ -35,7 +35,7 @@ registration:
     first_name: 'Prénom'
     last_name: 'Nom de famille'
     flash:
-        user_created: 'L''utilisateur a été créé avec succès.'
+        user_created: 'Vous êtes maintenant inscrit'
     email:
         subject: 'Bienvenue %username% !'
         message: |

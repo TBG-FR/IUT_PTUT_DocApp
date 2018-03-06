@@ -23,9 +23,18 @@ class UserType extends AbstractType
     {
         $builder
                 ->remove('username')
-                ->add('email', EmailType::class)
-                ->add('first_name', TextType::class)
-                ->add('last_name', TextType::class)
+                ->add('email', EmailType::class, [
+                    'label' => 'form.email',
+                    'translation_domain' => 'FOSUserBundle'
+                ])
+                ->add('first_name', TextType::class, [
+                    'label' => 'registration.first_name',
+                    'translation_domain' => 'FOSUserBundle'
+                ])
+                ->add('last_name', TextType::class, [
+                    'label' => 'registration.last_name',
+                    'translation_domain' => 'FOSUserBundle'
+                ])
                 /*>add('avatar', ImageType::class, [
                     'required' => false
                 ])*/
