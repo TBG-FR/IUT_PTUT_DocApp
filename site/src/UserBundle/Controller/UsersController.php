@@ -12,7 +12,7 @@ use UserBundle\Form\UserType;
 class UsersController extends Controller
 {
     /**
-     * @Route("/user/profile", name="users.index")
+     * @Route("/user/profile", name="users_index")
      */
     public function indexAction()
     {
@@ -29,7 +29,7 @@ class UsersController extends Controller
     }
 
     /**
-     * @Route("/user/edit", name="users.edit", methods={"GET", "POST"})
+     * @Route("/user/edit", name="users_edit", methods={"GET", "POST"})
      */
     public function editAction(Request $request)
     {
@@ -44,15 +44,15 @@ class UsersController extends Controller
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'User edited successfully');
 
-            return $this->redirectToRoute('users.index');
+            return $this->redirectToRoute('users_index');
         }
 
-        return $this->redirectToRoute('users.index');
+        return $this->redirectToRoute('users_index');
 
     }
 
     /**
-     * @Route("/user", name="users.save", methods={"GET", "POST"})
+     * @Route("/user", name="users_save", methods={"GET", "POST"})
      */
     public function saveAction(Request $request)
     {
@@ -60,7 +60,7 @@ class UsersController extends Controller
         $user = $userRepo->find($this->getUser()->getId());
 
         $form = $this->createForm(UserType::class, $user, [
-            'action' => $this->generateUrl('users.save')
+            'action' => $this->generateUrl('users_save')
         ]);
 
         if ($form->isSubmitted() && $form->handleRequest($request)->isValid()) {
@@ -70,10 +70,10 @@ class UsersController extends Controller
             $em->flush();
             $this->addFlash('success', 'User created successfully');
 
-            return $this->redirectToRoute('users.index');
+            return $this->redirectToRoute('users_index');
         }
 
-        return $this->redirectToRoute('users.index');
+        return $this->redirectToRoute('users_index');
     }
 
 }

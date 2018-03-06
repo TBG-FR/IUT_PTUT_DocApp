@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AppointmentsController extends Controller
 {
     /**
-     * @Route("/search", name="appointments.results")
+     * @Route("/search", name="appointments_results")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -131,7 +131,7 @@ class AppointmentsController extends Controller
     }
 
     /**
-     * @Route("/appt/{id}/details", name="appointments.details")
+     * @Route("/appt/{id}/details", name="appointments_details")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -160,7 +160,7 @@ class AppointmentsController extends Controller
     }
 
     /**
-     * @Route("/appt/{id}/reservation", name="appointments.reservation")
+     * @Route("/appt/{id}/reservation", name="appointments_reservation")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -185,7 +185,7 @@ class AppointmentsController extends Controller
 
         else { // ELSE (this appointment exists and is free)
 
-            return $this->render(':holding:laststep.html.twig', [
+            return $this->render(':reservation:laststep.html.twig', [
                 'appointment' => $appointment
             ]);
 
@@ -193,7 +193,7 @@ class AppointmentsController extends Controller
     }
 
     /**
-     * @Route("/appt/reservation/result", name="appointments.reservation_result")
+     * @Route("/appt/reservation/result", name="appointments_reservation_result")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -206,10 +206,18 @@ class AppointmentsController extends Controller
             $id = $request->request->get('paymentSuccessful');
             $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
-            if($appointment->getUser() instanceof User || $appointment->getUser() instanceof Doctor) { //
+            if($appointment->getUser() instanceof User || $appointment->getUser() instanceof Doctor) {
 
-                return $this->render(':holding:failure.html.twig', [
-                    'error' => "already_taken",
+                //TODO : FLASHBAG
+
+                /*
+                <div class="alert alert-danger" role="alert">
+                    Votre rendez-vous n'a pas été réservé (paiement non effectué) !
+                    Your appointment hasn't been reserved (payment not made) !
+                </div>
+                */
+
+                return $this->render(':reservation:failure.html.twig', [
                     'appointment' => $appointment
                 ]);
 
@@ -225,7 +233,7 @@ class AppointmentsController extends Controller
                 $em->persist($appointment);
                 $em->flush();
 
-                return $this->render(':holding:success.html.twig', [
+                return $this->render(':reservation:success.html.twig', [
                     'appointment' => $appointment
                 ]);
 
@@ -235,7 +243,7 @@ class AppointmentsController extends Controller
 
         else { // ELSE (the user acceeded to that page manually)
 
-            //throw $this->createNotFoundException("You didn't made any holding or payment !");
+            //throw $this->createNotFoundException("You didn't made any reservation or payment !");
             throw $this->createNotFoundException("Vous n'avez fait aucune réservation ni paiement !");
 
         }
@@ -243,7 +251,7 @@ class AppointmentsController extends Controller
     }
 
     /**
-     * @Route("/panel/appt/create", name="appointments.create")
+     * @Route("/panel/appt/create/single", name="appointments_create_single")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -261,7 +269,7 @@ class AppointmentsController extends Controller
                 $this->get('session')->getFlashBag()->add('danger','<span class="fa fa-warning"></span> Vous devez sélectionner <strong>au moins une spécialité</strong> !');
                 $this->get('session')->getFlashBag()->add('danger','<span class="fa fa-warning"></span> You must choose <strong>at least one speciality</strong> !');
 
-                return $this->render(':appointments:create.html.twig', [
+                return $this->render(':appointments:create_single.html.twig', [
                     'form' => $form->createView()
                 ]);
 
@@ -289,7 +297,7 @@ class AppointmentsController extends Controller
 
         else {
 
-            return $this->render(':appointments:create.html.twig', [
+            return $this->render(':appointments:create_single.html.twig', [
                 'form' => $form->createView()
             ]);
 
@@ -297,7 +305,7 @@ class AppointmentsController extends Controller
     }
 
     /**
-     * @Route("/appt/create/multiple", name="appointments.create.multiple")
+     * @Route("/panel/appt/create/multiple", name="appointments_create_multiple")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -350,9 +358,6 @@ class AppointmentsController extends Controller
             //dump($appointmentsDoc);
             //die();
             while ($NbCreneaux>0){
-
-
-
 
                 $appointment = new Appointment();
                 $appointment->setClosed(false);

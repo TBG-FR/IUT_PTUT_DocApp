@@ -25,7 +25,7 @@
 
             <div class="alert alert-info" role="alert">
                 Ce projet est en développement , nous avons besoin de vos avis...
-                Venez jeter un oeil à la page <a class="reviews-alert alert-link" href="{{ path('feedback.add') }}">
+                Venez jeter un oeil à la page <a class="reviews-alert alert-link" href="{{ path('feedback_add') }}">
                     <span class="fa fa-long-arrow-right"></span>
                     Feedback : Avis, Améliorations & Bugs
                     <span class="fa fa-long-arrow-left"></span>
@@ -60,6 +60,18 @@
             {% block javascripts %}{% endblock %}
 
         </div>
+
+
+        {% block footer %}
+        <div id="footer">
+
+            <p>
+                Projet Tutoré - Département Informatique - IUT Lyon1, site de Bourg-en-Bresse<br/>
+                Étudiants : Dyvia Fleury, Théo Champion et Tom-Brian Garcia
+            </p>
+
+        </div>
+        {% endblock %}
 
     </body>
 </html>

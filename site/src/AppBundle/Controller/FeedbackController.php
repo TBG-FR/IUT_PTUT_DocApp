@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class FeedbackController extends Controller
 {
     /**
-     * @Route("/feedback/list", name="feedback.list")
+     * @Route("/feedback/list", name="feedback_list")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -28,7 +28,7 @@ class FeedbackController extends Controller
     }
 
     /**
-     * @Route("/feedback/add", name="feedback.add")
+     * @Route("/feedback/add", name="feedback_add")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response

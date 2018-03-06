@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="default.index")
+     * @Route("/", name="default_index")
      */
     public function indexAction()
     {
@@ -22,7 +22,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/", name="default.reviews")
+     * @Route("/", name="default_reviews")
      */
     public function reviewsAction()
     {

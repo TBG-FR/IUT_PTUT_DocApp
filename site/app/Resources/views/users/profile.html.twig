@@ -1,17 +1,39 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+
+    {# DocInTime - Find a Doctor, now. [Profile] #}
+    DocInTime - Trouver un Docteur, maintenant. [Profil]
+
+{% endblock %}
+
+{% block page_title %}
+
+    <h1 class="page_title">Profil - {{ user.firstName }} {{ user.lastName }}</h1>
+
+{% endblock %}
+
 {% block content %}
-    <h1>{{ user.username }}'s profile</h1>
-    <a href="{{ path('user_appointments') }}" class="btn btn-primary">Mes rendez-vous</a>
-    <h2>Mes infos</h2>
-    <ul class="infos">
-        <li><b>Name:</b> {{ user.lastName }}</li>
-        <li><b>First name:</b> {{ user.firstName }}</li>
-        <li><b>Email address:</b> {{ user.email }}</li>
-    </ul>
-    <h2>Editer</h2>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <input type="submit" class="btn btn-primary" value="Editer">
-    {{ form_end(form) }}
+
+    <a href="{{ path('user_appointments') }}" class="btn btn-lg btn-primary -align-center">Voir mes rendez-vous</a>
+
+    <div class="section">
+        <h2 class="section_title">Informations Personnelles</h2>
+
+        <ul class="infos">
+            <li><b>Nom:</b> {{ user.lastName }}</li>
+            <li><b>Prénom:</b> {{ user.firstName }}</li>
+            <li><b>Addresse Email:</b> {{ user.email }}</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 class="section_title">Modifier mes Informations</h2>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" class="btn btn-primary" value="Mettre à jour">
+        {{ form_end(form) }}
+    </div>
+
 {% endblock %}

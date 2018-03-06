@@ -2,7 +2,8 @@
 
 {% block title %}
 
-    DocInTime - Find a Doctor, now. [Holding]
+    {# DocInTime - Find a Doctor, now. [Reservation] #}
+    DocInTime - Trouver un Docteur, maintenant. [Réservation]
 
 {% endblock %}
 
@@ -62,7 +63,7 @@
                             <p>Par respect du secret médical, aucun autre détail ne vous sera demandé par le site.</p>
                         </div>
                         <div class="modal-footer">
-                            <form action="{{ path('appointments.reservation_result') }}" method="post">
+                            <form action="{{ path('appointments_reservation_result') }}" method="post">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                                 <input type="hidden" name="paymentSuccessful" value="{{ appointment.ID }}">
                                 <button type="submit" class="btn btn-success">Valider</button>
@@ -88,7 +89,7 @@
     {% endif %}
 
     <div class="btn-group menu-bottom">
-        <a href="{{ path('appointments.details', {'id': appointment.ID}) }}" role="button" class="btn btn-secondary">Retourner aux détails du RDV</a>
+        <a href="{{ path('appointments_details', {'id': appointment.ID}) }}" role="button" class="btn btn-secondary">Retourner aux détails du RDV</a>
         <a href="{{ app.request.get('back') }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>
         {# TODO : Garder la recherche en mémoire ? Trouver un moyen de revenir à la même recherche ? #}
     </div>
