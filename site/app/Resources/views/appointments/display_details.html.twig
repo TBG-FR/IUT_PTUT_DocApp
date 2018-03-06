@@ -11,15 +11,6 @@
 
     {% include ':appointments:search_form.html.twig' %}
 
-    {% if appointment.user is not null %}
-
-        <div class="alert alert-danger" role="alert">
-            Attention : Ce rendez-vous est déjà pris !
-            Warning : This appointment is already taken !
-        </div>
-
-    {% endif %}
-
     <div class="details">
         <div class="row">
             <div class="col-2">

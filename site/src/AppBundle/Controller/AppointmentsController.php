@@ -143,20 +143,24 @@ class AppointmentsController extends Controller
 
         if(is_null($appointment)) { // IF this appointment doesn't exist
 
-            //throw $this->createNotFoundException("This appointment doesn't exist !");
             throw $this->createNotFoundException("Ce rendez-vous n'existe pas !");
+            //throw $this->createNotFoundException("This appointment doesn't exist !"); [TODO : EN Translation]
 
         }
 
-        else { // ELSE (this appointment exists)
+        else if(!is_null($appointment->getUser())) {
 
-            return $this->render(':appointments:display_details.html.twig', [
-                'appointment' => $appointment,
-                'specialities' => $specialities,
-                'extended' => false
-            ]);
+            $this->get('session')->getFlashBag()->add('warning', '<span class="fa fa-warning"></span> Ce rendez-vous est déjà pris, vous ne pourrez pas le réserver !');
+            //$this->get('session')->getFlashBag()->add('warning','<span class="fa fa-warning"></span> This appointment is already taken, you'll not be able to take it !'); [TODO : EN Translation]
 
         }
+
+        return $this->render(':appointments:display_details.html.twig', [
+            'appointment' => $appointment,
+            'specialities' => $specialities,
+            'extended' => false
+        ]);
+
     }
 
     /**
@@ -168,18 +172,25 @@ class AppointmentsController extends Controller
     public function reservationAction($id, Request $request)
     {
         $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
+        $specialities = $this->getDoctrine()->getRepository(Speciality::class)->findAll();
 
         if(is_null($appointment)) { // IF this appointment doesn't exist
 
-            //throw $this->createNotFoundException("This appointment doesn't exist !");
             throw $this->createNotFoundException("Ce rendez-vous n'existe pas !");
+            //throw $this->createNotFoundException("This appointment doesn't exist !"); [TODO : EN Translation]
 
         }
 
-        elseif(!is_null($appointment->getUser())) { // ELSE IF this appointment is taken
+        else if(!is_null($appointment->getUser())) {
 
-            //throw $this->createNotFoundException("This appointment is already taken !");
-            throw $this->createNotFoundException("Ce rendez-vous est déjà pris !");
+            $this->get('session')->getFlashBag()->add('danger', '<span class="fa fa-warning"></span> Impossible de passer à la réservation : ce rendez-vous est déjà pris !');
+            //$this->get('session')->getFlashBag()->add('danger','<span class="fa fa-warning"></span> Unable to go to the reservation : This appointment is already taken !'); [TODO : EN Translation]
+
+            return $this->render(':appointments:display_details.html.twig', [
+                'appointment' => $appointment,
+                'specialities' => $specialities,
+                'extended' => false
+            ]);
 
         }
 
@@ -203,19 +214,14 @@ class AppointmentsController extends Controller
 
         if($request->isMethod('POST')) { // IF the user acceeded to that page with POST (= after a payment)
 
-            $id = $request->request->get('paymentSuccessful');
+            $id = $request->request->get('paymentSuccessful'); // TODO : Implement Payments
+
             $appointment = $this->getDoctrine()->getRepository(Appointment::class)->find($id);
 
             if($appointment->getUser() instanceof User || $appointment->getUser() instanceof Doctor) {
 
-                //TODO : FLASHBAG
-
-                /*
-                <div class="alert alert-danger" role="alert">
-                    Votre rendez-vous n'a pas été réservé (paiement non effectué) !
-                    Your appointment hasn't been reserved (payment not made) !
-                </div>
-                */
+                $this->get('session')->getFlashBag()->add('danger','<span class="fa fa-warning"></span> Votre rendez-vous n\'a pas été réservé (paiement non effectué) !');
+                //$this->get('session')->getFlashBag()->add('danger','<span class="fa fa-warning"></span> Your appointment hasn't been reserved (payment not made) !'); [TODO : EN Translation]
 
                 return $this->render(':reservation:failure.html.twig', [
                     'appointment' => $appointment
@@ -232,6 +238,9 @@ class AppointmentsController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($appointment);
                 $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success','<span class="fa fa-warning"></span> Votre rendez-vous a été payé et réservé !');
+                //$this->get('session')->getFlashBag()->add('success','<span class="fa fa-warning"></span> Your appointment has been paid and held !'); [TODO : EN Translation]
 
                 return $this->render(':reservation:success.html.twig', [
                     'appointment' => $appointment
@@ -267,7 +276,8 @@ class AppointmentsController extends Controller
             if($appointment->getSpecialities()->isEmpty()) { // IF the user entered no speciality
 
                 $this->get('session')->getFlashBag()->add('danger','<span class="fa fa-warning"></span> Vous devez sélectionner <strong>au moins une spécialité</strong> !');
-                $this->get('session')->getFlashBag()->add('danger','<span class="fa fa-warning"></span> You must choose <strong>at least one speciality</strong> !');
+                // TODO : EN Translation
+                //$this->get('session')->getFlashBag()->add('danger','<span class="fa fa-warning"></span> You must choose <strong>at least one speciality</strong> !');
 
                 return $this->render(':appointments:create_single.html.twig', [
                     'form' => $form->createView()

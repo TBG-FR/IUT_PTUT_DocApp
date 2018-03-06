@@ -1,58 +1,62 @@
 {% block content %}
 
-    <div class="container">
-        <form class="form-inline" action="{{ path('appointments_results') }}" role="form">
-            <div class="input-group"> <!-- Speciality selection -->
-                <div class="input-group-prepend input-group-text"><span class="fa fa-graduation-cap"></span></div>
-                <select class="form-control" id="searchDocSpec" title="Spécialité" name="speciality">
-                    {% for speciality in specialities %}
-                        <option value="{{ speciality.id }}">{{ speciality.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+    <div class="searchform">
 
-            <div class="input-group"> <!-- Location selection -->
-                <div class="input-group-prepend input-group-text"><span class="fa fa-map"></span></div>
-                <input type="hidden" name="coords" value="">
-                <!-- placeholder="City name, zip code, street name, ..." -->
-                <input type="text" class="form-control" id="searchLocation" placeholder="Ville, Code Postal, Nom de rue, ..." name="location">
-                <div class="input-group-append">
-                    <button id="geoLocateBtn" class="btn btn-success" type="button"><span class="fa fa-map-marker"></span></button>
+        <div class="container searchform_main">
+            <form class="form-inline" action="{{ path('appointments_results') }}" role="form">
+                <div class="input-group"> <!-- Speciality selection -->
+                    <div class="input-group-prepend input-group-text"><span class="fa fa-graduation-cap"></span></div>
+                    <select class="form-control" id="searchDocSpec" title="Spécialité" name="speciality">
+                        {% for speciality in specialities %}
+                            <option value="{{ speciality.id }}">{{ speciality.name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-            </div>
 
-            <div class="input-group"> <!-- Hour selection -->
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    <div class="input-group-prepend input-group-text">
-                        <span class="fa fa-clock-o"></span>
-                        <label class="left-space" for="searchHour">&nbsp;Dès :</label>
-                    </div>
-                    <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}" name="time">
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary">DocInTime !</button>
-
-        </form>
-    </div>
-
-    {% if (extended is defined) and (extended) %}
-        <div class="container">
-            <form class="form-inline" role="form">
-                <div class="form-group">
-                    <div class="pull-left">
-                        <input type="text" value="1" width="10" id="input1" class="form-control" />-
-                        <br />
-                        <label for="input1">Label 1</label>
-                    </div>
-                    <div>
-                        <input type="text" value="I" width="30" id="input2" class="form-control" />
-                        <br />
-                        <label for="input2">Label 2</label>
+                <div class="input-group"> <!-- Location selection -->
+                    <div class="input-group-prepend input-group-text"><span class="fa fa-map"></span></div>
+                    <input type="hidden" name="coords" value="">
+                    <!-- placeholder="City name, zip code, street name, ..." -->
+                    <input type="text" class="form-control" id="searchLocation" placeholder="Ville, Code Postal, Nom de rue, ..." name="location">
+                    <div class="input-group-append">
+                        <button id="geoLocateBtn" class="btn btn-success" type="button"><span class="fa fa-map-marker"></span></button>
                     </div>
                 </div>
+
+                <div class="input-group"> <!-- Hour selection -->
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <div class="input-group-prepend input-group-text">
+                            <span class="fa fa-clock-o"></span>
+                            <label class="left-space" for="searchHour">&nbsp;Dès :</label>
+                        </div>
+                        <input type="time" class="form-control" id="searchHour" value="{{ "now"|date("H:i") }}" name="time">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">DocInTime !</button>
+
             </form>
         </div>
-    {% endif %}
+
+        {% if (extended is defined) and (extended) %}
+            <div class="container searchform_sub">
+                <form class="form-inline" role="form">
+                    <div class="form-group">
+                        <div class="pull-left">
+                            <input type="text" value="1" width="10" id="input1" class="form-control" />-
+                            <br />
+                            <label for="input1">Label 1</label>
+                        </div>
+                        <div>
+                            <input type="text" value="I" width="30" id="input2" class="form-control" />
+                            <br />
+                            <label for="input2">Label 2</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+
+    </div>
 
 {% endblock %}

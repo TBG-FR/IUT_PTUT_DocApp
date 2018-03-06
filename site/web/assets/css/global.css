@@ -60,7 +60,6 @@ html, body {
     margin-left: auto;
     margin-right: auto;
     margin-bottom : 2.5%;
-    margin-top : 2.5%;
 
 }
 
@@ -98,6 +97,14 @@ html, body {
 /*------------ ------------ Content : Homepage ------------- ------------*/
 
 .home {
+
+    margin-bottom: 2.5%;
+
+}
+
+/*------------ ------------ Content : Search Forms------------- ------------*/
+
+.searchform {
 
     margin-bottom: 2.5%;
 
@@ -242,6 +249,20 @@ html, body {
 }
 
 .details > .desc > .titre {
+
+}
+
+/*------------ ------------ Content : Menus ------------- ------------*/
+
+.menu-bottom {
+
+    margin-top: 2.5%;
+
+}
+
+.menu-bottom-unspaced {
+
+    /*margin-top: 0.5%;*/
 
 }
 

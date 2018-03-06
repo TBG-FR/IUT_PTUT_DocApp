@@ -9,11 +9,6 @@
 
 {% block content %}
 
-    <div class="alert alert-success" role="alert">
-        Votre rendez-vous a été payé et réservé !
-        Your appointment has been paid and held !
-    </div>
-
     <div class="summary text-left bg-secondary">
 
         {#{ dump(appointment) }#}
@@ -30,7 +25,7 @@
     <div class="btn-group menu-bottom">
 
             <a href="{{ path('user_appointments') }}" class="btn btn-primary">Voir la liste de vos RDVs</a>
-            <a href="{{ path('appointments.results') }}" role="button" class="btn btn-danger">Retourner à la recherche de RDVs</a>
+            <a href="{{ path('appointments_results') }}" role="button" class="btn btn-danger">Retourner à la recherche de RDVs</a>
 
     </div>
 

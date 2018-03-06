@@ -76,11 +76,16 @@ class DoctorsController extends Controller
     public function apptDetailsAction(Appointment $appointment, Request $request)
     {
         if($request->isMethod('POST')) {
+
             $content = $request->get('details');
+
             $appointment->setSummary($content);
+            $appointment->setClosed(true);
             $this->getDoctrine()->getManager()->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'Rendez-vous clôturé');
+            $this->get('session')->getFlashBag()->add('success', 'Rendez-vous clôturé avec succès !');
+            //$this->get('session')->getFlashBag()->add('success', 'Rendez-vous clôturé avec succès !'); [TODO : EN Translation]
+
             $this->redirect($this->generateUrl('doctor_panel'));
         }
 
