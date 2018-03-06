@@ -68,7 +68,9 @@ class AppointmentsController extends Controller
                 }
                 $clientCoords = explode(',', $request->get('coords'));
 
-                if(count($clientCoords) === 2) {
+                if(count($clientCoords) === 2 && $address->getLatitude() != null
+                    && $address->getLongitude() != null && $clientCoords[0] != null
+                    && $clientCoords[1] != null) {
                     $distance = $locationService->distance($address->getLatitude(), $address->getLongitude(),
                         $clientCoords[0], $clientCoords[1]);
 
