@@ -21,8 +21,7 @@
                     <input type="text" class="form-control" id="searchLocation" placeholder="Ville, Code Postal, Nom de rue, ..." name="location">
                     <div class="input-group-append">
                         <button id="geoLocateBtn" class="btn btn-success" type="button"><span class="fa fa-map-marker"></span></button>
-                    </div>                    
-                    <input type="time" class="form-control" id="searchHour" value="{{ app.request.get('time') ?? "now"|date("H:i") }}" name="time">                    
+                    </div>
                 </div>
 
                 <div class="input-group"> <!-- Hour selection -->
