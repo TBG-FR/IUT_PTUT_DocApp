@@ -4,6 +4,7 @@
 
         <div class="container searchform_main">
             <form class="form-inline" action="{{ path('appointments_results') }}" role="form">
+                
                 <div class="input-group"> <!-- Speciality selection -->
                     <div class="input-group-prepend input-group-text"><span class="fa fa-graduation-cap"></span></div>
                     <select class="form-control" id="searchDocSpec" title="Spécialité" name="speciality">
@@ -20,7 +21,8 @@
                     <input type="text" class="form-control" id="searchLocation" placeholder="Ville, Code Postal, Nom de rue, ..." name="location">
                     <div class="input-group-append">
                         <button id="geoLocateBtn" class="btn btn-success" type="button"><span class="fa fa-map-marker"></span></button>
-                    </div>
+                    </div>                    
+                    <input type="time" class="form-control" id="searchHour" value="{{ app.request.get('time') ?? "now"|date("H:i") }}" name="time">                    
                 </div>
 
                 <div class="input-group"> <!-- Hour selection -->

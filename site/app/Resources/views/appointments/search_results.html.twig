@@ -24,7 +24,7 @@
                     
                     {% for appointment in appointments %}
 
-                            <a class="lien" href="{{ path('appointments.details', { 'id': appointment.id }) }}" data-lat="{{ appointment.office.address.latitude }}" data-lon="{{ appointment.office.address.longitude }}">
+                            <a class="lien" href="{{ path('appointments_details', { 'id': appointment.id }) }}" data-lat="{{ appointment.office.address.latitude }}" data-lon="{{ appointment.office.address.longitude }}">
                                     <div class="element">
                                         <div class="image">
                                             {% if appointment.office.doctor.avatar %}

@@ -32,8 +32,10 @@ registration:
     confirmed: 'Félicitations %username%, votre compte est maintenant activé.'
     back: 'Retour à la page d''origine.'
     submit: 'Créer un compte'
+    first_name: 'Prénom'
+    last_name: 'Nom de famille'
     flash:
-        user_created: 'L''utilisateur a été créé avec succès.'
+        user_created: 'Vous êtes maintenant inscrit'
     email:
         subject: 'Bienvenue %username% !'
         message: |
