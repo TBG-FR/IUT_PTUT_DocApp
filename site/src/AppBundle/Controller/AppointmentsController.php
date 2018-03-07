@@ -289,13 +289,51 @@ class AppointmentsController extends Controller
 
             //$appointment->setDate(new \DateTime());
             //$interval=$request->request->get('duration');
+            $office = $this->getDoctrine()
+                    ->getRepository(Office::class)
+                    ->find($request->get('appointment')['office']);
+
+            $appointmentsDoc= $this->getDoctrine()
+                ->getRepository(Appointment::class)
+                ->findBy(
+                    ['office' => $office->getID()],
+                    ['id' => 'ASC']
+                );
+
+            foreach ($appointmentsDoc as $appointmentDoc) {
+                $appointmentDoc->setStartTime(new \DateTime($appointmentDoc->getStartTime()->format('H:i:s')));
+                $appointmentDoc->setEndTime(new \DateTime($appointmentDoc->getEndTime()->format('H:i:s')));
+            }
+
+
+
 
             $hours = $request->get('appointment')['duration']['hours']-1;
             $minutes = $request->get('appointment')['duration']['minutes'];
             $interval = new \DateInterval('PT' . $hours . 'H' . $minutes . 'M');
             $start=new \DateTime($appointment->getStartTime()->format('H:i:s'));
 
+
+
             $appointment->setEndTime($start->add($interval));
+
+            foreach ($appointmentsDoc as $appointmentDoc){
+
+                if($appointmentDoc->getDate()==$appointment->getDate()){
+                    if(($appointmentDoc->getStartTime()>$appointment->getStartTime()&&$appointmentDoc->getStartTime()<$appointment->getEndTime())||
+                        ($appointmentDoc->getEndTime()>=$appointment->getStartTime()&&$appointmentDoc->getEndTime()<=$appointment->getEndTime())||
+                        ($appointmentDoc->getStartTime()<$appointment->getStartTime()&&$appointmentDoc->getEndTime()>$appointment->getEndTime())||($appointmentDoc->getStartTime()>$appointment->getStartTime()&&$appointmentDoc->getEndTime()<$appointment->getEndTime())){
+
+                        $this->get('session')->getFlashBag()
+                    ->add('danger','<span class="fa fa-warning"></span>  <strong>Cet horaire n\'est pas disponible !</strong>');
+
+                        return $this->render(':appointments:create_single.html.twig', [
+                            'form' => $form->createView()
+                        ]);
+                    }
+                }
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($appointment);
             $em->flush();
@@ -352,8 +390,6 @@ class AppointmentsController extends Controller
             }
 
             $doc=$office->getDoctor();
-
-            dump($doc);
             $appointmentsDoc= $this->getDoctrine()
                 ->getRepository(Appointment::class)
                 ->findBy(
@@ -386,6 +422,9 @@ class AppointmentsController extends Controller
                             ($appointmentDoc->getEndTime()>=$appointment->getStartTime()&&$appointmentDoc->getEndTime()<=$appointment->getEndTime())||
                             ($appointmentDoc->getStartTime()<$appointment->getStartTime()&&$appointmentDoc->getEndTime()>$appointment->getEndTime())||($appointmentDoc->getStartTime()>$appointment->getStartTime()&&$appointmentDoc->getEndTime()<$appointment->getEndTime())){
 
+                            $this->get('session')->getFlashBag()
+                                ->add('danger','<span class="fa fa-warning"></span>  <strong>Ces horaires ne sont pas disponibles !</strong>');
+
                             return $this->render(':appointments:create_multiple.html.twig', [
                                 'form' => $form->createView()
                             ]);
@@ -393,7 +432,7 @@ class AppointmentsController extends Controller
                     }
                 }
 
-                dump($appointment);
+                //dump($appointment);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($appointment);
