@@ -29,6 +29,7 @@ class AppointmentMultipleType extends AbstractType
                 ])
                 ->add('startTime', TimeType::class, [
                     'input' => 'datetime',
+                    'label'=>'Heure de début'
                 ])
 
                 ->add('endTimeHour', IntegerType::class, [
@@ -46,7 +47,7 @@ class AppointmentMultipleType extends AbstractType
 
                 ->add('NbCrenaux', IntegerType::class, [
                     'required' => false,
-                    'label' => 'Nombre Crenaux',
+                    'label' => 'Nombre Crénaux',
                     'mapped'=>false,
                     ])
 
@@ -57,6 +58,7 @@ class AppointmentMultipleType extends AbstractType
                 'with_months'=>false,
                 'with_years'=>false,
                 'mapped'=>false,
+                'label' => 'Durée Crénaux',
                 'hours' => range(1, 4),
             ))
 

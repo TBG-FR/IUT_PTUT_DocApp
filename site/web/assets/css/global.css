@@ -266,6 +266,66 @@ html, body {
 
 }
 
+/*------------ ------------ Content : multiple form ------------- ------------*/
+
+.putInline{
+    display: inline-block;
+}
+
+.textebas{
+    margin-bottom: 2.5%;
+}
+
+.putInline.thin {
+    max-width: 3%;
+}
+
+.settings > .col{
+    margin: 2%;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.date{
+    margin-bottom: 2%;
+    margin-top: 3%;
+    display:inline-block;
+}
+
+.date.txt{
+    margin-left: 1%;
+
+}
+.date.field{
+    margin-left: 3%;
+
+}
+
+.mettrepadd{
+    border: 1px solid lightslategray;
+    border-radius: 10px;
+}
+
+.textefin{
+    margin-top: 2%;
+    text-align: center;
+}
+
+.settings > .centre{
+    border-right:1px solid lightslategray;
+    border-left:1px solid lightslategray;
+    margin-right: 0%;
+}
+.settings > .droite{
+    margin-left: 0%;
+}
+
+.create_multiple{
+    font-size: calc(0.7em + 0.5vw);
+
+}
 /* ------------ ------------ ------------ Scripts (JS) ------------ ------------ ------------ */
 
 #scripts {

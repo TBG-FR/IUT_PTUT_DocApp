@@ -89,6 +89,7 @@ $('#appointment_regular_appointment').on('change', function(event) {
 
 
 $('#appointment_multiple_NbCrenaux').on('change', function(event) {
+    console.log("changement");
     updateEndTime();
 });
 
@@ -108,6 +109,10 @@ $('#appointment_multiple_DureeCrenaux_minutes').on('change', function(event) {
     updateEndTime();
 });
 
+window.onload=function(){
+    document.getElementById("appointment_multiple_endTimeHour" ).value= parseInt(document.getElementById("appointment_multiple_startTime_hour" ).value);
+    document.getElementById("appointment_multiple_endTimeMinute" ).value=parseInt(document.getElementById("appointment_multiple_startTime_minute" ).value);
+}
 
 function updateEndTime()
 {
@@ -126,7 +131,7 @@ function updateEndTime()
     var endTimeMinute;
     var totalMinute;
     var totalHeure;
-    totalMinute=DureeCreneauxMinutes*NbCrenaux;
+    totalMinute=(DureeCreneauxMinutes*NbCrenaux)+startTimeMinute;
     totalHeure=DureeCreneauxHours*NbCrenaux;
 
     while (totalMinute-60>=0){
@@ -149,7 +154,8 @@ function updateEndTime()
             endTimeHour=startTimeHour+totalHeure;
         }
     }
-    endTimeMinute=startTimeMinute+totalMinute;
+    endTimeMinute=totalMinute;
+
     document.getElementById("appointment_multiple_endTimeHour" ).value=endTimeHour;
     document.getElementById("appointment_multiple_endTimeMinute" ).value=endTimeMinute;
 }

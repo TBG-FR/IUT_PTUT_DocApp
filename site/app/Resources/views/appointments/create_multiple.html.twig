@@ -1,5 +1,5 @@
 {% extends "base.html.twig" %}
-
+{% form_theme form _self %}
 {% block title %}
 
     {# DocInTime - Find a Doctor, now. [Appointments - Add Multiple] #}
@@ -22,31 +22,60 @@
 
         <div class="row">
             <div class="col">
-                {{ form_row(form.date) }}
+                <div class="date txt">
+                {{ form_label(form.date) }} :
+                </div>
+                <div class="date field">
+                {{ form_widget(form.date) }}
+                </div>
+            </div>
+        </div>
+        <div class="mettrepadd">
+            <div class="row settings">
+                <div class="col">
+                    {{ form_row(form.startTime) }}
+                </div>
+                <div class="col centre">
+                    <div>
+                    {{ form_row(form.NbCrenaux,{'attr':{'value': 0}}) }}
+                    </div>
+                </div>
+
+                <div class="col droite">
+                    <div class="textebas">
+                    Durée crénaux :
+                    </div>
+                    <div class="putInline">
+                        {{ form_widget(form.DureeCrenaux.hours) }}
+                    </div>
+                    :
+                    <div class="putInline">
+                        {{ form_widget(form.DureeCrenaux.minutes) }}
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-6">
-                {{ form_row(form.startTime) }}
+            <div class="col">
+                <div class="textefin">
+                <strong>Heure de fin :</strong>
+                </div>
             </div>
-            <div class="col-3">
+
+        </div>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-2 heure">
+
                 {{ form_row(form.endTimeHour) }}
             </div>
-            <div class="col-3">
+            <div class="col-2 minute">
                 {{ form_row(form.endTimeMinute) }}
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                {{ form_row(form.NbCrenaux,{'attr':{'value': 0}}) }}
+            <div class="col-4">
             </div>
-
-            <div class="col">
-                {{ form_row(form.DureeCrenaux) }}
-            </div>
-
         </div>
 
         <div class="row">
