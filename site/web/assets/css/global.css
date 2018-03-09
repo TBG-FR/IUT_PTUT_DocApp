@@ -10,7 +10,7 @@ html, body {
 
 /* ------------ ------------ ------------ Header (Logo/Navbar/etc) ------------ ------------ ------------ */
 
-#header {
+.header {
 
     position: relative;
     margin-bottom: 2.5%;
@@ -45,7 +45,7 @@ html, body {
 
 /* ------------ ------------ ------------ Content (Notices/Page) ------------ ------------ ------------ */
 
-#content {
+.content {
 
     /*margin-top : 5%;*/
 
@@ -327,7 +327,7 @@ html, body {
 }
 /* ------------ ------------ ------------ Scripts (JS) ------------ ------------ ------------ */
 
-#scripts {
+.scripts {
     
     display: none;
     
