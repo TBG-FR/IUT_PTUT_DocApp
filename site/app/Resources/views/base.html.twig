@@ -19,7 +19,7 @@
 
     <body>
 
-        <header id="header">
+        <div id="header">
 
             {% include 'navbar.html.twig' %}
 
@@ -33,9 +33,9 @@
                 Si ce système vous permettait de trouver un médecin (généraliste ou spécialiste) le plus rapidement possible, quelles améliorations voudriez-vous voir ?
             </div>
 
-        </header>
+        </div>
 
-        <div id="content" class="container">
+        <div class="content container">
 
             {% block page_title %}{% endblock %}
 
@@ -45,7 +45,7 @@
 
         </div>
 
-        <div id="scripts">
+        <div class="scripts">
 
             <!-- JS : JQuery (3.2.1) -->
             <script src="/assets/js/jquery-3.2.1.js"></script>
@@ -63,7 +63,7 @@
 
 
         {% block footer %}
-        <div id="footer">
+        <div class="footer">
 
             <p>
                 Projet Tutoré - Département Informatique - IUT Lyon1, site de Bourg-en-Bresse<br/>

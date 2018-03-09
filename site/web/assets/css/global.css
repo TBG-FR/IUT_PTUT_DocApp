@@ -10,10 +10,9 @@ html, body {
 
 /* ------------ ------------ ------------ Header (Logo/Navbar/etc) ------------ ------------ ------------ */
 
-#header {
+.header {
 
     position: relative;
-
     margin-bottom: 2.5%;
 
 }
@@ -46,7 +45,7 @@ html, body {
 
 /* ------------ ------------ ------------ Content (Notices/Page) ------------ ------------ ------------ */
 
-#content {
+.content {
 
     /*margin-top : 5%;*/
 
@@ -340,7 +339,7 @@ html, body {
 }
 /* ------------ ------------ ------------ Scripts (JS) ------------ ------------ ------------ */
 
-#scripts {
+.scripts {
     
     display: none;
     
@@ -348,25 +347,20 @@ html, body {
 
 /* ------------ ------------ ------------ Footer (Legal/Info) ------------ ------------ ------------ */
 
-#footer {
+.footer {
 
-    width: 100%;
+    //position:fixed;
+
+    width:100%;
     margin: auto;
-    margin-top: 2.5%;
+    /*margin-top: 2.5%;*/
     padding: 1%;
 
     text-align: center;
     font-size: calc(0.8em);
-
     background-color: darkgray;
 
-}
-
-#footer.long {
-
-    margin-top: 25%;
-
-}
+ }
 
 /*------------ ------------ OTH ------------- ------------*/
 /* TODO : Add other CSS parts/things here */
