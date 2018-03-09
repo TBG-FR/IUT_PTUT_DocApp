@@ -116,7 +116,6 @@ html, body {
     margin-top: 3%;
     padding-top: 3%;
     padding-bottom: 3%;
-    background-color: #e9f4ff;
     text-decoration: none;
 }
 
@@ -245,10 +244,23 @@ html, body {
     padding: 1%;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
-    background-color: #a6b3d4;
 }
 
 .details > .desc > .titre {
+
+}
+
+.address {
+    color:lightslategray;
+}
+.acentrer{
+
+    top: 50%; left: 50%; /* à 50%/50% du parent référent */
+    transform: translate(-50%, -50%);
+
+}
+
+.enbloc{
 
 }
 

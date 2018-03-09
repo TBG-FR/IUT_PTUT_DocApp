@@ -89,7 +89,6 @@ $('#appointment_regular_appointment').on('change', function(event) {
 
 
 $('#appointment_multiple_NbCrenaux').on('change', function(event) {
-    console.log("changement");
     updateEndTime();
 });
 

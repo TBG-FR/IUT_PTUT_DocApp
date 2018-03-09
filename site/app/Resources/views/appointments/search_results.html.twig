@@ -25,7 +25,7 @@
                     {% for appointment in appointments %}
 
                             <a class="lien" href="{{ path('appointments_details', { 'id': appointment.id }) }}" data-lat="{{ appointment.office.address.latitude }}" data-lon="{{ appointment.office.address.longitude }}">
-                                    <div class="element">
+                                    <div class="element p-3 mb-2 bg-light text-dark">
                                         <div class="image">
                                             {% if appointment.office.doctor.avatar %}
                                             <img class="img-fluid img-thumbnail" src="{{ appointment.office.doctor.avatar.url }}" alt="Doctor avatar">
@@ -48,7 +48,7 @@
                                                 </div>
                                             </div>
                                             <div class="float-right">
-                                                <div class="hour">
+                                                <div class="hour text-primary">
                                                     {{ appointment.startTime|date('H:i') }}
                                                 </div>
                                                 <div class="distance">

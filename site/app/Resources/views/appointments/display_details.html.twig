@@ -11,7 +11,7 @@
 
     {% include ':appointments:search_form.html.twig' %}
 
-    <div class="details">
+    <div class="details p-3 mb-2 bg-light text-dark">
         <div class="row">
             <div class="col-2">
 
@@ -23,7 +23,7 @@
 
             <div class="col-4">
                 <div class="name">
-                    Dr. {{ appointment.doctor.lastName }}
+                    <strong>Dr. {{ appointment.doctor.lastName }} </strong>
                 </div>
 
                 <div class="spe">
@@ -34,31 +34,35 @@
                     {% endfor %}
                     {{ doctor_specialities|join(' - ') }}
                 </div>
+
+                <div class="address text-secondary">
+                    {{ appointment.office.address.toAddressString()  }}
+                </div>
             </div>
 
             <div class="col-6">
-                <div class="time">
+                <div class="time text-primary">
                     {{ appointment.StartTime | date("H:i") }} - {{ appointment.EndTime | date("H:i") }}
                 </div>
             </div>
         </div>
-        <div class="row desc">
-            Description :<br/>{{ appointment.Description }}
-
-            <div class="bg-warning">
-                {# TODO : Better displaying of Appointment's Specialities ! #}
-                Specialities (TEMP) :
+        <div class="row desc p-3 mb-2 bg-primary text-white">
+            Rendez vous
                 {% set appt_specialities = [] %}
                 {% for speciality in appointment.specialities %}
                     {% set appt_specialities = appt_specialities|merge([speciality.name]) %}
                 {% endfor %}
                 {{ appt_specialities|join(' - ') }}
-            </div>
+
+            <br/>
+            {{ appointment.Description }}
+
+
         </div>
 
     </div>
 
-    <div class="btn-group menu-bottom">
+    <div class="btn-group menu-bottom acentrer">
 
         {% if appointment.user is not null %}
 

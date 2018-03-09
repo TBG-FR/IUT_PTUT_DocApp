@@ -17,30 +17,38 @@
         </div>
 
         <div class="payment text-center">
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm">
+            <div class="card w-100 bg-light mb-3 border-dark" style="width: 18rem;">
+                <div class="card-header">
+                    Récapitulatif Rendez-vous
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Dr. {{ appointment.doctor.lastName }} </h5>
+                    <h6 class="card-subtitle mb-2 text-muted"> {{ appointment.StartTime | date("H:i") }} - {{ appointment.EndTime | date("H:i") }} </h6>
+                    <p class="card-text"> {{ appointment.office.address.toAddressString() }} <br/>
+                        Spécialités :
+                        {% set doctor_specialities = [] %}
+                        {% for speciality in appointment.doctor.specialities %}
+                            {% set doctor_specialities = doctor_specialities|merge([speciality.name]) %}
+                        {% endfor %}
+                        {{ doctor_specialities|join(' - ') }}
+                        <br/>
+                        {{ appointment.Description }}
+                    </p>
+                    <button type="button" class="btn btn-lg btn-success" data-toggle="modal" data-target="#paymentModal">
+                        Valider et procéder au Paiement (virtuel)
+                    </button>
+                </div>
+            </div>
+            </div>
+            <div class="col-sm"></div>
+        </div>
 
-            <p class="summary text-left bg-info">
-
-                Dr. {{ appointment.doctor.lastName }}
-
-                {{ appointment.StartTime | date("H:i") }} - {{ appointment.EndTime | date("H:i") }}
-                Spécialités :
-                {% set doctor_specialities = [] %}
-                {% for speciality in appointment.doctor.specialities %}
-                    {% set doctor_specialities = doctor_specialities|merge([speciality.name]) %}
-                {% endfor %}
-                {{ doctor_specialities|join(' - ') }}
-
-                {{ appointment.office.name }}
-                {{ appointment.office.address.toAddressString() }}
-
-            </p>
-
-            <p class="instructions">Pour procéder à la réservation de ce rendez-vous, merci de cliquer ci-dessous</p>
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-lg btn-success" data-toggle="modal" data-target="#paymentModal">
-                Paiement (virtuel)
-            </button>
+
 
             <!-- Modal -->
             <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel"
@@ -88,7 +96,7 @@
 
     {% endif %}
 
-    <div class="btn-group menu-bottom">
+    <div class="btn-group menu-bottom acentrer">
         <a href="{{ path('appointments_details', {'id': appointment.ID}) }}" role="button" class="btn btn-secondary">Retourner aux détails du RDV</a>
         <a href="{{ app.request.get('back') }}" role="button" class="btn btn-danger">Retourner à la liste des RDVs</a>
         {# TODO : Garder la recherche en mémoire ? Trouver un moyen de revenir à la même recherche ? #}
