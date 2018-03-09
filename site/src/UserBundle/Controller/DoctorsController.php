@@ -21,7 +21,7 @@ class DoctorsController extends Controller
     public function index()
     {
         $apptRepo = $this->getDoctrine()->getRepository(Appointment::class);
-        $appointments = $apptRepo->getAppointmentsByDoctorQueryBuilder($this->getUser())->getQuery()->getResult();
+        $appointments = $apptRepo->getAppointmentsByDoctorQueryBuilder($this->getUser())->addOrderBy("a.date, a.startTime")->getQuery()->getResult();
 
         return $this->render('doctors/index.html.twig', [
             'appointments' => $appointments
