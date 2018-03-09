@@ -41,16 +41,16 @@ class AppointmentsController extends Controller
         $date = new \DateTime();
         $appointmentRepo = $this->getDoctrine()->getRepository(Appointment::class);
         $appointments = $appointmentRepo->getAvailableAppointmentsQueryBuilder()
-            ->innerJoin('a.office', 'o')
-            ->innerJoin('a.specialities', 's')
+            ->leftJoin('a.office', 'o')
+            ->leftJoin('a.specialities', 's')
             ->where('a.startTime >= :time_min AND a.startTime < :time_max AND a.date = :date AND s.id = :speciality_id')
-            ->setParameter(':time_min', $minTime)
-            ->setParameter(':time_max', $maxTime)
-            ->setParameter(':speciality_id', $request->get('speciality'))
+            ->setParameter(':time_min', $minTime->format('H:i:s'))
+            ->setParameter(':time_max', $maxTime->format('H:i:s'))
+            ->setParameter(':speciality_id', intval($request->get('speciality')))
             ->setParameter(':date', $date->format('Y-m-d'))
             ->getQuery()
             ->getResult();
-
+        
         $clientCoords = [];
 
         if(count($appointments) > 0) {
