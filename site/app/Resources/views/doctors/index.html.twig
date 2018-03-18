@@ -20,7 +20,7 @@
         <div class="card">
 
             <nav>
-                <div class="card-header nav nav-pills nav-justified" id="appts-menu" role="tablist">
+                <div class="card-header nav nav-justified" id="appts-menu" role="tablist">
 
                     <a class="nav-item nav-link card-header-tabs" id="appts-past-tab" data-toggle="pill"
                        href="#appts-past" role="tab" aria-controls="appts-past" aria-selected="false">
@@ -73,7 +73,9 @@
                             and (date(appointment.date|date('Y-m-d')) < date('now'|date('Y-m-d')))
                             and appointment.user is null %}
 
-                                {% include 'doctors/appointment_frame.html.twig' %}
+                                <div class="appointments-container">
+                                    {% include 'doctors/appointment_frame.html.twig' %}
+                                </div>
 
                             {% else %}
 
@@ -89,7 +91,9 @@
                             {% for appointment in appointments
                             if appointment.closed %}
 
-                                {% include 'doctors/appointment_frame.html.twig' %}
+                                <div class="appointments-container">
+                                    {% include 'doctors/appointment_frame.html.twig' %}
+                                </div>
 
                             {% else %}
 
@@ -136,7 +140,9 @@
                             and (date(appointment.date|date('Y-m-d')) <= date('now'|date('Y-m-d')))
                             %}
 
-                                {% include 'doctors/appointment_frame.html.twig' %}
+                                <div class="appointments-container">
+                                    {% include 'doctors/appointment_frame.html.twig' %}
+                                </div>
 
                             {% else %}
 
@@ -157,7 +163,9 @@
                             or (date(appointment.endTime|date('H:i:s')) >= date('now'|date('H:i:s'))))
                             %}
 
-                                {% include 'doctors/appointment_frame.html.twig' %}
+                                <div class="appointments-container">
+                                    {% include 'doctors/appointment_frame.html.twig' %}
+                                </div>
 
                             {% else %}
 
@@ -220,7 +228,9 @@
                             and date(appointment.date|date('Y-m-d')) >= date('now'|date('Y-m-d'))
                             and appointment.user is null %}
 
-                                {% include 'doctors/appointment_frame.html.twig' %}
+                                <div class="appointments-container">
+                                    {% include 'doctors/appointment_frame.html.twig' %}
+                                </div>
 
                             {% else %}
 
@@ -239,7 +249,9 @@
                             and date(appointment.date|date('Y-m-d')) >= date('now'|date('Y-m-d'))
                             and appointment.user is not null %}
 
-                                {% include 'doctors/appointment_frame.html.twig' %}
+                                <div class="appointments-container">
+                                    {% include 'doctors/appointment_frame.html.twig' %}
+                                </div>
 
                             {% else %}
 

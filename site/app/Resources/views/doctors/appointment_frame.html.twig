@@ -1,14 +1,20 @@
+<div class="appointment frame">
 
-<div class="appointment card">
-
-        <h3>Cabinet: {{ appointment.office.address.toAddressString }}</h3>
+        <!--<h3>Cabinet: {{ appointment.office.address.toAddressString }}</h3>-->
 
     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
 
         <div class="btn-group time" role="group" aria-label="Date & Time of this Appointment">
 
-            <a href="#" class="btn btn-secondary disabled" aria-disabled="true">{{ appointment.date|date('d/m') }}</a>
-            <a href="#" class="btn btn-secondary disabled" aria-disabled="true">{{ appointment.startTime|date('H:i') }} - {{  appointment.endTime|date('H:i') }}</a>
+            <a href="#" class="btn btn-outline-secondary c-disabled" aria-disabled="true">{{ appointment.date|date('d/m') }}</a>
+
+            <a href="#" class="btn btn-outline-secondary c-disabled" aria-disabled="true">
+                {{ appointment.startTime|date('H:i') }} - {{  appointment.endTime|date('H:i') }}
+            </a>
+
+            <a href="#" class="btn btn-outline-secondary c-disabled" aria-disabled="true">
+                Cabinet: {{ appointment.office.address.toAddressString }}
+            </a>
 
         </div>
 
@@ -16,12 +22,12 @@
 
             {% if appointment.User is null %}
 
-                <a href="#" class="btn btn-danger disabled" aria-disabled="true">Non-Réservé</a>
+                <a href="#" class="btn btn-secondary c-disabled" aria-disabled="true">État: Non-Réservé</a>
 
             {% else %}
 
-                <a href="#" class="btn btn-success disabled" aria-disabled="true">
-                    Réservé par {{ appointment.user.lastName ~ ' ' ~ appointment.user.firstName }}
+                <a href="#" class="btn btn-success c-disabled" aria-disabled="true">
+                    État: Réservé par {{ appointment.user.lastName ~ ' ' ~ appointment.user.firstName }}
                 </a>
 
             {% endif %}
@@ -30,11 +36,12 @@
 
         <div class="btn-group actions" role="group" aria-label="Actions related to this Appointment">
             <a href="{{ path('doctor_appointment_details', {id: appointment.id})}}" class="btn btn-primary">Détails</a>
-            <a href="{{ path('doctor_appointment_details', {id: appointment.id})}}" class="btn btn-secondary">Supprimer?</a>
-            <a href="{{ path('doctor_appointment_details', {id: appointment.id})}}" class="btn btn-info">Archiver?</a>
-            <a href="{{ path('doctor_appointment_details', {id: appointment.id})}}" class="btn btn-light">Annuler?</a>
+            <a href="{{ path('doctor_appointment_details', {id: appointment.id})}}" class="btn btn-danger">Supprimer</a>
+            <a href="{{ path('doctor_appointment_details', {id: appointment.id})}}" class="btn btn-dark">Archiver</a>
         </div>
 
     </div>
 
 </div>
+
+<hr />

@@ -189,6 +189,44 @@ html, body {
 
 }
 
+/*------------ ------------ Content : Appointments Frame ------------- ------------*/
+
+.appointments-container:not(:first-child):not(:last-child):after {
+
+    /*content: '<hr />';*/
+
+}
+
+.appointments-container:first-child {
+
+    margin-top: 1.5%
+
+}
+
+.appointments-container:last-child {
+
+     margin-bottom: 1.5%;
+
+ }
+
+.appointment.frame > .btn-toolbar > .btn-group {
+
+    margin-right: 2.5%;
+    margin-bottom: 0.5%;
+
+}
+
+.appointment.frame > .btn-toolbar {
+
+    text-align: center;
+
+}
+
+.appointment.frame > .status {
+
+    width: 45%;
+}
+
 /*------------ ------------ Content : Appointments Details ------------- ------------*/
 
 .details {
@@ -373,5 +411,13 @@ html, body {
 
     text-decoration-line: line-through;
     color: grey;
+
+}
+
+.c-disabled {
+
+    pointer-events: none;
+    cursor:not-allowed;
+    /*cursor: default;*/
 
 }

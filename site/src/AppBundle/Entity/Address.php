@@ -324,7 +324,8 @@ class Address
 
     public function toAddressString()
     {
-        return $this->line1 . ' ' . $this->getZip() . ' ' . $this->getCity() . ', ' . $this->getCountry();
+        /*return $this->line1 . ' ' . $this->getZip() . ' ' . $this->getCity() . ', ';*/
+        return $this->line1 . ' ' . $this->getCity();
     }
 }
 
