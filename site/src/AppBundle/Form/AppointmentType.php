@@ -25,10 +25,12 @@ class AppointmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('date', DateType::class, [
-                    'input' => 'datetime'
+                    'input' => 'datetime',
+                    'label' => 'Date',
                 ])
                 ->add('startTime', TimeType::class, [
-                    'input' => 'datetime'
+                    'input' => 'datetime',
+                    'label' => 'Heure de début',
                 ])
                 ->add('duration', DateIntervalType::class, array (
                     'with_minutes'=>true,
@@ -36,6 +38,7 @@ class AppointmentType extends AbstractType
                     'with_days'=>false,
                     'with_months'=>false,
                     'with_years'=>false,
+                    'label' => 'Durée',
                     'mapped'=>false,
                     'hours' => range(1, 4),
                 ))
