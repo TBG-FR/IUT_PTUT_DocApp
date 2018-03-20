@@ -18,8 +18,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class AppointmentsController extends Controller
-{
+class AppointmentsController extends Controller {
+
     /**
      * @Route("/search", name="appointments_results")
      *
@@ -220,7 +220,7 @@ class AppointmentsController extends Controller
 
             if($appointment->getUser() instanceof User || $appointment->getUser() instanceof Doctor) {
 
-                $this->get('session')->getFlashBag()->add('danger','<span class="fa fa-warning"></span> Votre rendez-vous n\'a pas été réservé (paiement non effectué) !');
+                //$this->get('session')->getFlashBag()->add('danger','<span class="fa fa-warning"></span> Votre rendez-vous n\'a pas été réservé (paiement non effectué) !');
                 //$this->get('session')->getFlashBag()->add('danger','<span class="fa fa-warning"></span> Your appointment hasn't been reserved (payment not made) !'); [TODO : EN Translation]
 
                 return $this->render(':reservation:failure.html.twig', [
@@ -239,7 +239,7 @@ class AppointmentsController extends Controller
                 $em->persist($appointment);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success','<span class="fa fa-warning"></span> Votre rendez-vous a été payé et réservé !');
+                //$this->get('session')->getFlashBag()->add('success','<span class="fa fa-warning"></span> Votre rendez-vous a été payé et réservé !');
                 //$this->get('session')->getFlashBag()->add('success','<span class="fa fa-warning"></span> Your appointment has been paid and held !'); [TODO : EN Translation]
 
                 return $this->render(':reservation:success.html.twig', [

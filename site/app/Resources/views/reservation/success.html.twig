@@ -9,17 +9,23 @@
 
 {% block content %}
 
-    <div class="summary text-left bg-secondary">
+
 
         {#{ dump(appointment) }#}
         {# TODO : Recap Infos RDV #}
-        RDV à 15h45<br/>
-        Dr Jean Jo (Pneumologie)<br/>
-        <br/>
-        Maison Médicale de Bourg<br/>
-        4 Rue des Tulipes<br/>
-        01000 Bourg-en-Bresse, France
-
+    <div class="text-center card border-success mb-3">
+        <div class="card-header text-white bg-success border-success">
+            <span class="fa fa-warning"></span> Votre rendez-vous a été payé et réservé !
+        </div>
+        <div class="card-body text-success">
+            Rendez vous à <strong> {{ appointment.StartTime | date("H:i") }} </strong> ! <br/>
+            Dr. {{ appointment.doctor.lastName }} (  {% set doctor_specialities = [] %}
+            {% for speciality in appointment.doctor.specialities %}
+                {% set doctor_specialities = doctor_specialities|merge([speciality.name]) %}
+            {% endfor %}
+            {{ doctor_specialities|join(' - ') }} )  <br/>
+            {{ appointment.office.address.toAddressString() }}
+        </div>
     </div>
 
     <div class="btn-group menu-bottom">

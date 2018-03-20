@@ -9,14 +9,17 @@
 
 {% block content %}
 
-    <div class="text-left bg-secondary">
+    <div class="text-center card border-danger mb-3">
+        <div class="card-header text-white bg-danger border-danger">
+            <span class="fa fa-warning"></span> Votre rendez-vous n'a <strong> pas été réservé  </strong> (paiement non effectué) !
+        </div>
+        <div class="card-body text-danger">
+            <p class="error">Il y a eu un problème lors du paiement ou de la validation du rendez-vous...<br/></p>
 
-        <p class="error">Il y a eu un problème lors du paiement ou de la validation du rendez-vous...<br/></p>
-
-        Ressurez-vous, vous n'avez pas été débité !
-        <br/><br/>
-        Veuillez nous excuser pour le dérangement. Nous vous proposons d'aller rechercher un autre rendez-vous !
-
+            Ressurez-vous, vous n'avez <strong> pas été débité </strong> !
+            <br/><br/>
+                Veuillez nous excuser pour le dérangement. Nous vous proposons d'aller <strong> rechercher un autre rendez-vous </strong>!
+        </div>
     </div>
 
     <div class="btn-group menu-bottom">

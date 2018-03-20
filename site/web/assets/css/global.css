@@ -126,7 +126,6 @@ html, body {
 .results > .row > .col-8 > .lien > .element {
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
-    background-color: #d0deff;
     padding: 1%;
     margin : 2%;
     position: relative;
