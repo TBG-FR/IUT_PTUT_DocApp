@@ -101,6 +101,10 @@ html, body {
 
 }
 
+.marge {
+
+    margin-bottom: 50px;
+}
 /*------------ ------------ Content : Search Forms------------- ------------*/
 
 .searchform {
