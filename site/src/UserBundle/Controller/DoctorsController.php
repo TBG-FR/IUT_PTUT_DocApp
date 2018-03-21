@@ -43,7 +43,8 @@ class DoctorsController extends Controller
             $doctor->setPassword($passwordEncoder->encodePassword($doctor, $doctor->getPassword()));
             $doctor->setEnabled(false);
             $doctor->addRole('ROLE_DOCTOR');
-            $doctor->setUsername(strtolower($doctor->getFirstName().$doctor->getLastName()));
+            $doctor->setUsername($doctor->getEmail());
+            $doctor->setUsernameCanonical($doctor->getEmailCanonical());
             //update address coords
             $coords = $locationService->getCoordinatesFromString($doctor->getAddress()->toAddressString());
             $doctor->getAddress()->setLatitude($coords['latitude']);
