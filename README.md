@@ -1,13 +1,13 @@
 
 # DocInTime (DocApp)
 
-Réalisation d'un système portant sur la prise de rendez-vous médicaux en urgence, dans le cadre du projet tutoré de deuxième année de DUT Informatique.
+**Réalisation d'un système portant sur la prise de rendez-vous médicaux en urgence, dans le cadre du projet tutoré de deuxième année de DUT Informatique.**
 
 # Description
  
-Le but est de produire un système qui permette à une personne de trouver, dans l'urgence, le praticien dont elle a besoin, le plus rapidement possible, et le plus près d'elle possible. Pour les praticiens, l'idée est de combler les « trous » dans le planning et les désistements, qui sont une perte de temps et d'argent.
+Le but est de produire un système qui **permette à une personne de trouver, dans l'urgence, le praticien dont elle a besoin**, le plus rapidement possible, et le plus près d'elle possible. Pour les praticiens, l'idée est de combler les « trous » dans le planning et les désistements, qui sont une perte de temps et d'argent.
 
-L'idée de base de ce projet répond à un problème qui reste non résolu depuis plus de 5 ans, en France en tous cas : il est très souvent compliqué d'obtenir un rendez-vous médical en urgence, que ce soit avec un généraliste ou un spécialiste.
+L'idée de base de ce projet répond à un problème qui reste non résolu depuis plus de 5 ans, en France en tous cas : **il est très souvent compliqué d'obtenir un rendez-vous médical en urgence, que ce soit avec un généraliste ou un spécialiste.**
 Le solutions existant actuellement permettent de trouver les médecins autour de soi et leurs plannings, mais ne raisonnent pas en terme d'urgence. Nous, c'est notre objectif majeur !
 
 # Avancement du projet
@@ -51,6 +51,6 @@ Le sujet et/ou le projet vous intéressent ? Vous souhaitez en savoir plus, voir
 
 N'hésitez pas à nous contacter !
 
-Dyvia Fleury [Github](https://github.com/Dyvia)
-Théo Champion [Github](https://github.com/tete0148)
+Dyvia Fleury [Github](https://github.com/Dyvia)  
+Théo Champion [Github](https://github.com/tete0148)  
 Tom-Brian Garcia [Github](https://github.com/TBG-FR) ou [Mails, LinkedIn, etc](https://linkkle.com/TBG)
